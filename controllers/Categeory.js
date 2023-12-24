@@ -81,6 +81,7 @@ exports.showAllCategeotys = async(req, res) => {
 }
 
 
+// categoryPageDetails
 
 exports.categoryPageDetails = async (req, res) => {
 	try {
