@@ -1,10 +1,10 @@
-const Categeoty = require("../models/Categeoty");
+const Category = require("../models/Category");
 
 
 
-// createe Categeoty ka handler function
+// createe Category ka handler function
 
-exports.createrCategeoty = async (req, res) => {
+exports.createCategory = async (req, res) => {
 
     /**
      * Step: 1 --> data fetch
@@ -27,16 +27,16 @@ exports.createrCategeoty = async (req, res) => {
         }
 
         //  create entry in DB
-        const CategeotyDetails = await Categeoty.create({
+        const CategoryDetails = await Category.create({
             name: name,
             description: description,
         });
-        console.log("Categeoty Details is: ",CategeotyDetails);
+        console.log("Category Details is: ",CategoryDetails);
 
         // return res
         return res.status(200).json({
             success: truek,
-            message: "Categeoty created successfully",
+            message: "Category created successfully",
         })
         
     } catch (error) {
@@ -50,13 +50,13 @@ exports.createrCategeoty = async (req, res) => {
 
 
 
-// Get All Categeotys ka handler function
+// Get All Categorys ka handler function
 
-exports.showAllCategeotys = async(req, res) => {
+exports.showAllCategories = async(req, res) => {
     try {
 
-        const allCategeotys = await Categeoty.find(
-            // find all Categeotys 
+        const allCategorys = await Category.find(
+            // find all Categorys 
             {},
             // name and description is mendatary
             {
@@ -67,8 +67,8 @@ exports.showAllCategeotys = async(req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "All Categeotys returned successfully",
-            allCategeotys,
+            message: "All Categorys returned successfully",
+            allCategorys,
         })
 
         
@@ -81,56 +81,55 @@ exports.showAllCategeotys = async(req, res) => {
 }
 
 
-// categoryPageDetails
-
+// categoryPageDetail
 exports.categoryPageDetails = async (req, res) => {
+
+    /**
+     * Step: 1 --> get categoryId
+     * Step: 2 --> get cousrses for specified categoryId
+     * Step: 3 --> validation
+     * Step: 4 --> get course for different categorie
+     * Step: 5 --> get top selling courses
+     * Step: 6 --> return res
+     */
+
 	try {
-		const { categoryId } = req.body;
 
-		// Get courses for the specified category
-		const selectedCategory = await Category.findById(categoryId)
-			.populate("courses")
-			.exec();
-		console.log(selectedCategory);
-		// Handle the case when the category is not found
-		if (!selectedCategory) {
-			console.log("Category not found.");
-			return res
-				.status(404)
-				.json({ success: false, message: "Category not found" });
-		}
-		// Handle the case when there are no courses
-		if (selectedCategory.courses.length === 0) {
-			console.log("No courses found for the selected category.");
-			return res.status(404).json({
-				success: false,
-				message: "No courses found for the selected category.",
-			});
-		}
+        // * Step: 1 --> get categoryId
+        const {categoryId} = req.body;
 
-		const selectedCourses = selectedCategory.courses;
+        // * Step: 2 --> get cousrses for specified categoryId
+        const selectedCetogry = await Category.findById(categoryId)
+            .populate("courses")
+            .exec();
 
-		// Get courses for other categories
-		const categoriesExceptSelected = await Category.find({
-			_id: { $ne: categoryId },
-		}).populate("courses");
-		let differentCourses = [];
-		for (const category of categoriesExceptSelected) {
-			differentCourses.push(...category.courses);
-		}
+        // * Step: 3 --> validation
+        if(!selectedCetogry){
+            return res.status(404).json({
+                success: false,
+                message: "Data Not Found",
+            });
+        }
 
-		// Get top-selling courses across all categories
-		const allCategories = await Category.find().populate("courses");
-		const allCourses = allCategories.flatMap((category) => category.courses);
-		const mostSellingCourses = allCourses
-			.sort((a, b) => b.sold - a.sold)
-			.slice(0, 10);
+        // * Step: 4 --> get course for different categorie
+        const differentCategories = await Category.find(
+            {_id: {$ne: categoryId}},
+        )
+        .populate("courses")
+        .exec();
 
-		res.status(200).json({
-			selectedCourses: selectedCourses,
-			differentCourses: differentCourses,
-			mostSellingCourses: mostSellingCourses,
-		});
+        // * Step: 5 --> get top selling courses
+        // Hw
+
+        // * Step: 6 --> return res
+        return res.status(200).json({
+            success: true,
+            data: {
+                selectedCetogry,
+                differentCategories,
+            }
+        });
+		
 	} catch (error) {
 		return res.status(500).json({
 			success: false,

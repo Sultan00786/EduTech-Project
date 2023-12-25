@@ -79,7 +79,7 @@ exports.createSubSection = async (req, res) => {
 
 
 // update handle for subsection
-exports.updateSubSectionl = async (req, res) => {
+exports.updateSubSection = async (req, res) => {
 
     /**
      * Step: 1 --> data fetch
