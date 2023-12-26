@@ -38,7 +38,14 @@ exports.createSection = async (req, res) => {
                     courseContent: newSection._id,
                 }
             }
-        ).populate("Section").populate("SubSection").exec();
+        )
+        .populate({
+            path: "courseContent",
+            populate: {
+                path: "subSection",
+            },
+        })
+        .exec();
 
         // Step: 5 --> return res
         return res.status(200).json({

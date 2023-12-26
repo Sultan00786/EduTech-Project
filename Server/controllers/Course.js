@@ -1,5 +1,5 @@
 const Course = require("../models/Course");
-const Categeoty = require("../models/Categeoty");
+const Category = require("../models/Category");
 const User = require("../models/User");
 const {uploadImageToCloudinary} = require("../utils/imageUploader");
 
@@ -12,13 +12,13 @@ exports.createCourse = async (req, res) =>  {
     try {
 
         // fetch all data from creating the course
-        const {courseName, courseDescription, whatYouWillLearn, price, Categeoty} = req.body;
+        const {courseName, courseDescription, whatYouWillLearn, price, Category} = req.body;
 
         // get thumbnail using req.files.fileName
         const thumbnail = req.files.thumbnailName;
 
         // Validation for all data 
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !Categeoty || !thumbnail){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !Category || !thumbnail){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required",
@@ -38,12 +38,12 @@ exports.createCourse = async (req, res) =>  {
             });
         }
 
-        // check given Categeoty is valid or not 
-        const CategeotyDetails = await Categeoty.findById(Categeoty);
-        if(!CategeotyDetails){
+        // check given Category is valid or not 
+        const CategoryDetails = await Category.findById(Category);
+        if(!CategoryDetails){
             return res.status(404).json({
                 success: false,
-                message: "Categeoty Details not found",
+                message: "Category Details not found",
             });
         }
 
@@ -57,7 +57,7 @@ exports.createCourse = async (req, res) =>  {
             instructor: instructorDtails._id,
             whatYouWillLearn,
             price,
-            Categeoty: CategeotyDetails._id,
+            Category: CategoryDetails._id,
             thumbnail: thumbnailImage.secure_url,
         });
 
@@ -72,15 +72,16 @@ exports.createCourse = async (req, res) =>  {
             {new: true}
         );
 
-        // update the Categeoty ka schema 
+        // update the Category ka schema 
 
-        await Categeoty.findByIdAndUpdate(
-            {_id: CategeotyDetails._id},
+        await Category.findByIdAndUpdate(
+            {_id: CategoryDetails._id},
             {
                 $push: {
                     coures: newCourse._id,
                 }
-            }
+            },
+            { new: true }
         );
 
         // return response 
@@ -106,7 +107,7 @@ exports.createCourse = async (req, res) =>  {
 
 // getAllCourses handler function
 
-exports.showAllCourses = async (req, res) => {
+exports.getAllCourses = async (req, res) => {
 
     try {
 
@@ -131,3 +132,66 @@ exports.showAllCourses = async (req, res) => {
     }
 
 }
+
+
+
+// getCourseDetails
+
+exports.getCourseDetails = async(req, res) => {
+    try {
+
+        // get id 
+        const {courseId} = req.body;
+
+        // get course full details
+        const courseDetail = await Course.find(
+
+            {_id: courseId},
+
+        )
+        .populate(
+            {
+                path:"instructor",
+                populate:{
+                    path:"additionalDetails",
+                }
+            }
+        )
+        .populate("category")
+        .populate("ratingAndreviews")
+        .populate(
+            {
+                path:"courseContent",
+                populate:{
+                    path:"subSection",
+                }
+            }
+        )
+        .exec();
+
+        // validation
+        if(!courseDetail){
+            return res.stastu(400).json({
+                success: false,
+                message: `Could Not Faild The Course With ${courseId}`,
+            })
+        }
+
+        // return response
+        return res.status(200).json({
+            success: true,
+            message: "Course Details Fetched Successfully",
+            data: courseDetail,
+        })
+        
+    } catch (error) {
+
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+        
+    }
+}
+

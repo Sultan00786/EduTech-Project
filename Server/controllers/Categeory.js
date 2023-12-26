@@ -1,10 +1,10 @@
-const Categeoty = require("../models/Categeoty");
+const Category = require("../models/Category");
 
 
 
-// createe Categeoty ka handler function
+// createe Category ka handler function
 
-exports.createrCategeoty = async (req, res) => {
+exports.createCategory = async (req, res) => {
 
     /**
      * Step: 1 --> data fetch
@@ -27,16 +27,16 @@ exports.createrCategeoty = async (req, res) => {
         }
 
         //  create entry in DB
-        const CategeotyDetails = await Categeoty.create({
+        const CategoryDetails = await Category.create({
             name: name,
             description: description,
         });
-        console.log("Categeoty Details is: ",CategeotyDetails);
+        console.log("Category Details is: ",CategoryDetails);
 
         // return res
         return res.status(200).json({
             success: truek,
-            message: "Categeoty created successfully",
+            message: "Category created successfully",
         })
         
     } catch (error) {
@@ -50,13 +50,13 @@ exports.createrCategeoty = async (req, res) => {
 
 
 
-// Get All Categeotys ka handler function
+// Get All Categorys ka handler function
 
-exports.showAllCategeotys = async(req, res) => {
+exports.showAllCategories = async(req, res) => {
     try {
 
-        const allCategeotys = await Categeoty.find(
-            // find all Categeotys 
+        const allCategorys = await Category.find(
+            // find all Categorys 
             {},
             // name and description is mendatary
             {
@@ -67,8 +67,8 @@ exports.showAllCategeotys = async(req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "All Categeotys returned successfully",
-            allCategeotys,
+            message: "All Categorys returned successfully",
+            allCategorys,
         })
 
         
@@ -79,4 +79,63 @@ exports.showAllCategeotys = async(req, res) => {
         })
     }
 }
+
+
+// categoryPageDetail
+exports.categoryPageDetails = async (req, res) => {
+
+    /**
+     * Step: 1 --> get categoryId
+     * Step: 2 --> get cousrses for specified categoryId
+     * Step: 3 --> validation
+     * Step: 4 --> get course for different categorie
+     * Step: 5 --> get top selling courses
+     * Step: 6 --> return res
+     */
+
+	try {
+
+        // * Step: 1 --> get categoryId
+        const {categoryId} = req.body;
+
+        // * Step: 2 --> get cousrses for specified categoryId
+        const selectedCetogry = await Category.findById(categoryId)
+            .populate("courses")
+            .exec();
+
+        // * Step: 3 --> validation
+        if(!selectedCetogry){
+            return res.status(404).json({
+                success: false,
+                message: "Data Not Found",
+            });
+        }
+
+        // * Step: 4 --> get course for different categorie
+        const differentCategories = await Category.find(
+            {_id: {$ne: categoryId}},
+        )
+        .populate("courses")
+        .exec();
+
+        // * Step: 5 --> get top selling courses
+        // Hw
+
+        // * Step: 6 --> return res
+        return res.status(200).json({
+            success: true,
+            data: {
+                selectedCetogry,
+                differentCategories,
+            }
+        });
+		
+	} catch (error) {
+		return res.status(500).json({
+			success: false,
+			message: "Internal server error",
+			error: error.message,
+		});
+	}
+};
 
