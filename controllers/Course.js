@@ -12,18 +12,22 @@ exports.createCourse = async (req, res) =>  {
     try {
 
         // fetch all data from creating the course
-        const {courseName, courseDescription, whatYouWillLearn, price, Category} = req.body;
+        const {courseName, courseDescription, whatYouWillLearn, price, CategoryId} = req.body;
 
         // get thumbnail using req.files.fileName
         const thumbnail = req.files.thumbnailName;
+        console.log(courseName, courseDescription, whatYouWillLearn, price, CategoryId)
+        
 
         // Validation for all data 
-        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !Category || !thumbnail){
+        if(!courseName || !courseDescription || !whatYouWillLearn || !price || !CategoryId || !thumbnail){
+            // (courseName && courseDescription && whatYouWillLearn && price && CategoryId && thumbnail)
             return res.status(400).json({
                 success: false,
                 message: "All fields are required",
             });
         }
+       
 
         // check for instructor
         const userId = req.user.id;
@@ -39,13 +43,15 @@ exports.createCourse = async (req, res) =>  {
         }
 
         // check given Category is valid or not 
-        const CategoryDetails = await Category.findById(Category);
+        // console.log("Category ID: ", CategoryId);
+        const CategoryDetails = await Category.findById(CategoryId);
         if(!CategoryDetails){
             return res.status(404).json({
                 success: false,
                 message: "Category Details not found",
             });
         }
+        // console.log("Category ID: ", Category);
 
         // Uplaod Image to cloudinary
         const thumbnailImage = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
@@ -85,9 +91,10 @@ exports.createCourse = async (req, res) =>  {
         );
 
         // return response 
-        return res.stastu(200).json({
+        return res.status(200).json({
             success: true,
             message: "Course Created successfully",
+            newCourse
         });
         
     } catch (error) {
@@ -158,7 +165,7 @@ exports.getCourseDetails = async(req, res) => {
             }
         )
         .populate("category")
-        .populate("ratingAndreviews")
+        // .populate("ratingAndreviews")
         .populate(
             {
                 path:"courseContent",

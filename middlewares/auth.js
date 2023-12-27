@@ -3,7 +3,7 @@ const User = require("../models/User");
 require("dotenv").config();
 
 // auth
-exports.auth = async(res, req, next) => {
+exports.auth = async(req, res, next) => {
 
     /**
      * Step: 1 --> extract token
@@ -12,12 +12,16 @@ exports.auth = async(res, req, next) => {
      * Step: 4 --> write next() for next middleware
      */
 
+    
+
     try {
 
         // extract token
-        const token = req.cokies.token ||
+        const token = await ( req.cookies.token ||
                         req.body.token ||
-                        req.header("Authorisation").replace("Bearer","");
+                        req.header("Authorisation").replace("Bearer","") );
+        
+        console.log("token is: ", token)
 
         // check if token missing 
         if(!token){
@@ -30,7 +34,7 @@ exports.auth = async(res, req, next) => {
         // verify the token 
         try {
 
-            const decode = jwt.verify(token, process.env.JWT_SECRET);
+            const decode = await jwt.verify(token, process.env.JWT_SECRET);
             console.log(decode);
             req.user = decode;
             
@@ -42,12 +46,15 @@ exports.auth = async(res, req, next) => {
         }
 
         // write next() for next middleware
+        console.log("Token is verified");
         next();
 
-    } catch (error) {
+    } 
+    catch (error) {
         return res.status(401).json({
             success: false,
             message: "Something went wrong while validating the token",
+            message: error.message
         });
     }
 
@@ -118,6 +125,7 @@ exports.isAdmin = async (req, res, next ) => {
 
         // take role from req.user and check for user role is not equal to Admin role
         if(req.user.accountType !== "Admin"){
+            console.log("Accout Type is: ",req.user.accountType);
             return res.status(401).json({
                 success: false,
                 message: "This is a protected route for Admin only",
