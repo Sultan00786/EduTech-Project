@@ -287,7 +287,7 @@ exports.login = async (req, res) => {
         console.log("Error of login Handler: ", error);
         return res.status(500).json({
             success: false,
-            message: "Login Failure, please try again",
+            message: "Login Fail, please try again",
         });
     }
 
