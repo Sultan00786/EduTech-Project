@@ -1,6 +1,7 @@
 const { TopologyDescriptionChangedEvent } = require("mongodb");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
+const {uploadImageToCloudinary} = require("../utils/imageUploader");
 
 
 
@@ -24,8 +25,10 @@ exports.updateProfile = async (req, res) => {
         // * Step: 2 --> get userId
         const Id = req.user.id;
 
+        console.log("Id: ", Id);
+
         // * Step: 3 --> validation
-        if(!contactNumber || !gender || Id){
+        if(!contactNumber || !gender ){
             return res.status(400).json({
                 success: false,
                 message: "All fields are required",
@@ -49,6 +52,7 @@ exports.updateProfile = async (req, res) => {
         return res.status(200).json({
             success:true,
             message: "profile Upload successfully",
+            profileDetails,
         });
 
         
@@ -67,7 +71,7 @@ exports.updateProfile = async (req, res) => {
 // delete Account
 // Explore -> how can we schedule delete option
 
-exports.deleteAccount = async (req, res )=> {
+exports.deleteAccount = async (req, res )=> { // only for student role
 
     /**
      * Step: 1 --> get userId
