@@ -1,0 +1,7 @@
+slice is collection of --> data and thier fuction
+
+** Creat a slice **
+
+1) name of slice
+2) initialstae --> initilaization of state value
+3) reducer fuction --> for changing state value

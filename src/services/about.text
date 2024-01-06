@@ -1,0 +1,4 @@
+
+** Folow of service fuction
+
+frontend --> click on button --> services fuction call --> Then Call go to Backend --> then Controller --> then Specific fuction of require service and we get respone
