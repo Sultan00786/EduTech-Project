@@ -1,8 +1,11 @@
 import React from 'react'
+import Template from '../components/common/Template'
 
 function Signup() {
   return (
-    <div>Signup</div>
+    <div>
+      <Template/>
+    </div>
   )
 }
 

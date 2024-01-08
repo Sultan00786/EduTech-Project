@@ -32,12 +32,12 @@ const Home = () => {
 
           <Link to={"/signup"} >
 
-            <div className=' group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 transition-all duration-200 hover:scale-95 w-full'>
+            <div className=' group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 border-b-[2px] border-richblack-700 transition-all duration-200 hover:scale-95 w-full'>
 
-              <div className='flex flex-row items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900'>
+              <div className='flex flex-row items-center gap-3 rounded-full px-6 py-[5px] transition-all duration-200 group-hover:bg-richblack-900'>
 
-                <p className=' text-white'>Become an Instructor</p>
-                <FaArrowRight />
+                <p className=' text-richblack-200 text-[15px] font-semibold '>Becomes an Instructor</p>
+                <FaArrowRight className=' text-[12px] ' />
               </div>
 
             </div>
@@ -61,7 +61,7 @@ const Home = () => {
 
           {/* two button */}
 
-          <div className='flex flex-row gap-7 mt-8'>
+          <div className='flex flex-row gap-7 '>
           {/* CTA --> call to action button */}
 
             <CTAButton active={true} linkto={"/signup"}>
