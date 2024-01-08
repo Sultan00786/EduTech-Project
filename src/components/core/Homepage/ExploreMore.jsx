@@ -14,7 +14,7 @@ const tabsName = [
 
 ];
 
-const ExploreMore = () => {
+const   ExploreMore = () => {
 
   // initial value of 
   // tab    -> free, 
@@ -24,14 +24,14 @@ const ExploreMore = () => {
   const [courses, setCourse] = useState(HomePageExplore[0].courses);
   const [currentCard, setCurrentCard] = useState(HomePageExplore[0].courses[0].heading);
 
-  const setMyCards = (value) => {
+  const setMyCards = (element) => {
 
-    setCurrentTab(value);
+    setCurrentTab(element);
     const result = HomePageExplore.filter(
       (course) => {
-        return course.tag === value
+        return course.tag === element;
       }
-    )
+    );
     setCourse( result[0].courses );
     setCurrentCard( result[0].courses[0].heading );
 

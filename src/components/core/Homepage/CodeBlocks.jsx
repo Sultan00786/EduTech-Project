@@ -17,12 +17,14 @@ const CodeBlocks = ({
     
 }) => {
   return (
-    <div className={`flex ${position} my-20 justify-between gap-10`}>
+    <div className={`flex ${position} my-20 justify-between gap-10 px-5 `}>
 
         {/* Section 1 */}
 
         <div className=' w-[50%] flex flex-col gap-8'>
+        
             {heading}
+
             <div className=' font-bold text-richblack-300 '>
                 {subheading}
             </div>
@@ -48,11 +50,14 @@ const CodeBlocks = ({
 
         {/* Section 2 */}
 
-        <div className=' flex h-fit text-10[px] w-[100%] py-4 lg:w-[500px] '>
+        <div className=' relative flex h-fit text-10[px] w-[100%] py-4 lg:w-[500px] '>
+
+            <div className=' absolute bg-richblue-500 opacity-25 left-0 right-0 top-[2%]  rounded-md w-[100%] h-[98%] ' ></div>
+
             {/* HW --> BG gradiant */}
             
             {/* Numbers */}
-            <div className=' w-[10%] text-center flex flex-col text-richblack-400 font-inter font-bold '>
+            <div className=' static w-[10%] text-center flex flex-col text-richblack-400 font-inter font-bold '>
                 <p>1</p>
                 <p>2</p>
                 <p>3</p>
@@ -67,7 +72,7 @@ const CodeBlocks = ({
             </div>
 
             {/* Codes */}
-            <div className={ `w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} ` }>
+            <div className={ ` static w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} ` }>
                 <TypeAnimation
                     sequence={[codeblock, 8000, ""]}   // 10000 --> 10sec wait after one animation cycle complete 
                     repeat={Infinity}
@@ -83,6 +88,9 @@ const CodeBlocks = ({
 
                 />
             </div>
+
+
+            
         </div>
 
     </div>
