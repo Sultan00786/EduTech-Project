@@ -64,10 +64,12 @@ function Navbar() {
 
             {/* img logo */}
 
-            <img
-                src={logo}
-                className=' w-40 '
-            />
+            <Link to={"/"} >
+                <img
+                    src={logo}
+                    className=' w-40 '
+                />
+            </Link>
 
             {/* nav link */}
 
@@ -157,7 +159,7 @@ function Navbar() {
                     token === null &&
                     (
                         <Link to="/login" >
-                            <div className=" border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-blue-25 rounded-md transition-all duration-200 hover:scale-105  ">
+                            <div className=" border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-white  ">
                                 Log in
                             </div>
                         </Link>
@@ -168,7 +170,7 @@ function Navbar() {
                     token === null && 
                     (
                         <Link to="/signup" >
-                            <div className=" border border-richblack-700 bg-richblack-900 px-[8px] py-[5px] text-blue-25 rounded-md transition-all duration-200 hover:scale-105  " >
+                            <div className="  border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-whitess " >
                                 Sign Up
                             </div>
                         </Link>
