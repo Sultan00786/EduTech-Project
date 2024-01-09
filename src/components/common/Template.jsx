@@ -25,7 +25,7 @@ function Template( {heading, subHeading, formType, btnText} ) {
 
   return (
     <div className=' text-richblack-25 w-[100%] max-w-maxContent mx-auto '>
-        <div className=' relative w-11/12 flex flex-row mx-auto  justify-between mt-16 ' >
+        <div className=' relative w-11/12 flex flex-row mx-auto  justify-between mt-16 mb-24 ' >
             
             {/* form section */}
 
@@ -71,15 +71,15 @@ function Template( {heading, subHeading, formType, btnText} ) {
             <div className=' pl-6 ' >
                 <img
                     src={formType === "loginForm" ? loginImage : signImage}
-                    width={580}
-                    height={580}
-                    className='absolute left-[48%] '
+                    width={550}
+                    height={550}
+                    className='absolute left-[51%] top-[1%] '
                 />
                 <img
                     src={frame}
-                    width={580}
-                    height={580}
-                    className=' mt-5 ml- '
+                    width={550}
+                    height={550}
+                    className=' mt-5 '
                 />
             </div>
 
