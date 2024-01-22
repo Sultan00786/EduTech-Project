@@ -1,9 +1,11 @@
 
 const User = require("../models/User");
 const OTP = require("../models/OTP");
+const Profile = require("../models/Profile");
 const otpGenerator = require('otp-generator');
 const { json } = require("express");
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 const mailSender = require("../utils/mailSender");
 require('dotenv').config();
@@ -48,7 +50,7 @@ exports.sendOTP = async (req, res) => {
         // check unique otp or not 
         const result = await OTP.findOne({otp: otp});
         while(result){
-            opt = otpGenerator.generate(6,{
+            otp = otpGenerator.generate(6,{
                 upperCaseAlphabets: false,
                 lowerCaseAlphabets: false,
                 specialChars: false,
@@ -58,13 +60,19 @@ exports.sendOTP = async (req, res) => {
 
         // After unique otp, store that in DB
         const otpPayload = {email, otp}
-        const optBody = await OTP.create(otpPayload);
-        console.log(optBody);
+        const otpBody = await OTP.create(
+            {
+                email: email,
+                otp: otp,
+            }
+        );
+        console.log("otp body \n",otpBody);
 
         // return response successful
         return res.status(200).json({
             success: true,
             message: "OTP Sent Successfully",
+            otp: otp,
         })
 
 
@@ -142,17 +150,17 @@ exports.signUp = async (req, res) => {
 
         // find most recent OTP stored for the user
         const recentOtp = await OTP.find({email}).sort({createdAt: -1}).limit(1);
-        console.log("Recent OTP is: ", recentOtp);
+        console.log("Recent OTP is: ", recentOtp[0].otp);
 
         
         // then validation karlo OTP
-        if(recentOtp.length == 0){
+        if(!recentOtp[0].otp){
             return res.status(400).json({
                 success: false,
-                message: "OTP is not found"
+                message: "OTP is not found",
             });
         }
-        else if(otp !== recentOtp){
+        else if(otp !== recentOtp[0].otp){
             return res.status(400).json({
                 success: false,
                 message: "Invalid OTP is entred"
@@ -187,12 +195,14 @@ exports.signUp = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "User is registered Successfully",
+            user,
         })
 
     } 
     catch (error) {
 
         console.error("Error ocurred in signUP controller: ",error);
+        console.log(error)
         return res.status(500).json({
             success: false,
             message: "User cannot be registered. Please try again.",
@@ -244,16 +254,22 @@ exports.login = async (req, res) => {
             const payload = {
                 email: user.email,
                 id: user._id,
-                role: user.accountType,
+                accountType: user.accountType,
             }
-            const token = jwt.sign(payload, process.env.JWT_SECRET, {
-                expriesIn: "2hr",
-            });
+
+            console.log("Payload of token: ",payload)
+
+            const token = jwt.sign(payload, process.env.JWT_SECRET);
             user.token = token; // transfer token in user json object
             user.password = undefined;
 
             // Step: 5 --> create cookie 
-            res.cookie("token", token, option).status(200).json({
+            const Option = {
+				expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+				httpOnly: true,
+			};
+
+            res.cookie("token", token, Option).status(200).json({
                 success: true,
                 token,
                 user,
@@ -271,7 +287,7 @@ exports.login = async (req, res) => {
         console.log("Error of login Handler: ", error);
         return res.status(500).json({
             success: false,
-            message: "Login Failure, please try again",
+            message: "Login Fail, please try again",
         });
     }
 

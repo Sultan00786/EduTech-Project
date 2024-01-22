@@ -101,7 +101,7 @@ exports.updateSection = async (req, res) =>{
         //  Step: 4 --> return res
         return res.status(200).json({
             success: true,
-            message: "Section created successfully",
+            message: "Section Update successfully",
         });
         
     } catch (error) {
