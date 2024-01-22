@@ -68,7 +68,7 @@ function Template( {heading, subHeading, formType, btnText} ) {
 
             {/* image section */}
 
-            <div className=' pl-6 ' >
+            <div className=' pl-6 select-none ' >
                 <img
                     src={formType === "loginForm" ? loginImage : signImage}
                     width={550}
