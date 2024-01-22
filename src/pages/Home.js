@@ -163,9 +163,16 @@ const Home = () => {
               codeColor={"text-yellow-50"}
 
             />
+
+            <div
+              className=' mb-[500px] '
+            />
+
           </div>
 
-          <ExploreMore/>
+          <div className=' relative w-11/12 ' >
+            <ExploreMore/>
+          </div>
 
 
       </div>
