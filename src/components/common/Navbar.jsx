@@ -27,35 +27,37 @@ function Navbar() {
     }
 
     
-    const subLinks = [
-        {
-            title: "python",
-            link: "/catalog/python",
-        },
-        {
-            title: "web dev",
-            link: "/catalog/web-development"
-        }
-    ]
-    
-    // const [ subLinks, setSubLinks ] = useState([]);
-
-    // const fetchSublinks = async() => {
-    //     try {
-
-    //         const result = await apiConnector( "GET", categories.CATEGORIES_API );
-    //         console.log( "Printing Sublinks result: ", result );
-    //         setSubLinks( result.data.data );
-            
-    //     } catch (error) {
-    //         console.log( "Could Not Fetch The Category List" )
+    // const subLinks = [
+    //     {
+    //         title: "python",
+    //         link: "/catalog/python",
+    //     },
+    //     {
+    //         title: "web dev",
+    //         link: "/catalog/web-development"
     //     }
-    // }
+    // ]
+    
+    const [ subLinks, setSubLinks ] = useState([]);
 
-    // useEffect(
-    //     () => {fetchSublinks ();},
-    //     []
-    // )
+    const fetchSublinks = async() => {
+        try {
+
+            console.log( "1" );
+            const result = await apiConnector( "GET", categories.CATEGORIES_API );
+            console.log( "Printing Sublinks result: ", result );
+            setSubLinks( result.data.data );
+            console.log( "2" );
+            
+        } catch (error) {
+            console.log( "Could Not Fetch The Category List" )
+        }
+    }
+
+    useEffect(
+        () => {fetchSublinks ();},
+        []
+    )
     
 
   return (
