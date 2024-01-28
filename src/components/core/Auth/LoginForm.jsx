@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Form, Link } from 'react-router-dom'
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import CTAButton from '../Homepage/Botton';
 
-function LoginForm() {
+function LoginForm( {btnText} ) {
 
   const [isText, setIsText] = useState(false);
 
@@ -80,6 +81,12 @@ function LoginForm() {
         <Link to={"/forgetpassword"} >
           <div className=' flex flex-row-reverse text-blue-500 text-xs select-none hover:cursor-pointer hover:text-blue-400  ' >Forget Password</div>
         </Link>
+
+        <CTAButton
+            children = {btnText}
+            active = {true}
+            linkto= ""
+        />
 
       </form>
     </div>

@@ -40,10 +40,11 @@ function Template( {heading, subHeading, formType, btnText} ) {
                 {
                     accountType.map((accountType, index) => (
                         <div key={index} 
-                        onClick={()=>{
-                            changeTab(accountType);
-                        }} 
-                        className={` ${accountType === currentTab ? " bg-richblack-900 text-richblue-5" : " text-richblack-100 "} px-6 py-2 rounded-full `} >
+                            onClick={()=>{
+                                changeTab(accountType);
+                            }} 
+                            className={` ${accountType === currentTab ? " bg-richblack-900 text-richblue-5" : " text-richblack-100 "} px-6 py-2 rounded-full `} 
+                        >
                             {accountType}
                         </div>
                     ))
@@ -54,15 +55,9 @@ function Template( {heading, subHeading, formType, btnText} ) {
 
                 {
                     formType === "loginForm" ?
-                    (<LoginForm/>) :
-                    (<SignForm/>)
+                    (<LoginForm btnText = {btnText} />) :
+                    (<SignForm btnText = {btnText} />)
                 }
-
-                <CTAButton
-                    children = {btnText}
-                    active = {true}
-                    linkto= ""
-                />
 
             </div>
 

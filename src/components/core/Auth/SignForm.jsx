@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import CTAButton from '../Homepage/Botton';
 
-function SignForm() {
+function SignForm( {btnText} ) {
 
   const [isText1, setIsText1] = useState(false);
   const [isText2, setIsText2] = useState(false);
@@ -202,6 +203,18 @@ function SignForm() {
           </div>
 
         </div>
+
+
+        <button
+          type='submit'
+        >
+          <CTAButton
+              children = {btnText}
+              active = {true}
+              linkto= ""
+          />
+        </button>
+
 
       </form>
     </div>
