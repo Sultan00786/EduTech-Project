@@ -34,25 +34,6 @@ function Template( {heading, subHeading, formType, btnText} ) {
 
                 <div className=' text-richblack-100 mb-8 text-[18px]   ' > {subHeading} </div>
 
-                {/* tab for student or instructor */}
-
-                <div className=' bg-richblack-800 w-fit flex flex-row items-center rounded-full gap-1 border-b-[2px] border-richblack-700 py-1 px-1 cursor-pointer ' >
-                {
-                    accountType.map((accountType, index) => (
-                        <div key={index} 
-                            onClick={()=>{
-                                changeTab(accountType);
-                            }} 
-                            className={` ${accountType === currentTab ? " bg-richblack-900 text-richblue-5" : " text-richblack-100 "} px-6 py-2 rounded-full `} 
-                        >
-                            {accountType}
-                        </div>
-                    ))
-                }
-                </div>
-
-
-
                 {
                     formType === "loginForm" ?
                     (<LoginForm btnText = {btnText} />) :

@@ -42,12 +42,9 @@ function Navbar() {
 
     const fetchSublinks = async() => {
         try {
-
-            console.log( "1" );
             const result = await apiConnector( "GET", categories.CATEGORIES_API );
-            console.log( "Printing Sublinks result: ", result );
-            setSubLinks( result.data.data );
-            console.log( "2" );
+            // console.log( "Printing Sublinks result: ", result.data.allCategorys);
+            setSubLinks( result.data.allCategorys );
             
         } catch (error) {
             console.log( "Could Not Fetch The Category List" )
@@ -56,8 +53,7 @@ function Navbar() {
 
     useEffect(
         () => {fetchSublinks ();},
-        []
-    )
+    []);
     
 
   return (
@@ -90,9 +86,9 @@ function Navbar() {
                                                 <p>{link.title}</p>
                                                 <IoIosArrowDown className=' mt-1 text ' />
 
-                                                <div className=' invisible absolute left-[50%] top-[45%] translate-x-[-50%] translate-y-[70%] flex flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[300px] ' >
+                                                <div className=' z-10 invisible absolute left-[10%] top-[45%] translate-x-[-60%] translate-y-[30%] flex flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[300px] ' >
                                                 
-                                                    <div className=' absolute left-[50%] right-[50%] translate-x-[75%] translate-y-[-100%]
+                                                    <div className=' absolute left-[68%] translate-x-[100%] translate-y-[-100%]
                                                     h-6 w-6 rotate-45 bg-richblack-5 rounded ' >
                                                     </div>
 
@@ -101,7 +97,7 @@ function Navbar() {
                                                                 subLinks.map ( ( subLinks, index ) => {
                                                                     return (
                                                                         <Link to={`${subLinks.link}`} key={index}>
-                                                                            {subLinks.title}
+                                                                            {subLinks.name}
                                                                         </Link>
                                                                     )
                                                                 } )
@@ -158,7 +154,7 @@ function Navbar() {
                 }
 
                 {
-                    token === null &&
+                    token !== null &&
                     (
                         <Link to="/login" >
                             <div className=" border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-white  ">
@@ -169,7 +165,7 @@ function Navbar() {
                 }
 
                 {
-                    token === null && 
+                    token !== null && 
                     (
                         <Link to="/signup" >
                             <div className="  border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-whitess " >
