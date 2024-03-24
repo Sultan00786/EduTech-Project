@@ -1,6 +1,6 @@
 import React from 'react';
-import HighlightText from '../components/core/Homepage/HighlightText';
-import Botton from '../components/core/Homepage/Botton';
+import HighlightText from '../Homepage/HighlightText';
+import Botton from '../Homepage/Botton';
 
 const LearningGridArray = [
     {
