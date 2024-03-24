@@ -6,7 +6,7 @@ import Image3 from "../assets/Images/aboutus3.webp";
 import Quote from '../components/core/AboutPage/Quote';
 import FoundingStory from "../assets/Images/FoundingStory.png";
 import StackComponent from '../components/core/AboutPage/StackComponent';
-import LearningGrid from './LearningGrid';
+import LearningGrid from '../components/core/AboutPage/LearningGrid';
 
 function About() {
   return (
@@ -85,9 +85,8 @@ function About() {
         {/* Section 5 */}
         <section className=' mt-32 ' >
             <LearningGrid/>
+            <ContactFormSection/>
         </section>
-
-        {/* Section 6 --> 1:04 min ke baad */}
 
     </div>
   )
