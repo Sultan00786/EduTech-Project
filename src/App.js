@@ -10,6 +10,7 @@ import UpdatePassword from "./pages/UpdatePassword";
 import Error from "./pages/Error";
 import VerifyEmail from "./pages/VerifyEmail";
 import About from "./pages/About";
+import Dashborad from "./pages/Dashborad";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/update-password/:id" element={<UpdatePassword/>} />
           <Route path="/verify-email" element={<VerifyEmail/>} />
           <Route path="/about" element={<About/>} />
+          <Route path="/dashboard/my-profile" element={<Dashborad/>} />
           <Route path="/" />
           <Route path="*" element={<Error/>} ></Route>
         </Routes>
