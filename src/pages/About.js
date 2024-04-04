@@ -7,6 +7,8 @@ import Quote from '../components/core/AboutPage/Quote';
 import FoundingStory from "../assets/Images/FoundingStory.png";
 import StackComponent from '../components/core/AboutPage/StackComponent';
 import LearningGrid from '../components/core/AboutPage/LearningGrid';
+import ContactFormSection from '../components/core/AboutPage/ContactFormSection';
+import Footer from "../components/common/Footer";
 
 function About() {
   return (
@@ -83,10 +85,20 @@ function About() {
         <StackComponent/>
 
         {/* Section 5 */}
-        <section className=' mt-32 ' >
+        <section className=' mt-32 mb-[150px] ' >
             <LearningGrid/>
-            <ContactFormSection/>
+            <div className='w-full' >
+                <ContactFormSection/>
+            </div>
         </section>
+
+        {/* Section 6 */}
+        <section>
+            <h1>Review From other learners</h1>
+            {/* <ReviewSlider/> */}
+        </section>
+
+        <Footer/>
 
     </div>
   )
