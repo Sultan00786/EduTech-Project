@@ -7,10 +7,10 @@ export const apiConnector = ( method, url, bodyData, header, params ) => {
 
         method: `${method}`,
         url: `${url}`,
-        bodyData: bodyData ? bodyData : null,
+        data: bodyData ? bodyData : null,
         headers: header ? header : null,
         params : params ? params : null,
 
-    })
+    });
 }
 

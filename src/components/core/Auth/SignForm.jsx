@@ -1,8 +1,16 @@
 import React, { useState } from 'react'
 import { IoIosArrowDown } from "react-icons/io";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import CTAButton from '../Homepage/Botton';
+import Tap from '../../common/Tap';
+import {ACCOUNT_TYPE} from "../../../utils/constants";
+import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setSignupData } from '../../../slices/authSlice';
+import { sendOtp } from '../../../services/operations/authAPI';
 
-function SignForm() {
+function SignForm( {btnText} ) {
 
   const [isText1, setIsText1] = useState(false);
   const [isText2, setIsText2] = useState(false);
@@ -10,12 +18,14 @@ function SignForm() {
   function changeViwe1 (){
     setIsText1( !isText1 );
   }
-
   function changeViwe2 (){
     setIsText2( !isText2 );
   }
-
-
+  
+  
+  // Student or Instructor
+  const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT);
+  // form data
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -24,6 +34,19 @@ function SignForm() {
     password: "",
     confirmPassword: "",
   });
+
+  const tabData = [
+    {
+      id: 1,
+      tabName: "Student",
+      type: ACCOUNT_TYPE.STUDENT,
+    },
+    {
+      id: 2,
+      tabName: "Instructor",
+      type: ACCOUNT_TYPE.INSTRUCTOR,
+    },
+  ]
 
   const changeFormData = (event) =>
   {
@@ -37,10 +60,48 @@ function SignForm() {
     );
   }
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const submitHandler = (event) => {
+
+    event.preventDefault();
+
+    if(formData.password !== formData.confirmPassword){
+      toast.error("Password do not Match");
+      return;
+    }
+
+    // setting sign up data to state
+    // to be used after otp verification
+    const signupData = {
+      ...formData,
+      accountType: accountType,
+    }
+    dispatch( setSignupData(signupData) );
+    
+    // send OTP to user for verification
+    dispatch( sendOtp(formData.email, navigate) );      // After completion of opt api operation --> sing up operation take place
+
+    // reset
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
+    setAccountType( ACCOUNT_TYPE.STUDENT );
+
+  }
+
 
   return (
     <div className=' mt-7 text-richblack-25 text-[16px] select-none ' >
-      <form className='flex flex-col gap-4 ' >
+
+      <Tap tabData={tabData} field={accountType} setField={setAccountType} />
+
+      <form onSubmit={submitHandler} className='flex flex-col gap-4 ' >
 
         <div className=' w-full flex flex-row gap-4 justify-between '>
         
@@ -202,6 +263,18 @@ function SignForm() {
           </div>
 
         </div>
+
+
+        <button
+          onClick={submitHandler}
+        >
+          <CTAButton
+              children = {btnText}
+              active = {true}
+              linkto= ""
+          />
+        </button>
+
 
       </form>
     </div>

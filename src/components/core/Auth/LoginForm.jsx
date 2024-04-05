@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
-import { Form, Link } from 'react-router-dom'
+import { Form, Link, useNavigate } from 'react-router-dom'
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import CTAButton from '../Homepage/Botton';
+import { apiConnector } from '../../../services/apiconnector';
+import { user } from '../../../services/api';
+import { useDispatch } from 'react-redux';
+import { login } from '../../../services/operations/authAPI';
 
-function LoginForm() {
+function LoginForm( {btnText} ) {
 
   const [isText, setIsText] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function changeViwe (){
     setIsText( !isText );
@@ -16,6 +23,8 @@ function LoginForm() {
     password: "",
 
   } );
+
+  const { email, password } = formData;
 
   function changeFormData(event)
   {
@@ -29,7 +38,10 @@ function LoginForm() {
      )
   }
 
-  console.log(formData.password);
+  const loginHandler = async (event) =>{
+    event.preventDefault();
+    dispatch( login(email, password, navigate) );
+  }
 
   return (
     <div className=' mt-5 text-richblack-25 select-none ' >
@@ -77,9 +89,17 @@ function LoginForm() {
           
         </div>
 
-        <Link to={"/forgetpassword"} >
+        <Link to={"/forgotpassword"} >
           <div className=' flex flex-row-reverse text-blue-500 text-xs select-none hover:cursor-pointer hover:text-blue-400  ' >Forget Password</div>
         </Link>
+
+        <button onClick={loginHandler} >
+          <CTAButton
+              children = {btnText}
+              active = {true}
+              linkto= ""
+          />
+        </button>
 
       </form>
     </div>

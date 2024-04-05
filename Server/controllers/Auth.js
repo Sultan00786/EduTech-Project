@@ -201,11 +201,11 @@ exports.signUp = async (req, res) => {
     } 
     catch (error) {
 
-        console.error("Error ocurred in signUP controller: ",error);
+        console.error("Error ocurred in signUP controller: ",error.response.data);
         console.log(error)
         return res.status(500).json({
             success: false,
-            message: "User cannot be registered. Please try again.",
+            message: "Error in SignUp Controller",
         })
         
     }
