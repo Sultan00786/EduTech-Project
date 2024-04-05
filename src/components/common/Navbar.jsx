@@ -16,7 +16,6 @@ import { IoIosArrowDown } from "react-icons/io";
 function Navbar() {
 
     const location = useLocation();
-
     
     const {token} = useSelector ( (state) => state.auth );
     const {user} = useSelector ( (state) => state.profile );
@@ -25,7 +24,6 @@ function Navbar() {
     const matchPath = (path) => {
         return path === location.pathname ? true : false;
     }
-
     
     // const subLinks = [
     //     {
