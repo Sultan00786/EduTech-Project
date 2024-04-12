@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { logout } from '../../../services/operations/authAPI';
 import { useSelector, useDispatch } from 'react-redux';
 import SidebarLink from './SidebarLink';
@@ -13,7 +13,16 @@ function Sidebar() {
   const {user, loading: profileLoading} = useSelector( (state)=> state.profile );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [ confirmationModal, setConfirmationModal ] = useSelector(null);
+  const [ confirmationModal, setConfirmationModal ] = useState(null);
+
+  const data =  {
+    text1: "Are you sure?",
+    text2: "You wiil be logged out from your account?",
+    btn1Text: "Logout", 
+    btn2Text: "Cancel",
+    btn1Handler: () => dispatch(logout(navigate)),
+    btn2Handler: () => setConfirmationModal()
+  }
 
 
 
@@ -25,13 +34,17 @@ function Sidebar() {
     )
   }
 
+  function confirmationHandler () {
+    setConfirmationModal(data);
+  }
+
   return (
-    <div>
+    <div className='' >
         <div className='flex min-w-[222px] flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblue-800 ' >
           <div className='flex flex-col' >
             {
               sidebarLinks.map( (link)=> {
-                if( link.type && (user?.accountType !== link.type) ) return null;
+                if( link.type && (user?.accountType != link.type) ) return null;
                 return(
                   <SidebarLink 
                     link={link}
@@ -57,14 +70,7 @@ function Sidebar() {
 
             {/* Logout */}
             <button
-              onClick={ () => setConfirmationModal({
-                  text1: "Are you sure?",
-                  text2: "You wiil be logged out from your account?",
-                  btn1Text: "Logout", 
-                  btn2Text: "Cancel",
-                  btn1Handler: () => dispatch(logout(navigate)),
-                  btn2Handler: () => setConfirmationModal(null)
-                })}
+              onClick={confirmationHandler}
                 className='text-sm font-medium text-richblack-300'
             >
               <div className='flex items-center gap-x-2' >
