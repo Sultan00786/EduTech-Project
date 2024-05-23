@@ -25,45 +25,45 @@ function App() {
         <Route
           path="/login"
           element={
-            <OpenRoute>
+            <OpenRoute> 
               <Login />
-            </OpenRoute>
+            </OpenRoute> 
           }
         />
 
         <Route
           path="/signup"
           element={
-            <OpenRoute>
+            <OpenRoute> 
               <Signup />
-            </OpenRoute>
+            </OpenRoute> 
           }
         />
 
         <Route
           path="/forgotpassword"
           element={
-            <OpenRoute>
+            <OpenRoute> 
               <ForgotPassword />
-            </OpenRoute>
+            </OpenRoute> 
           }
         />
 
         <Route
           path="/update-password/:id"
           element={
-            <OpenRoute>
+            <OpenRoute> 
               <UpdatePassword />
-            </OpenRoute>
+            </OpenRoute> 
           }
         />
 
         <Route
           path="/verify-email"
           element={
-            <OpenRoute>
+            <OpenRoute> 
               <VerifyEmail />
-            </OpenRoute>
+            </OpenRoute> 
           }
         />
 
@@ -72,12 +72,12 @@ function App() {
 
         <Route
           element={
-            <PrivateRout>
+            <PrivateRout> 
               <Dashborad />
-            </PrivateRout>
+            </PrivateRout> 
           }
         >
-          <Route path="/dashboard/my-profile" element={<MyProfile />} />
+          <Route path="dashboard/my-profile" element={<MyProfile />} />
         </Route>
 
         <Route path="*" element={<Error />}></Route>

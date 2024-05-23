@@ -146,7 +146,7 @@ function Navbar() {
                 }
 
                 {
-                    (
+                    token === null && (
                         <Link to="/login" >
                             <div className=" border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-white  ">
                                 Log in
@@ -156,7 +156,7 @@ function Navbar() {
                 }
 
                 {
-                    (
+                    token === null && (
                         <Link to="/signup" >
                             <div className="  border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-whitess " >
                                 Sign Up
@@ -165,9 +165,8 @@ function Navbar() {
                     )
                 }
 
-                {/* token !== null && <ProfileDropDown/> */}
                 {
-                    <ProfileDropDown/>
+                    token !== null && <ProfileDropDown/>
                 }
 
             </div>

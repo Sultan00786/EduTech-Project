@@ -1,28 +1,22 @@
-import React from 'react'
-import Iconbtn from './Iconbtn';
+import React from "react";
+import Iconbtn from "./Iconbtn";
 
-function ConfirmationModal({modalData}) {
+function ConfirmationModal({ modalData }) {
   return (
-    <div>
+    <div className=" text-white ">
+      <div>
+        <p>{modalData.text1}</p>
+        <p>{modalData.text2}</p>
         <div>
-            <p>
-                {modalData.text1}
-            </p>
-            <p>
-                {modalData.text2}
-            </p>
-            <div>
-                <Iconbtn
-                    onClick={modalData?.btn1Handler}
-                    text={modalData?.btn1Text}
-                />
-                <button onClick={modalData.btn2Handler} >
-                    {modalData?.btn2Text}
-                </button>
-            </div>
+          <Iconbtn
+            onClick={modalData?.btn1Handler}
+            text={modalData?.btn1Text}
+          />
+          <button onClick={modalData.btn2Handler}>{modalData?.btn2Text}</button>
         </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default ConfirmationModal
+export default ConfirmationModal;
