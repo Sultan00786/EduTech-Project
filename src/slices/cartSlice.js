@@ -14,7 +14,7 @@ const initialState = {
 }
 
 const cardSlice = createSlice ({
-    name: "profile",
+    name: "cart",
     initialState: initialState,
     reducers: {
         setTotalItems( state, value ) {
