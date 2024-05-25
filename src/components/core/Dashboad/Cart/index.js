@@ -6,7 +6,7 @@ import RenderTotalAmount from "./RenderTotalAmount";
 function Cart() {
   const { total, totalItems } = useSelector((state) => state.cart);
   return (
-    <div>
+    <div className=" text-white">
       <h1>Your Cart</h1>
       <p>{totalItems} Courses in Cart</p>
 
