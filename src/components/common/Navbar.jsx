@@ -4,7 +4,7 @@ import {NavbarLinks} from "../../data/navbar-links";
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { HiOutlineShoppingCart } from "react-icons/hi";
+import { HiOutlineShoppingCart, HiSearch } from "react-icons/hi";
 import ProfileDropDown from '../core/Auth/ProfileDropDown';
 import { apiConnector } from '../../services/apiconnector';
 import { categories } from '../../services/api';
@@ -25,16 +25,6 @@ function Navbar() {
         return path === location.pathname ? true : false;
     }
     
-    // const subLinks = [
-    //     {
-    //         title: "python",
-    //         link: "/catalog/python",
-    //     },
-    //     {
-    //         title: "web dev",
-    //         link: "/catalog/web-development"
-    //     }
-    // ]
     
     const [ subLinks, setSubLinks ] = useState([]);
 
@@ -133,27 +123,30 @@ function Navbar() {
 
             {/* Login/SignUp/Dashboard */}
 
-            <div className=' flex gap-x-4 items-center  ' >
+            <div className=' flex gap-x-4 items-center  ' > {/*&&*/}
                 {
-                    user && user.accountType != "Instructor" && 
                     (
-                        <Link to="/dashboard/cart" className='relative' >
-                            <HiOutlineShoppingCart/>
-                            {
-                                totalItems > 0 && 
-                                (
-                                    <span>
-                                        {totalItems}
-                                    </span>
-                                )
-                            }
-                        </Link>
+                        <div className=' flex gap-x-3 text-2xl text-richblack-200 ' >
+                            <span className=' cursor-pointer ' >
+                                <HiSearch/>
+                            </span>
+                            <Link to="/dashboard/cart" className='relative ' >
+                                <HiOutlineShoppingCart/>
+                                {
+                                    totalItems > 0 && 
+                                    (
+                                        <span>
+                                            {totalItems}
+                                        </span>
+                                    )
+                                }
+                            </Link>
+                        </div>
                     )
                 }
 
                 {
-                    token !== null &&
-                    (
+                    token === null && (
                         <Link to="/login" >
                             <div className=" border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-white  ">
                                 Log in
@@ -163,8 +156,7 @@ function Navbar() {
                 }
 
                 {
-                    token !== null && 
-                    (
+                    token === null && (
                         <Link to="/signup" >
                             <div className="  border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-whitess " >
                                 Sign Up

@@ -121,6 +121,7 @@ export function login( email, password, navigate ){
 
             // also stor toke in local storage as JSON format
             localStorage.setItem( "token", JSON.stringify(response.data.user.token) );
+            localStorage.setItem( "user", JSON.stringify(response.data.user) );
 
             // After Login Done we will have to navigate no profile dashboard
             navigate("/dashboard/my-profile");
