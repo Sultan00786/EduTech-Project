@@ -31,7 +31,7 @@ function RequirementFied({
 
   return (
     <>
-      <div>
+      <div className="flex flex-col gap-1">
         <label className="lable-style" htmlFor={name}>
           {" "}
           {label} <sup>*</sup>{" "}
@@ -45,18 +45,23 @@ function RequirementFied({
           className="form-style"
         />
 
-        <button
-          type="button"
-          onClick={handleAddRequirement}
-          className=" font-semibold text-yellow-50"
-        >
-          Add
-        </button>
+        <div>
+          <button
+            type="button"
+            onClick={handleAddRequirement}
+            className=" font-semibold text-yellow-50"
+          >
+            Add
+          </button>
+        </div>
 
         {requirementList.length > 0 && (
           <ul>
             {requirementList.map((item, index) => (
-              <li key={index} className=" flex items-center text-richblack-5">
+              <li
+                key={index}
+                className=" flex items-center gap-1 text-richblack-5"
+              >
                 <span>{item}</span>
                 <button
                   type="button"

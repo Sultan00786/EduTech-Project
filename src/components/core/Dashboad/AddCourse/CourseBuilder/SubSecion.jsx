@@ -106,69 +106,82 @@ function SubSecion({
     setLoading(false);
   };
 
+  const handlerPrevent = (event) => {
+    console.log("Helo");
+    event.preventDefault();
+  };
+
   return (
-    <div>
-      <div>
-        <p>
-          {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
-        </p>
-        <button onClick={() => (!loading ? setModalData(null) : {})}>
-          <RxCross1 />
-        </button>
-      </div>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="lectureVideo">
-          <Upload
-            id="lectureVideo"
-            name="lectureVideo"
-            lable="Lecture Video"
-            register={register}
-            setValue={setValue}
-            errors={errors}
-            video={true}
-            viewData={view ? modalData.videoUrl : null}
-            editData={edit ? modalData.videoUrl : null}
-          />
-        </label>
-
-        <div>
-          <label htmlFor="lectureTitle" className="lable-style">
-            Lecture Title
-          </label>
-          <input
-            id="lectureTitle"
-            name="lectureTitle"
-            placeholder="Enter Lecture Title"
-            {...register("lectureTitle", { required: true })}
-            className=" w-full min-h-[130px] form-style"
-          />
-          {errors.lectureTitle && <span>Lecture Title is required</span>}
+    <div className=" fixed inset-0 scroll-smooth place-items-center overflow-auto w-screen z-[200] bg-white bg-opacity-10 backdrop-blur-sm">
+      <div className=" max-w-[700px] w-11/12 mx-auto rounded-lg border border-richblack-400 bg-richblack-800">
+        <div className=" bg-richblack-700 flex items-center justify-between p-3">
+          <p className=" text-richblue-5 font-bold text-2xl">
+            {view && "Viewing"} {add && "Adding"} {edit && "Editing"} Lecture
+          </p>
+          <button
+            className=" text-richblue-5 font-bold"
+            onClick={() => (!loading ? setModalData(null) : {})}
+          >
+            <RxCross1 />
+          </button>
         </div>
 
-        <div>
-          <label htmlFor="lectureDesc" className="lable-style">
-            Lecture Description
-          </label>
-          <textarea
-            id="lectureDesc"
-            name="lectureDesc"
-            placeholder="Enter Lecture Description"
-            {...register("lectureDesc", { required: true })}
-            className=" w-full min-h-[130px] form-style"
-          />
-          {errors.lectureDesc && <span>Lecture Description is required</span>}
-        </div>
-
-        {!view && (
-          <div>
-            <Iconbtn
-              text={loading ? "Loading..." : edit ? "Save Change" : "Save"}
-              type="submit"
+        <form
+          className=" p-14 flex flex-col gap-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <label htmlFor="lectureVideo">
+            <Upload
+              id="lectureVideo"
+              name="lectureVideo"
+              label={"Lecture Video"}
+              register={register}
+              setValue={setValue}
+              errors={errors}
+              video={true}
+              viewData={view ? modalData.videoUrl : null}
+              editData={edit ? modalData.videoUrl : null}
             />
+          </label>
+
+          <div>
+            <label htmlFor="lectureTitle" className="lable-style">
+              Lecture Title
+            </label>
+            <input
+              id="lectureTitle"
+              name="lectureTitle"
+              placeholder="Enter Lecture Title"
+              {...register("lectureTitle", { required: true })}
+              className=" w-full form-style"
+            />
+            {errors.lectureTitle && <span>Lecture Title is required</span>}
           </div>
-        )}
-      </form>
+
+          <div>
+            <label htmlFor="lectureDesc" className="lable-style">
+              Lecture Description
+            </label>
+            <textarea
+              id="lectureDesc"
+              name="lectureDesc"
+              placeholder="Enter Lecture Description"
+              {...register("lectureDesc", { required: true })}
+              className=" w-full min-h-[130px] form-style"
+            />
+            {errors.lectureDesc && <span>Lecture Description is required</span>}
+          </div>
+
+          {!view && (
+            <div>
+              <Iconbtn
+                text={loading ? "Loading..." : edit ? "Save Change" : "Save"}
+                type="submit"
+              />
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

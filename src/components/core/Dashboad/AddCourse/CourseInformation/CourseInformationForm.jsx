@@ -12,6 +12,8 @@ import { setCourse, setStep } from "../../../../../slices/courseSlice";
 import Iconbtn from "../../../../common/Iconbtn";
 import toast from "react-hot-toast";
 import { COURSE_STASTUS } from "../../../../../utils/constants";
+import ChipInput from "./ChipInput";
+import Upload from "../CourseBuilder/Upload";
 
 function CourseInformationForm() {
   const {
@@ -28,6 +30,8 @@ function CourseInformationForm() {
 
   const [loading, setLoading] = useState();
   const [courseCategories, setCourseCategories] = useState([]);
+
+  const [tagList, setTagList] = useState([]);
 
   useEffect(() => {
     const getCategories = async () => {
@@ -56,8 +60,8 @@ function CourseInformationForm() {
       currentVal.courseTitle !== course.courseName ||
       currentVal.courseShortDesc !== course.courseDescription ||
       currentVal.coursePrice !== course.price ||
-      // currentVal.courseTags !== course.tag ||
-      // currentVal.courseImage !== course.thumbnail ||
+      currentVal.courseTags !== course.tag ||
+      currentVal.courseImage !== course.thumbnail ||
       currentVal.courseBenefits !== course.whatYouWillLearn ||
       currentVal.courseCategory._id !== course.category._id ||
       currentVal.courseRequirements !== course.instruction
@@ -67,7 +71,8 @@ function CourseInformationForm() {
   }
 
   const onSubmit = async (data) => {
-    console.log("Edit Course >> ", editCourse);
+    console.log("data Course >> ", data);
+
     if (editCourse) {
       if (isFormUpdate) {
         const currentValues = getValues();
@@ -92,6 +97,10 @@ function CourseInformationForm() {
           formData.append("whatYouWillLearn", data.courseBenefits);
         }
 
+        if (currentValues.courseImage !== course.thumbnail) {
+          formData.append("thumbnail", data.courseImage);
+        }
+
         if (currentValues.courseCategory !== course.category) {
           formData.append("category", data.courseCategory);
         }
@@ -103,8 +112,13 @@ function CourseInformationForm() {
           );
         }
 
-        console.log("Values >> ", currentValues);
-        console.log("Course >> ", course);
+        const jsonTags1 = JSON.stringify(tagList);
+        if (currentValues?.courseTags !== course?.tag) {
+          formData.append("tag", JSON.stringify(jsonTags1));
+        }
+
+        // console.log("Values >> ", currentValues);
+        // console.log("Course >> ", course);
 
         setLoading(true);
         const result = await editCourseDetails(formData, token);
@@ -128,8 +142,12 @@ function CourseInformationForm() {
     formData.append("category", data.courseCategory);
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("status", COURSE_STASTUS.DRAFT);
+    formData.append("thumbnail", data.courseImage);
 
-    console.log("Hellow", step);
+    const jsonTags = JSON.stringify(tagList);
+    formData.append("courseTags", jsonTags);
+
+    console.log("thumbnail ?? ", data.courseImage);
 
     setLoading(true);
     const result = await addCourseDetails(formData, token);
@@ -137,7 +155,6 @@ function CourseInformationForm() {
     if (result) {
       dispatch(setStep(2));
       dispatch(setCourse(result));
-      console.log(step);
     }
     setLoading(false);
   };
@@ -146,7 +163,7 @@ function CourseInformationForm() {
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className=" rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-8"
+        className=" flex flex-col gap space-y-8"
       >
         <div>
           <label htmlFor="courseTitle" className="lable-style">
@@ -162,7 +179,7 @@ function CourseInformationForm() {
           {errors.courseTitle && <span>Course Title is required</span>}
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
           <label htmlFor="courseShortDesc" className="lable-style">
             Course Short Description
           </label>
@@ -178,7 +195,7 @@ function CourseInformationForm() {
           )}
         </div>
 
-        <div className=" relative flex-col">
+        <div className=" relative flex flex-col gap-1">
           <label htmlFor="coursePrice" className="lable-style">
             Course Price
             <sup className=" text-pink-400">*</sup>
@@ -197,7 +214,7 @@ function CourseInformationForm() {
           <HiOutlineCurrencyRupee className=" absolute top-1/2 left-2 text-richblack-400 text-2xl" />
         </div>
 
-        <div className="">
+        <div className="flex flex-col gap-1 ">
           <label htmlFor="courseCategory" className="lable-style">
             Course Category
           </label>
@@ -218,7 +235,7 @@ function CourseInformationForm() {
           </select>
         </div>
 
-        {/* <ChipInput
+        <ChipInput
           label="Tag"
           name="courseTags"
           placeholder="Enter tags and press enter"
@@ -226,13 +243,18 @@ function CourseInformationForm() {
           errors={errors}
           setValue={setValue}
           getValues={getValues}
-        /> */}
+          tagList={tagList}
+          setTagList={setTagList}
+        />
 
-        {/* <Upload
-          name
-        /> */}
+        <Upload
+          name="courseImage"
+          label="Course Thumbnail"
+          setValue={setValue}
+          errors={errors}
+        />
 
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
           <label htmlFor="courseBenefits" className="lable-style">
             Benefifts of the course
           </label>
@@ -267,10 +289,12 @@ function CourseInformationForm() {
             </button>
           )}
 
-          <Iconbtn
-            type={"submit"}
-            text={!editCourse ? "Next" : "Save Changes"}
-          />
+          <div className="flex items-end justify-end w-full">
+            <Iconbtn
+              type={"submit"}
+              text={!editCourse ? "Next" : "Save Changes"}
+            />
+          </div>
         </div>
       </form>
     </div>

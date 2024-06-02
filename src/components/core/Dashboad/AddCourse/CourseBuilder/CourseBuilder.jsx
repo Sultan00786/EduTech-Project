@@ -113,7 +113,6 @@ function CourseBuilder() {
 
   return (
     <div>
-      <p>Course Builder</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Label */}
         <div className="flex flex-col">
@@ -150,20 +149,26 @@ function CourseBuilder() {
         </div>
       </form>
 
-      {course?.courseContent?.length > 0 && (
-        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
-      )}
+      <div className="">
+        {course?.courseContent?.length > 0 && (
+          <NestedView
+            handleChangeEditSectionName={handleChangeEditSectionName}
+          />
+        )}
+      </div>
 
       <div className="flex justify-end gap-x-3">
         <button
-          className=" rounded-md cursor-pointer flex items-center"
+          className=" text-richblack-5 bg-richblack-500 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold "
           onClick={goToBack}
         >
           Back
         </button>
-        <Iconbtn text="Next" onClick={goToNext}>
-          <FaRegArrowAltCircleRight />
-        </Iconbtn>
+        <Iconbtn
+          customClasses="flex flex-row items-center gap-2"
+          text="Next"
+          onClick={goToNext}
+        ></Iconbtn>
       </div>
     </div>
   );
