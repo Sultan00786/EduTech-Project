@@ -14,8 +14,18 @@ import Dashborad from "./pages/Dashborad";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 import PrivateRout from "./components/core/Auth/PrivateRout";
 import MyProfile from "./components/core/Dashboad/MyProfile";
+import Setting from "./components/core/Dashboad/Setting";
+import EnrolledCourses from "./components/core/Dashboad/EnrolledCourses";
+import Cart from "./components/core/Dashboad/Cart";
+import { ACCOUNT_TYPE } from "./utils/constants";
+import { useSelector } from "react-redux";
+import AddCourse from "./components/core/Dashboad/AddCourse";
+import ContactUs from "./pages/ContactUs";
+import Mycourse from "./components/core/Dashboad/Mycourse";
+import EditCourse from "./components/core/Dashboad/MyCourses/EditCourse";
 
 function App() {
+  const { user } = useSelector((state) => state.profile);
   return (
     <div className=" w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
@@ -25,59 +35,81 @@ function App() {
         <Route
           path="/login"
           element={
-            <OpenRoute> 
+            <OpenRoute>
               <Login />
-            </OpenRoute> 
+            </OpenRoute>
           }
         />
 
         <Route
           path="/signup"
           element={
-            <OpenRoute> 
+            <OpenRoute>
               <Signup />
-            </OpenRoute> 
+            </OpenRoute>
           }
         />
 
         <Route
           path="/forgotpassword"
           element={
-            <OpenRoute> 
+            <OpenRoute>
               <ForgotPassword />
-            </OpenRoute> 
+            </OpenRoute>
           }
         />
 
         <Route
           path="/update-password/:id"
           element={
-            <OpenRoute> 
+            <OpenRoute>
               <UpdatePassword />
-            </OpenRoute> 
+            </OpenRoute>
           }
         />
 
         <Route
           path="/verify-email"
           element={
-            <OpenRoute> 
+            <OpenRoute>
               <VerifyEmail />
-            </OpenRoute> 
+            </OpenRoute>
           }
         />
 
         <Route path="/about" element={<About />} />
-        {/* <Route path="/contact" element={<Contact/>} /> */}
+        <Route path="/contact" element={<ContactUs />} />
 
         <Route
           element={
-            <PrivateRout> 
+            <PrivateRout>
               <Dashborad />
-            </PrivateRout> 
+            </PrivateRout>
           }
         >
           <Route path="dashboard/my-profile" element={<MyProfile />} />
+          <Route path="dashboard/settings" element={<Setting />} />
+
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="dashboard/enrolled-courses"
+                element={<EnrolledCourses />}
+              />
+              <Route path="dashboard/cart" element={<Cart />} />
+            </>
+          )}
+
+          {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+            <>
+              <Route path="dashboard/add-course" element={<AddCourse />} />
+              <Route path="dashboard/my-courses" element={<Mycourse />} />
+              <Route
+                path="dashboard/edit-course/:courseId"
+                element={<EditCourse />}
+              />
+            </>
+          )}
         </Route>
 
         <Route path="*" element={<Error />}></Route>
