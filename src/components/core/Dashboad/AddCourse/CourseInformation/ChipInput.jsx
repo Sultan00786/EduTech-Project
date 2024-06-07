@@ -27,7 +27,7 @@ function ChipInput({
   };
 
   const handlerDeleteTag = (data) => {
-    console.log(data);
+    // console.log(data);
     const filterTag = tagList.filter((tag) => tag !== data);
     setTagList(filterTag);
   };

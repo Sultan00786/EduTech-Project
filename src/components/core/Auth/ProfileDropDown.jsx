@@ -7,8 +7,7 @@ import { logout } from "../../../services/operations/authAPI";
 function ProfileDropDown() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.profile);
-  console.log("user = ", user?.image);
+  const { user, image } = useSelector((state) => state.profile);
 
   const [showMenue, setShowMenue] = useState(false);
 
@@ -19,7 +18,11 @@ function ProfileDropDown() {
       }}
       className=" relative flex items-center gap-1  "
     >
-      <img width={27} className=" rounded-full " src={user?.image} />
+      <img
+        width={27}
+        className="aspect-square rounded-full object-cover"
+        src={image ? image : user.image}
+      />
 
       <div className=" text-richblack-200 font-medium cursor-pointer ">
         <FaChevronDown />

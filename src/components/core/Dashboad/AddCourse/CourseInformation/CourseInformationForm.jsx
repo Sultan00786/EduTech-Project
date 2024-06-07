@@ -25,7 +25,7 @@ function CourseInformationForm() {
   } = useForm();
 
   const dispatch = useDispatch();
-  const { course, editCourse, step } = useSelector((state) => state.course);
+  const { course, editCourse } = useSelector((state) => state.course);
   const { token } = useSelector((state) => state.auth);
 
   const [loading, setLoading] = useState();
@@ -42,8 +42,9 @@ function CourseInformationForm() {
     };
     getCategories();
     if (editCourse) {
+      // console.log("Course edit >> ", course);
       setValue("courseTitle", course.courseName);
-      setValue("courseShortDesc", course.courseDescription);
+      setValue("courseShortDesc", course.courseDiscription);
       setValue("coursePrice", course.price);
       setValue("courseTags", course.tag);
       setValue("courseBenefits", course.whatYouWillLearn);
@@ -55,7 +56,7 @@ function CourseInformationForm() {
 
   function isFormUpdate() {
     const currentVal = getValues();
-    console.log("Hellow ... ");
+    // console.log("Hellow ... ");
     if (
       currentVal.courseTitle !== course.courseName ||
       currentVal.courseShortDesc !== course.courseDescription ||
@@ -71,7 +72,7 @@ function CourseInformationForm() {
   }
 
   const onSubmit = async (data) => {
-    console.log("data Course >> ", data);
+    // console.log("data Course >> ", data);
 
     if (editCourse) {
       if (isFormUpdate) {
@@ -124,6 +125,8 @@ function CourseInformationForm() {
         const result = await editCourseDetails(formData, token);
         setLoading(false);
 
+        // console.log("result", result);
+
         if (result) {
           dispatch(setStep(2));
           dispatch(setCourse(result));
@@ -147,11 +150,11 @@ function CourseInformationForm() {
     const jsonTags = JSON.stringify(tagList);
     formData.append("courseTags", jsonTags);
 
-    console.log("thumbnail ?? ", data.courseImage);
+    // console.log("thumbnail ?? ", data.courseImage);
 
     setLoading(true);
     const result = await addCourseDetails(formData, token);
-    console.log("Result: .. ", result);
+    // console.log("Result: .. ", result);
     if (result) {
       dispatch(setStep(2));
       dispatch(setCourse(result));
@@ -283,7 +286,7 @@ function CourseInformationForm() {
           {editCourse && (
             <button
               onClick={() => dispatch(setStep(2))}
-              className="flex items-center gap-x-2 bg-richblack-300"
+              className=" text-richblack-5 bg-richblack-500 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold "
             >
               Continue Without Saving
             </button>

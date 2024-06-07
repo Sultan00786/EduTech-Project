@@ -18,12 +18,12 @@ body {
   display: inline-block;
   position: relative;
   border: 3px solid;
-  border-color: #FFF #FFF transparent;
+  border-color: #fff #fff transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
 .loader::after {
-  content: '';  
+  content: "";
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -32,7 +32,7 @@ body {
   bottom: 0;
   margin: auto;
   border: 3px solid;
-  border-color: transparent #FF3D00 #FF3D00;
+  border-color: transparent #ff3d00 #ff3d00;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -47,8 +47,8 @@ body {
   100% {
     transform: rotate(360deg);
   }
-} 
-    
+}
+
 @keyframes rotationBack {
   0% {
     transform: rotate(0deg);
@@ -57,4 +57,10 @@ body {
     transform: rotate(-360deg);
   }
 }
-    
+
+.lable-style {
+  @apply text-[14px] text-richblack-5;
+}
+.form-style {
+  @apply rounded-lg bg-richblack-700 p-3 text-[16px] leading-[24px] text-richblack-5 shadow-[0_1px_0_0] shadow-white/50 placeholder:text-richblack-400 focus:outline-none;
+}

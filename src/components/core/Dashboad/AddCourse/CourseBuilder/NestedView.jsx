@@ -30,7 +30,7 @@ function NestedView({ handleChangeEditSectionName }) {
       courseId: course._id,
       token,
     });
-    console.log("result >> ", result);
+    // console.log("result >> ", result);
     if (result) dispatch(setCourse(result));
     setConfirmationModal(null);
   }

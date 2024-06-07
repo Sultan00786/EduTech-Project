@@ -41,7 +41,7 @@ function CourseBuilder() {
   };
 
   const goToNext = () => {
-    console.log(course);
+    // console.log(course);
 
     if (course.courseContent.length === 0) {
       toast.error("Please add one atleast one Section");
@@ -67,7 +67,7 @@ function CourseBuilder() {
 
     if (editSectionName) {
       // we are editing the section name
-      console.log("editSectionName == ", editSectionName);
+      // console.log("editSectionName == ", editSectionName);
       result = await updateSection(
         {
           sectionName: data.sectionName,
@@ -86,7 +86,7 @@ function CourseBuilder() {
       );
     }
 
-    console.log("result ... ", result);
+    // console.log("result ... ", result);
 
     // update value
     if (result) {
@@ -105,7 +105,6 @@ function CourseBuilder() {
       return;
     }
 
-    console.log("mai aa aya ");
 
     setEditSectionName(sectionId);
     setValue("sectionName", sectionName);

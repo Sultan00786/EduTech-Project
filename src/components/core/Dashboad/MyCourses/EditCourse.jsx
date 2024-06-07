@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import RenderSteps from "../AddCourse/RenderSteps";
 import { getFullDetailsOfCourse } from "../../../../services/operations/courseDetailsAPI";
-import { setCourse, setEditCourse } from "../../../../slices/courseSlice";
+import {
+  setCourse,
+  setEditCourse,
+  setStep,
+} from "../../../../slices/courseSlice";
 
 function EditCourse() {
   const dispatch = useDispatch();
@@ -13,6 +17,7 @@ function EditCourse() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    dispatch(setStep(1));
     async function getDetailsCourse() {
       setLoading(true);
       const result = await getFullDetailsOfCourse(courseId, token);
@@ -31,7 +36,7 @@ function EditCourse() {
   return (
     <div className=" text-white">
       <h1>Edit Course</h1>
-      <div> {course ? <RenderSteps /> : <p>No course found </p>} </div>
+      <div> {course ? <RenderSteps /> : <p>No course found 0` `</p>} </div>
     </div>
   );
 }

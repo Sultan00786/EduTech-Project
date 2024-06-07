@@ -84,7 +84,7 @@ function SubSecion({
       return;
     }
 
-    console.log("modalData >> ", data);
+    // console.log("modalData >> ", data);
 
     // subsection create kardo
     const formData = new FormData();
@@ -96,7 +96,7 @@ function SubSecion({
 
     setLoading(true);
     const result = await createSubSection(formData, token);
-    console.log(" result >>>>>>>>>>>> ", result);
+    // console.log(" result >>>>>>>>>>>> ", result);
     if (result) {
       // TODO
       dispatch(setCourse(result));
@@ -107,7 +107,7 @@ function SubSecion({
   };
 
   const handlerPrevent = (event) => {
-    console.log("Helo");
+    // console.log("Helo");
     event.preventDefault();
   };
 

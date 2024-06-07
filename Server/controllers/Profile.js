@@ -16,15 +16,30 @@ exports.updateProfile = async (req, res) => {
 
   try {
     // * Step: 1 --> fetch data
-    const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
+    const {
+      dateOfBirth = "",
+      about = "",
+      contactNumber,
+      gender,
+      firstName,
+      lastName,
+      userId,
+      profileId,
+    } = req.body;
 
+    console.log(firstName);
+    console.log(lastName);
+    console.log(contactNumber);
+    console.log(dateOfBirth);
+    console.log(about);
+    console.log(gender);
+    console.log(profileId);
     // * Step: 2 --> get userId
-    const Id = req.user.id;
 
-    console.log("Id: ", Id);
+    console.log("Id: ", userId);
 
     // * Step: 3 --> validation
-    if (!contactNumber || !gender) {
+    if (!contactNumber || !gender || !firstName || !lastName) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -32,23 +47,46 @@ exports.updateProfile = async (req, res) => {
     }
 
     // * Step: 4 --> find profile from db
-    const userDetails = await User.findById(Id);
-    const profileId = userDetails.additionalDetails;
-    const profileDetails = await Profile.findById(profileId);
 
-    // * Step: 5 --> update profile in db
-    profileDetails.dateOfBirth = dateOfBirth;
-    profileDetails.about = about;
-    profileDetails.gender = gender;
-    profileDetails.contactNamber = contactNumber;
+    const profileDetails = await Profile.findByIdAndUpdate(profileId, {
+      $set: {
+        about: about,
+        gender: gender,
+        dateOfBirth: dateOfBirth,
+        contactNamber: contactNumber,
+      },
+    });
+    console.log("\n>>>>> profile Details: ", profileDetails);
 
-    await profileDetails.save();
+    const userDetails = await User.findByIdAndUpdate(userId, {
+      $set: {
+        firstName: firstName,
+        lastName: lastName,
+      },
+    })
+      .populate({
+        path: "additionalDetails",
+        populate: {
+          path: "contactNamber",
+        },
+      })
+      .exec();
+
+    console.log("\n>>>>> User Details: ", userDetails);
+
+    // // * Step: 5 --> update profile in db
+    // profileDetails.dateOfBirth = dateOfBirth;
+    // profileDetails.about = about;
+    // profileDetails.gender = gender;
+    // profileDetails.contactNamber = contactNumber;
+
+    // await profileDetails.save();
 
     // * Step: 6 --> return res
     return res.status(200).json({
       success: true,
       message: "profile Upload successfully",
-      profileDetails,
+      data: userDetails,
     });
   } catch (error) {
     return res.status(500).json({

@@ -37,7 +37,13 @@ export function changeProfilePicture(token, formData) {
       if (!response.data.success) throw new Error(response.data.message);
 
       toast.success("Uploaded Successful");
-      dispatch(setUser(response.data.data)); // setUser update the value of user in localstorage or slice
+
+      dispatch(setUser(response?.data?.data)); // setUser update the value of user in localstorage or slice\
+
+      localStorage.setItem("user", JSON.stringify(response.data.data));
+      console.log("Local user << >> ", localStorage.getItem("user"));
+
+      return response;
     } catch (error) {
       console.log(
         "CHANGE_PROFILE_PICTURE_API Error........",
@@ -51,11 +57,14 @@ export function changeProfilePicture(token, formData) {
 }
 
 export function updateProfile(token, formData) {
+  console.log(
+    "Maki Ch*t ......................................................"
+  );
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     try {
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
-        Authorization: `Bearer ${token}`,
+        Authorisation: `Bearer ${token}`,
       });
       console.log("UPDATE_PROFILE_API API RESPONSE............", response);
 
@@ -63,16 +72,13 @@ export function updateProfile(token, formData) {
         throw new Error(response.data.message);
       }
 
-      const userImage = response.data.updatedUserDetails.image
-        ? response.data.updatedUserDetails.image
-        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
+      // const userImage = response.data.updatedUserDetails.image
+      //   ? response.data.updatedUserDetails.image
+      //   : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
 
-      dispatch(
-        setUser({
-          ...response.data.updatedUserDetails,
-          image: userImage,
-        })
-      );
+      dispatch(setUser(response?.data?.data));
+      localStorage.setItem("user", JSON.stringify(response?.data?.data));
+
       toast.success("Profile Updated Successfully");
     } catch (error) {
       console.log("UPDATE_PROFILE_API API ERROR............", error);
@@ -86,7 +92,7 @@ export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...");
   try {
     const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
-      Authorization: `Bearer ${token}`,
+      Authorisation: `Bearer ${token}`,
     });
     console.log("CHANGE_PASSWORD_API API RESPONSE............", response);
 
@@ -106,7 +112,7 @@ export function deleteProfile(token, navigate) {
     const toastId = toast.loading("Loading...");
     try {
       const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
-        Authorization: `Bearer ${token}`,
+        Authorisation: `Bearer ${token}`,
       });
       console.log("DELETE_PROFILE_API API RESPONSE............", response);
 

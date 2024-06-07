@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const mailSender = require("../utils/mailSender");
+const { passwordUpdated } = require("../mail/templates/passwordUpdate");
 require("dotenv").config();
 
 // sendf OTP
@@ -157,7 +158,7 @@ exports.signUp = async (req, res) => {
       gender: null,
       dateOfBirth: null,
       about: null,
-      contactNumber: null,
+      contactNumber,
     });
     const user = await User.create({
       firstName,
@@ -177,7 +178,7 @@ exports.signUp = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.error("Error ocurred in signUP controller: ", error.response.data);
+    console.error("Error ocurred in signUP controller: ", error.response);
     console.log(error);
     return res.status(500).json({
       success: false,
@@ -211,7 +212,7 @@ exports.login = async (req, res) => {
     }
 
     // 3 --> check user is already exist or not
-    const user = await User.findOne({ email });
+    var user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -238,6 +239,16 @@ exports.login = async (req, res) => {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly: true,
       };
+
+      const profileId = user.additionalDetails;
+      const userId = user._id;
+
+      const userDetails = await User.findById(userId)
+        .populate("additionalDetails")
+        .exec();
+
+      user = userDetails;
+      console.log("User Details: >>>>>> ", user);
 
       res.cookie("token", token, Option).status(200).json({
         success: true,
@@ -268,6 +279,8 @@ exports.changePassword = async (req, res) => {
     // Get user data from req.user
     const userDetails = await User.findById(req.user.id);
 
+    console.log(userDetails);
+
     // Get old password, new password, and confirm new password from req.body
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
 
@@ -276,6 +289,7 @@ exports.changePassword = async (req, res) => {
       oldPassword,
       userDetails.password
     );
+
     if (!isPasswordMatch) {
       // If old password does not match, return a 401 (Unauthorized) error
       return res
@@ -284,13 +298,13 @@ exports.changePassword = async (req, res) => {
     }
 
     // Match new password and confirm new password
-    if (newPassword !== confirmNewPassword) {
-      // If new password and confirm new password do not match, return a 400 (Bad Request) error
-      return res.status(400).json({
-        success: false,
-        message: "The password and confirm password does not match",
-      });
-    }
+    // if (newPassword !== confirmNewPassword) {
+    //   // If new password and confirm new password do not match, return a 400 (Bad Request) error
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "The password and confirm password does not match",
+    //   });
+    // }
 
     // Update password
     const encryptedPassword = await bcrypt.hash(newPassword, 10);
@@ -304,12 +318,13 @@ exports.changePassword = async (req, res) => {
     try {
       const emailResponse = await mailSender(
         updatedUserDetails.email,
+        "Your Password is Change !!",
         passwordUpdated(
           updatedUserDetails.email,
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
       );
-      console.log("Email sent successfully:", emailResponse.response);
+      // console.log("Email sent successfully:", emailResponse);
     } catch (error) {
       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
       console.error("Error occurred while sending email:", error);

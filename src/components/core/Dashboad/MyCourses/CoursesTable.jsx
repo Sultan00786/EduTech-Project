@@ -17,14 +17,12 @@ function CoursesTable({ courses, setCourses }) {
   const navigate = useNavigate();
 
   const handlerDelete = async (courseId) => {
-    console.log("Hellow");
-    console.log("Id >> ", courseId);
 
     setLoading(true);
     const result = deleteCourse({ courseId: courseId }, token); // always pass values in key value pairs
     if (result) {
       const updatedCourses = courses.filter((elem) => elem._id !== courseId);
-      console.log(updatedCourses);
+      // console.log(updatedCourses);
       setCourses(updatedCourses);
     }
     setLoading(false);

@@ -18,7 +18,7 @@ function Dashborad() {
   return (
     <div className=" relative flex min-h-[calc(100vh-3.5rem)] ">
       <Sidebar />
-      <div className=" py-10 ">
+      <div className=" w-[1000px] mx-auto py-10 ">
         <Outlet />
       </div>
     </div>

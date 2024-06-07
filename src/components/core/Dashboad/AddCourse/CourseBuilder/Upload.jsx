@@ -25,7 +25,6 @@ export default function Upload({
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
-    console.log("ACCEPTEDfiles >>>>> ", file);
     if (file) {
       previewFile(file);
       setSelectedFile(file);
@@ -47,7 +46,6 @@ export default function Upload({
     reader.onloadend = () => {
       setPreviewSource(reader.result);
     };
-    console.log();
   };
 
   // useEffect(() => {

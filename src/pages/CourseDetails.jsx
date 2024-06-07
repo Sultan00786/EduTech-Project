@@ -1,0 +1,123 @@
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchCourseDetails } from "../services/operations/courseDetailsAPI";
+import RatingStars from "../components/common/RatingStars";
+import GetAvgRating from "../utils/avgRating";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+import Iconbtn from "../components/common/Iconbtn";
+import { MdArrowRight } from "react-icons/md";
+import Footer from "../components/common/Footer";
+
+function CourseDetails() {
+  const { courseId } = useParams();
+  console.log(courseId);
+  const [loading, setLoading] = useState(false);
+  const [CourseDetails, setCourseDetais] = useState(null);
+  const [avgReviewCount, setAvgReviewCount] = useState(0);
+
+  useEffect(() => {
+    const getCourseDetails = async () => {
+      setLoading(true);
+      const result = await fetchCourseDetails(courseId);
+      console.log("result >> ", result?.data[0]);
+      if (result) setCourseDetais(result?.data[0]);
+      setLoading(false);
+    };
+    getCourseDetails();
+  }, []);
+
+  useEffect(() => {
+    const count = GetAvgRating(CourseDetails?.ratingAndReviews);
+    setAvgReviewCount(count);
+  }, [CourseDetails]);
+
+  if (loading) {
+    return (
+      <div className=" h-screen flex items-center justify-center">
+        <div className=" loader"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className=" text-white w-full">
+      <div className=" bg-richblack-800 py-14">
+        <div className=" w-11/12 mx-auto">
+          <div className=" relative w-11/12 mx-auto">
+            <div className="flex flex-col gap-2">
+              <h1 className=" text-richblue-5 text-4xl font-bold">
+                {CourseDetails?.courseName}
+              </h1>
+              <p className=" text-richblack-200 text-sm">
+                {CourseDetails?.courseDiscription}
+              </p>
+              <div className=" flex items-center gap-2">
+                <span className=" text-yellow-25 flex items-center gap-2 font-bold ">
+                  {avgReviewCount || 0}
+                </span>
+                <RatingStars />
+                <span>({CourseDetails?.ratingAndReviews?.length} Reviews)</span>
+                <span>
+                  {CourseDetails?.studentsEnrolled?.length} Students Enrolles
+                </span>
+              </div>
+              <p className=" text-[15px]">
+                Created By {CourseDetails?.instructor?.firstName}{" "}
+                {CourseDetails?.instructor?.lastName}
+              </p>
+              <div className="flex items-center gap-3 text-[15px]">
+                <HiOutlineExclamationCircle />
+                <span>Create at</span>
+              </div>
+            </div>
+            <div className=" bg-richblack-700 w-fit flex flex-col gap-3 rounded-md absolute right-0 top-0 p-5 pb-20">
+              <dvi className="flex flex-col gap-5">
+                <img
+                  src={CourseDetails?.thumbnail}
+                  className=" w-[350px] rounded-lg"
+                />
+                <p className=" text-richblue-5 font-bold text-3xl">
+                  Rs. {CourseDetails?.price}
+                </p>
+                <div className=" w-full flex flex-col gap-4">
+                  <Iconbtn
+                    customClasses={"w-full flex items-center justify-center"}
+                    text={"Buy Now"}
+                  />
+                  <button className=" w-full text-richblack-5 bg-richblack-800 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold ">
+                    Add to Cart
+                  </button>
+                </div>
+              </dvi>
+              <p className=" text-richblack-200 text-center">
+                30-Day Money-Back Gaurantee
+              </p>
+              <div className="flex flex-col gap-1 mt-4">
+                <p className=" text-xl text-richblue-5 font-semibold">
+                  This Course Includes :
+                </p>
+                <div className=" flex gap-2 items-center text-caribbeangreen-200">
+                  <MdArrowRight /> <span>Good Course</span>
+                </div>
+                <div className=" flex gap-2 items-center text-caribbeangreen-200">
+                  <MdArrowRight /> <span>Fast place</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+      {/* <Footer /> */}
+    </div>
+  );
+}
+
+export default CourseDetails;

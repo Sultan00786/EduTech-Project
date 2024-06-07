@@ -23,6 +23,8 @@ import AddCourse from "./components/core/Dashboad/AddCourse";
 import ContactUs from "./pages/ContactUs";
 import Mycourse from "./components/core/Dashboad/Mycourse";
 import EditCourse from "./components/core/Dashboad/MyCourses/EditCourse";
+import Catalog from "./pages/Catalog";
+import CourseDetails from "./pages/CourseDetails";
 
 function App() {
   const { user } = useSelector((state) => state.profile);
@@ -31,6 +33,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/catalog/:catalogName" element={<Catalog />} />
+        <Route path="/courses/:courseId" element={<CourseDetails />} />
 
         <Route
           path="/login"
