@@ -16,7 +16,6 @@ exports.updateProfile = async (req, res) => {
 
   try {
     // * Step: 1 --> fetch data
-<<<<<<< HEAD
     const {
       dateOfBirth = "",
       about = "",
@@ -41,17 +40,6 @@ exports.updateProfile = async (req, res) => {
 
     // * Step: 3 --> validation
     if (!contactNumber || !gender || !firstName || !lastName) {
-=======
-    const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
-
-    // * Step: 2 --> get userId
-    const Id = req.user.id;
-
-    console.log("Id: ", Id);
-
-    // * Step: 3 --> validation
-    if (!contactNumber || !gender) {
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       return res.status(400).json({
         success: false,
         message: "All fields are required",
@@ -59,7 +47,6 @@ exports.updateProfile = async (req, res) => {
     }
 
     // * Step: 4 --> find profile from db
-<<<<<<< HEAD
 
     const profileDetails = await Profile.findByIdAndUpdate(profileId, {
       $set: {
@@ -94,29 +81,12 @@ exports.updateProfile = async (req, res) => {
     // profileDetails.contactNamber = contactNumber;
 
     // await profileDetails.save();
-=======
-    const userDetails = await User.findById(Id);
-    const profileId = userDetails.additionalDetails;
-    const profileDetails = await Profile.findById(profileId);
-
-    // * Step: 5 --> update profile in db
-    profileDetails.dateOfBirth = dateOfBirth;
-    profileDetails.about = about;
-    profileDetails.gender = gender;
-    profileDetails.contactNamber = contactNumber;
-
-    await profileDetails.save();
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
     // * Step: 6 --> return res
     return res.status(200).json({
       success: true,
       message: "profile Upload successfully",
-<<<<<<< HEAD
       data: userDetails,
-=======
-      profileDetails,
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     });
   } catch (error) {
     return res.status(500).json({
