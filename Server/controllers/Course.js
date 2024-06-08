@@ -3,13 +3,18 @@ const Category = require("../models/Category");
 const Section = require("../models/Section");
 const SubSection = require("../models/SubSection");
 const User = require("../models/User");
+<<<<<<< HEAD
 const CourseProgress = require("../models/CourseProgress");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const { convertSecondsToDuration } = require("../utils/secToDuration");
+=======
+const { uploadImageToCloudinary } = require("../utils/imageUploader");
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
 // createCourse handler function
 
 exports.createCourse = async (req, res) => {
+<<<<<<< HEAD
   console.log(" >> >> ", req.files);
   try {
     // fetch all data from creating the course
@@ -37,15 +42,37 @@ exports.createCourse = async (req, res) => {
 
     //  >>>>> couseTags string formate aa raha hie uska ghayan rakh na
 
+=======
+  try {
+    // fetch all data from creating the course
+    const { courseName, courseDescription, whatYouWillLearn, price, category } =
+      req.body;
+
+    // get thumbnail using req.files.fileName
+    // const thumbnail = req.files.thumbnailName;
+    console.log("REquest ki body", req.body);
+    console.log(
+      courseName,
+      courseDescription,
+      whatYouWillLearn,
+      price,
+      category
+    );
+
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     // Validation for all data
     if (
       !courseName ||
       !courseDescription ||
       !whatYouWillLearn ||
       !price ||
+<<<<<<< HEAD
       !category ||
       !thumbnail ||
       !courseTags
+=======
+      !category
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     ) {
       // (courseName && courseDescription && whatYouWillLearn && price && CategoryId && thumbnail)
       return res.status(400).json({
@@ -76,6 +103,7 @@ exports.createCourse = async (req, res) => {
         message: "Category Details not found",
       });
     }
+<<<<<<< HEAD
     console.log("Category ID: ", CategoryDetails);
 
     // Uplaod Image to cloudinary
@@ -95,13 +123,32 @@ exports.createCourse = async (req, res) => {
       thumbnail: thumbnailImage.secure_url,
       tag: courseTags,
       status: null,
+=======
+    // console.log("Category ID: ", category);
+
+    // Uplaod Image to cloudinary
+    //const thumbnailImage = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
+
+    // create an entry for new course
+    const newCourse = await Course.create({
+      courseName,
+      courseDescription,
+      instructor: instructorDtails._id,
+      whatYouWillLearn,
+      price,
+      Category: CategoryDetails._id,
+      // thumbnail: thumbnailImage.secure_url,
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     });
 
     const course = await Course.findById(newCourse._id)
       .populate("category")
+<<<<<<< HEAD
       .populate("tag")
       .populate("courseDiscription")
       .populate("status")
+=======
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       .exec();
 
     // console.log("New Course >> ", newCourse);
@@ -119,23 +166,39 @@ exports.createCourse = async (req, res) => {
     );
 
     // update the Category ka schema
+<<<<<<< HEAD
     const updCat = await Category.findByIdAndUpdate(
       { _id: CategoryDetails._id },
       {
         $push: {
           courses: newCourse._id,
+=======
+
+    await Category.findByIdAndUpdate(
+      { _id: CategoryDetails._id },
+      {
+        $push: {
+          coures: newCourse._id,
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         },
       },
       { new: true }
     );
 
+<<<<<<< HEAD
     console.log("Updated wli category:\n", updCat);
 
+=======
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     // return response
     return res.status(200).json({
       success: true,
       message: "Course Created successfully",
+<<<<<<< HEAD
       course,
+=======
+      newCourse,
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     });
   } catch (error) {
     console.log(error);
@@ -146,6 +209,7 @@ exports.createCourse = async (req, res) => {
     });
   }
 };
+<<<<<<< HEAD
 
 // Edit Course Details
 exports.editCourse = async (req, res) => {
@@ -217,6 +281,8 @@ exports.editCourse = async (req, res) => {
     });
   }
 };
+=======
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
 // getAllCourses handler function
 
@@ -287,6 +353,7 @@ exports.getCourseDetails = async (req, res) => {
     });
   }
 };
+<<<<<<< HEAD
 
 exports.getFullCourseDetails = async (req, res) => {
   try {
@@ -439,3 +506,5 @@ exports.deleteCourse = async (req, res) => {
     });
   }
 };
+=======
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7

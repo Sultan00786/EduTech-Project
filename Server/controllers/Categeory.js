@@ -17,12 +17,47 @@ exports.createCategory = async (req, res) => {
     // fetch data
     const { name, description } = req.body;
 
+<<<<<<< HEAD
     // data validation
     if (!name || !description) {
       return res.status(400).json({
         success: false,
         message: "All fields are required",
       });
+=======
+    try {
+
+        // fetch data 
+        const {name, description} = req.body;
+
+        // data validation
+        if(!name || !description){
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required",
+            });
+        }
+
+        //  create entry in DB
+        const CategoryDetails = await Category.create({
+            name: name,
+            description: description,
+        });
+        console.log("Category Details is: ",CategoryDetails);
+
+        // return res
+        return res.status(200).json({
+            success: true,
+            message: "Category created successfully",
+            CategoryDetails,
+        })
+        
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message,
+        })
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     }
 
     //  create entry in DB

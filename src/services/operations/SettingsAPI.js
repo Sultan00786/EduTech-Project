@@ -37,6 +37,7 @@ export function changeProfilePicture(token, formData) {
       if (!response.data.success) throw new Error(response.data.message);
 
       toast.success("Uploaded Successful");
+<<<<<<< HEAD
 
       dispatch(setUser(response?.data?.data)); // setUser update the value of user in localstorage or slice\
 
@@ -44,6 +45,9 @@ export function changeProfilePicture(token, formData) {
       console.log("Local user << >> ", localStorage.getItem("user"));
 
       return response;
+=======
+      dispatch(setUser(response.data.data)); // setUser update the value of user in localstorage or slice
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     } catch (error) {
       console.log(
         "CHANGE_PROFILE_PICTURE_API Error........",
@@ -57,14 +61,21 @@ export function changeProfilePicture(token, formData) {
 }
 
 export function updateProfile(token, formData) {
+<<<<<<< HEAD
   console.log(
     "Maki Ch*t ......................................................"
   );
+=======
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     try {
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
+<<<<<<< HEAD
         Authorisation: `Bearer ${token}`,
+=======
+        Authorization: `Bearer ${token}`,
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       });
       console.log("UPDATE_PROFILE_API API RESPONSE............", response);
 
@@ -72,6 +83,7 @@ export function updateProfile(token, formData) {
         throw new Error(response.data.message);
       }
 
+<<<<<<< HEAD
       // const userImage = response.data.updatedUserDetails.image
       //   ? response.data.updatedUserDetails.image
       //   : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
@@ -79,6 +91,18 @@ export function updateProfile(token, formData) {
       dispatch(setUser(response?.data?.data));
       localStorage.setItem("user", JSON.stringify(response?.data?.data));
 
+=======
+      const userImage = response.data.updatedUserDetails.image
+        ? response.data.updatedUserDetails.image
+        : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.updatedUserDetails.firstName} ${response.data.updatedUserDetails.lastName}`;
+
+      dispatch(
+        setUser({
+          ...response.data.updatedUserDetails,
+          image: userImage,
+        })
+      );
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       toast.success("Profile Updated Successfully");
     } catch (error) {
       console.log("UPDATE_PROFILE_API API ERROR............", error);
@@ -92,7 +116,11 @@ export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...");
   try {
     const response = await apiConnector("POST", CHANGE_PASSWORD_API, formData, {
+<<<<<<< HEAD
       Authorisation: `Bearer ${token}`,
+=======
+      Authorization: `Bearer ${token}`,
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     });
     console.log("CHANGE_PASSWORD_API API RESPONSE............", response);
 
@@ -112,7 +140,11 @@ export function deleteProfile(token, navigate) {
     const toastId = toast.loading("Loading...");
     try {
       const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
+<<<<<<< HEAD
         Authorisation: `Bearer ${token}`,
+=======
+        Authorization: `Bearer ${token}`,
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       });
       console.log("DELETE_PROFILE_API API RESPONSE............", response);
 

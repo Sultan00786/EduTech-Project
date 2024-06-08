@@ -9,7 +9,11 @@ import Footer from "../components/common/Footer";
 function ContactUs() {
   return (
     <div className=" text-richblack-100">
+<<<<<<< HEAD
       <div className=" w-11/12 mx-auto flex px-16 ">
+=======
+      <div className=" w-11/12 mx-auto flex">
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         <div className=" flex flex-col gap-10 w-[450px] h-fit bg-richblack-800 rounded-md mt-20 p-6 ">
           <div className="flex gap-2 text-lg ">
             <HiChatBubbleLeftRight className="text-richblack-5" />

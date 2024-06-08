@@ -23,6 +23,10 @@ const {
   CREATE_RATING_API,
   LECTURE_COMPLETION_API,
 } = courseEndpoints;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 export const getAllCourses = async () => {
   const toastId = toast.loading("Loading...");
   let result = [];
@@ -69,7 +73,11 @@ export const fetchCourseCategories = async () => {
   let result = [];
   try {
     const response = await apiConnector("GET", COURSE_CATEGORIES_API);
+<<<<<<< HEAD
     // console.log("COURSE_CATEGORIES_API API RESPONSE............", response);
+=======
+    console.log("COURSE_CATEGORIES_API API RESPONSE............", response);
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     if (!response?.data?.success) {
       throw new Error("Could Not Fetch Course Categories");
     }
@@ -98,7 +106,11 @@ export const addCourseDetails = async (data, token) => {
       throw new Error("Could Not Add Course Details");
     }
     toast.success("Course Details Added Successfully");
+<<<<<<< HEAD
     result = response?.data?.course;
+=======
+    result = response?.data?.newCourse;
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   } catch (error) {
     console.log("CREATE COURSE API ERROR............", error);
     toast.error(error.message);
@@ -292,10 +304,16 @@ export const fetchInstructorCourses = async (token) => {
 
 // delete a course
 export const deleteCourse = async (data, token) => {
+<<<<<<< HEAD
   console.log(" IDDDDD >>> ", data);
   const toastId = toast.loading("Loading...");
   try {
     const response = await apiConnector("POST", DELETE_COURSE_API, data, {
+=======
+  const toastId = toast.loading("Loading...");
+  try {
+    const response = await apiConnector("DELETE", DELETE_COURSE_API, data, {
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       Authorisation: `Bearer ${token}`,
     });
     console.log("DELETE COURSE API RESPONSE............", response);
@@ -306,10 +324,15 @@ export const deleteCourse = async (data, token) => {
   } catch (error) {
     console.log("DELETE COURSE API ERROR............", error);
     toast.error(error.message);
+<<<<<<< HEAD
     return false;
   }
   toast.dismiss(toastId);
   return true;
+=======
+  }
+  toast.dismiss(toastId);
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 };
 
 // get full details of a course

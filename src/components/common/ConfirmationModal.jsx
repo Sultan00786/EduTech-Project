@@ -3,6 +3,7 @@ import Iconbtn from "./Iconbtn";
 
 function ConfirmationModal({ modalData }) {
   return (
+<<<<<<< HEAD
     <div className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
       <div className=" p-5 bg-richblack-900 flex flex-col gap-2 w-[300px] rounded-xl border-[1px] border-richblack-500 ">
         <p className=" text-richblack-5 font-bold text-2xl">
@@ -10,16 +11,27 @@ function ConfirmationModal({ modalData }) {
         </p>
         <p className=" text-richblack-200 text-sm">{modalData.text2}</p>
         <div className="flex items-center gap-2 mt-2">
+=======
+    <div className=" text-white ">
+      <div>
+        <p>{modalData.text1}</p>
+        <p>{modalData.text2}</p>
+        <div>
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           <Iconbtn
             onClick={modalData?.btn1Handler}
             text={modalData?.btn1Text}
           />
+<<<<<<< HEAD
           <button
             className=" text-richblack-5 bg-richblack-500 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold "
             onClick={modalData.btn2Handler}
           >
             {modalData?.btn2Text}
           </button>
+=======
+          <button onClick={modalData.btn2Handler}>{modalData?.btn2Text}</button>
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         </div>
       </div>
     </div>

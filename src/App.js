@@ -14,6 +14,7 @@ import Dashborad from "./pages/Dashborad";
 import OpenRoute from "./components/core/Auth/OpenRoute";
 import PrivateRout from "./components/core/Auth/PrivateRout";
 import MyProfile from "./components/core/Dashboad/MyProfile";
+<<<<<<< HEAD
 import Setting from "./components/core/Dashboad/Setting";
 import EnrolledCourses from "./components/core/Dashboad/EnrolledCourses";
 import Cart from "./components/core/Dashboad/Cart";
@@ -28,60 +29,98 @@ import CourseDetails from "./pages/CourseDetails";
 
 function App() {
   const { user } = useSelector((state) => state.profile);
+=======
+
+function App() {
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   return (
     <div className=" w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+<<<<<<< HEAD
         <Route path="/catalog/:catalogName" element={<Catalog />} />
         <Route path="/courses/:courseId" element={<CourseDetails />} />
+=======
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
         <Route
           path="/login"
           element={
+<<<<<<< HEAD
             <OpenRoute>
               <Login />
             </OpenRoute>
+=======
+            <OpenRoute> 
+              <Login />
+            </OpenRoute> 
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           }
         />
 
         <Route
           path="/signup"
           element={
+<<<<<<< HEAD
             <OpenRoute>
               <Signup />
             </OpenRoute>
+=======
+            <OpenRoute> 
+              <Signup />
+            </OpenRoute> 
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           }
         />
 
         <Route
           path="/forgotpassword"
           element={
+<<<<<<< HEAD
             <OpenRoute>
               <ForgotPassword />
             </OpenRoute>
+=======
+            <OpenRoute> 
+              <ForgotPassword />
+            </OpenRoute> 
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           }
         />
 
         <Route
           path="/update-password/:id"
           element={
+<<<<<<< HEAD
             <OpenRoute>
               <UpdatePassword />
             </OpenRoute>
+=======
+            <OpenRoute> 
+              <UpdatePassword />
+            </OpenRoute> 
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           }
         />
 
         <Route
           path="/verify-email"
           element={
+<<<<<<< HEAD
             <OpenRoute>
               <VerifyEmail />
             </OpenRoute>
+=======
+            <OpenRoute> 
+              <VerifyEmail />
+            </OpenRoute> 
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           }
         />
 
         <Route path="/about" element={<About />} />
+<<<<<<< HEAD
         <Route path="/contact" element={<ContactUs />} />
 
         <Route
@@ -114,6 +153,18 @@ function App() {
               />
             </>
           )}
+=======
+        {/* <Route path="/contact" element={<Contact/>} /> */}
+
+        <Route
+          element={
+            <PrivateRout> 
+              <Dashborad />
+            </PrivateRout> 
+          }
+        >
+          <Route path="dashboard/my-profile" element={<MyProfile />} />
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         </Route>
 
         <Route path="*" element={<Error />}></Route>

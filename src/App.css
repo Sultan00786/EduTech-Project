@@ -18,12 +18,20 @@ body {
   display: inline-block;
   position: relative;
   border: 3px solid;
+<<<<<<< HEAD
   border-color: #fff #fff transparent;
+=======
+  border-color: #FFF #FFF transparent;
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
 .loader::after {
+<<<<<<< HEAD
   content: "";
+=======
+  content: '';  
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -32,7 +40,11 @@ body {
   bottom: 0;
   margin: auto;
   border: 3px solid;
+<<<<<<< HEAD
   border-color: transparent #ff3d00 #ff3d00;
+=======
+  border-color: transparent #FF3D00 #FF3D00;
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -47,8 +59,13 @@ body {
   100% {
     transform: rotate(360deg);
   }
+<<<<<<< HEAD
 }
 
+=======
+} 
+    
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 @keyframes rotationBack {
   0% {
     transform: rotate(0deg);
@@ -57,6 +74,7 @@ body {
     transform: rotate(-360deg);
   }
 }
+<<<<<<< HEAD
 
 .lable-style {
   @apply text-[14px] text-richblack-5;
@@ -64,3 +82,6 @@ body {
 .form-style {
   @apply rounded-lg bg-richblack-700 p-3 text-[16px] leading-[24px] text-richblack-5 shadow-[0_1px_0_0] shadow-white/50 placeholder:text-richblack-400 focus:outline-none;
 }
+=======
+    
+>>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
