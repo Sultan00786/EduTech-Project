@@ -18,20 +18,12 @@ body {
   display: inline-block;
   position: relative;
   border: 3px solid;
-<<<<<<< HEAD
   border-color: #fff #fff transparent;
-=======
-  border-color: #FFF #FFF transparent;
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
 .loader::after {
-<<<<<<< HEAD
   content: "";
-=======
-  content: '';  
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   box-sizing: border-box;
   position: absolute;
   left: 0;
@@ -40,11 +32,7 @@ body {
   bottom: 0;
   margin: auto;
   border: 3px solid;
-<<<<<<< HEAD
   border-color: transparent #ff3d00 #ff3d00;
-=======
-  border-color: transparent #FF3D00 #FF3D00;
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   width: 24px;
   height: 24px;
   border-radius: 50%;
