@@ -12,11 +12,8 @@ import { setCourse, setStep } from "../../../../../slices/courseSlice";
 import Iconbtn from "../../../../common/Iconbtn";
 import toast from "react-hot-toast";
 import { COURSE_STASTUS } from "../../../../../utils/constants";
-<<<<<<< HEAD
 import ChipInput from "./ChipInput";
 import Upload from "../CourseBuilder/Upload";
-=======
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
 function CourseInformationForm() {
   const {
@@ -28,21 +25,13 @@ function CourseInformationForm() {
   } = useForm();
 
   const dispatch = useDispatch();
-<<<<<<< HEAD
   const { course, editCourse } = useSelector((state) => state.course);
-=======
-  const { course, editCourse, step } = useSelector((state) => state.course);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   const { token } = useSelector((state) => state.auth);
 
   const [loading, setLoading] = useState();
   const [courseCategories, setCourseCategories] = useState([]);
 
-<<<<<<< HEAD
   const [tagList, setTagList] = useState([]);
-
-=======
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true);
@@ -52,14 +41,9 @@ function CourseInformationForm() {
     };
     getCategories();
     if (editCourse) {
-<<<<<<< HEAD
       // console.log("Course edit >> ", course);
       setValue("courseTitle", course.courseName);
       setValue("courseShortDesc", course.courseDiscription);
-=======
-      setValue("courseTitle", course.courseName);
-      setValue("courseShortDesc", course.courseDescription);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       setValue("coursePrice", course.price);
       setValue("courseTags", course.tag);
       setValue("courseBenefits", course.whatYouWillLearn);
@@ -71,22 +55,13 @@ function CourseInformationForm() {
 
   function isFormUpdate() {
     const currentVal = getValues();
-<<<<<<< HEAD
     // console.log("Hellow ... ");
-=======
-    console.log("Hellow ... ");
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     if (
       currentVal.courseTitle !== course.courseName ||
       currentVal.courseShortDesc !== course.courseDescription ||
       currentVal.coursePrice !== course.price ||
-<<<<<<< HEAD
       currentVal.courseTags !== course.tag ||
       currentVal.courseImage !== course.thumbnail ||
-=======
-      // currentVal.courseTags !== course.tag ||
-      // currentVal.courseImage !== course.thumbnail ||
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       currentVal.courseBenefits !== course.whatYouWillLearn ||
       currentVal.courseCategory._id !== course.category._id ||
       currentVal.courseRequirements !== course.instruction
@@ -96,12 +71,8 @@ function CourseInformationForm() {
   }
 
   const onSubmit = async (data) => {
-<<<<<<< HEAD
     // console.log("data Course >> ", data);
 
-=======
-    console.log("Edit Course >> ", editCourse);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     if (editCourse) {
       if (isFormUpdate) {
         const currentValues = getValues();
@@ -126,13 +97,10 @@ function CourseInformationForm() {
           formData.append("whatYouWillLearn", data.courseBenefits);
         }
 
-<<<<<<< HEAD
         if (currentValues.courseImage !== course.thumbnail) {
           formData.append("thumbnail", data.courseImage);
         }
 
-=======
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         if (currentValues.courseCategory !== course.category) {
           formData.append("category", data.courseCategory);
         }
@@ -144,7 +112,6 @@ function CourseInformationForm() {
           );
         }
 
-<<<<<<< HEAD
         const jsonTags1 = JSON.stringify(tagList);
         if (currentValues?.courseTags !== course?.tag) {
           formData.append("tag", JSON.stringify(jsonTags1));
@@ -152,20 +119,13 @@ function CourseInformationForm() {
 
         // console.log("Values >> ", currentValues);
         // console.log("Course >> ", course);
-=======
-        console.log("Values >> ", currentValues);
-        console.log("Course >> ", course);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
         setLoading(true);
         const result = await editCourseDetails(formData, token);
         setLoading(false);
 
-<<<<<<< HEAD
         // console.log("result", result);
 
-=======
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         if (result) {
           dispatch(setStep(2));
           dispatch(setCourse(result));
@@ -184,7 +144,6 @@ function CourseInformationForm() {
     formData.append("category", data.courseCategory);
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("status", COURSE_STASTUS.DRAFT);
-<<<<<<< HEAD
     formData.append("thumbnail", data.courseImage);
 
     const jsonTags = JSON.stringify(tagList);
@@ -198,18 +157,6 @@ function CourseInformationForm() {
     if (result) {
       dispatch(setStep(2));
       dispatch(setCourse(result));
-=======
-
-    console.log("Hellow", step);
-
-    setLoading(true);
-    const result = await addCourseDetails(formData, token);
-    console.log("Result: .. ", result);
-    if (result) {
-      dispatch(setStep(2));
-      dispatch(setCourse(result));
-      console.log(step);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     }
     setLoading(false);
   };
@@ -218,11 +165,7 @@ function CourseInformationForm() {
     <div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-<<<<<<< HEAD
         className=" flex flex-col gap space-y-8"
-=======
-        className=" rounded-md border-richblack-700 bg-richblack-800 p-6 space-y-8"
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       >
         <div>
           <label htmlFor="courseTitle" className="lable-style">
@@ -238,11 +181,7 @@ function CourseInformationForm() {
           {errors.courseTitle && <span>Course Title is required</span>}
         </div>
 
-<<<<<<< HEAD
         <div className="flex flex-col gap-1">
-=======
-        <div className="flex flex-col">
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           <label htmlFor="courseShortDesc" className="lable-style">
             Course Short Description
           </label>
@@ -258,11 +197,7 @@ function CourseInformationForm() {
           )}
         </div>
 
-<<<<<<< HEAD
         <div className=" relative flex flex-col gap-1">
-=======
-        <div className=" relative flex-col">
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           <label htmlFor="coursePrice" className="lable-style">
             Course Price
             <sup className=" text-pink-400">*</sup>
@@ -281,11 +216,7 @@ function CourseInformationForm() {
           <HiOutlineCurrencyRupee className=" absolute top-1/2 left-2 text-richblack-400 text-2xl" />
         </div>
 
-<<<<<<< HEAD
         <div className="flex flex-col gap-1 ">
-=======
-        <div className="">
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           <label htmlFor="courseCategory" className="lable-style">
             Course Category
           </label>
@@ -306,11 +237,7 @@ function CourseInformationForm() {
           </select>
         </div>
 
-<<<<<<< HEAD
         <ChipInput
-=======
-        {/* <ChipInput
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           label="Tag"
           name="courseTags"
           placeholder="Enter tags and press enter"
@@ -318,7 +245,6 @@ function CourseInformationForm() {
           errors={errors}
           setValue={setValue}
           getValues={getValues}
-<<<<<<< HEAD
           tagList={tagList}
           setTagList={setTagList}
         />
@@ -331,15 +257,6 @@ function CourseInformationForm() {
         />
 
         <div className="flex flex-col gap-1">
-=======
-        /> */}
-
-        {/* <Upload
-          name
-        /> */}
-
-        <div className="flex flex-col">
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           <label htmlFor="courseBenefits" className="lable-style">
             Benefifts of the course
           </label>
@@ -368,29 +285,18 @@ function CourseInformationForm() {
           {editCourse && (
             <button
               onClick={() => dispatch(setStep(2))}
-<<<<<<< HEAD
               className=" text-richblack-5 bg-richblack-500 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold "
-=======
-              className="flex items-center gap-x-2 bg-richblack-300"
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
             >
               Continue Without Saving
             </button>
           )}
 
-<<<<<<< HEAD
           <div className="flex items-end justify-end w-full">
             <Iconbtn
               type={"submit"}
               text={!editCourse ? "Next" : "Save Changes"}
             />
           </div>
-=======
-          <Iconbtn
-            type={"submit"}
-            text={!editCourse ? "Next" : "Save Changes"}
-          />
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         </div>
       </form>
     </div>

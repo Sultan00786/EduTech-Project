@@ -38,13 +38,8 @@ function Sidebar() {
   }
 
   return (
-<<<<<<< HEAD
     <div className=" min-h-[100vh] ">
       <div className="flex min-w-[222px] h-full flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblack-800 ">
-=======
-    <div className="">
-      <div className="flex min-w-[222px] flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblack-800 ">
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
         <div className="flex flex-col">
           {sidebarLinks.map((link) => {
             // console.log("------->",link.type);
@@ -60,11 +55,7 @@ function Sidebar() {
 
         {/* Setting */}
         <SidebarLink
-<<<<<<< HEAD
           className=" h-full absolute -left-[22px]"
-=======
-          className=" absolute -left-[22px]"
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           link={{
             name: "Settings",
             path: "dashboard/settings",

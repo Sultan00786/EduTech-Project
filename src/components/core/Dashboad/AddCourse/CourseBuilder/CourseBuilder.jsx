@@ -41,11 +41,7 @@ function CourseBuilder() {
   };
 
   const goToNext = () => {
-<<<<<<< HEAD
     // console.log(course);
-=======
-    console.log(course);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
     if (course.courseContent.length === 0) {
       toast.error("Please add one atleast one Section");
@@ -71,11 +67,7 @@ function CourseBuilder() {
 
     if (editSectionName) {
       // we are editing the section name
-<<<<<<< HEAD
       // console.log("editSectionName == ", editSectionName);
-=======
-      console.log("editSectionName == ", editSectionName);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       result = await updateSection(
         {
           sectionName: data.sectionName,
@@ -94,11 +86,7 @@ function CourseBuilder() {
       );
     }
 
-<<<<<<< HEAD
     // console.log("result ... ", result);
-=======
-    console.log("result ... ", result);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
     // update value
     if (result) {
@@ -117,10 +105,6 @@ function CourseBuilder() {
       return;
     }
 
-<<<<<<< HEAD
-=======
-    console.log("mai aa aya ");
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 
     setEditSectionName(sectionId);
     setValue("sectionName", sectionName);
@@ -128,10 +112,6 @@ function CourseBuilder() {
 
   return (
     <div>
-<<<<<<< HEAD
-=======
-      <p>Course Builder</p>
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Label */}
         <div className="flex flex-col">
@@ -168,7 +148,6 @@ function CourseBuilder() {
         </div>
       </form>
 
-<<<<<<< HEAD
       <div className="">
         {course?.courseContent?.length > 0 && (
           <NestedView
@@ -180,30 +159,15 @@ function CourseBuilder() {
       <div className="flex justify-end gap-x-3">
         <button
           className=" text-richblack-5 bg-richblack-500 cursor-pointer gap-x-2 rounded-md py-2 px-5 font-semibold "
-=======
-      {course?.courseContent?.length > 0 && (
-        <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
-      )}
-
-      <div className="flex justify-end gap-x-3">
-        <button
-          className=" rounded-md cursor-pointer flex items-center"
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           onClick={goToBack}
         >
           Back
         </button>
-<<<<<<< HEAD
         <Iconbtn
           customClasses="flex flex-row items-center gap-2"
           text="Next"
           onClick={goToNext}
         ></Iconbtn>
-=======
-        <Iconbtn text="Next" onClick={goToNext}>
-          <FaRegArrowAltCircleRight />
-        </Iconbtn>
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       </div>
     </div>
   );

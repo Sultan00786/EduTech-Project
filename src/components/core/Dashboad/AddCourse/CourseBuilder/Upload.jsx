@@ -25,10 +25,6 @@ export default function Upload({
 
   const onDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
-<<<<<<< HEAD
-=======
-    // console.log("ACCEPTEDfiles >>>>> ", file);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     if (file) {
       previewFile(file);
       setSelectedFile(file);
@@ -50,10 +46,6 @@ export default function Upload({
     reader.onloadend = () => {
       setPreviewSource(reader.result);
     };
-<<<<<<< HEAD
-=======
-    console.log();
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
   };
 
   // useEffect(() => {
@@ -67,11 +59,7 @@ export default function Upload({
   }, [selectedFile]);
 
   return (
-<<<<<<< HEAD
     <div className="flex flex-col gap-1 space-y-2">
-=======
-    <div className="flex flex-col space-y-2">
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       <label className="text-sm text-richblack-5" htmlFor={name}>
         {label} {!viewData && <sup className="text-pink-200">*</sup>}
       </label>
