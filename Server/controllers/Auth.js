@@ -7,10 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const mailSender = require("../utils/mailSender");
-<<<<<<< HEAD
 const { passwordUpdated } = require("../mail/templates/passwordUpdate");
-=======
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
 require("dotenv").config();
 
 // sendf OTP
@@ -161,11 +158,7 @@ exports.signUp = async (req, res) => {
       gender: null,
       dateOfBirth: null,
       about: null,
-<<<<<<< HEAD
       contactNumber,
-=======
-      contactNumber: null,
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     });
     const user = await User.create({
       firstName,
@@ -185,11 +178,7 @@ exports.signUp = async (req, res) => {
       user,
     });
   } catch (error) {
-<<<<<<< HEAD
     console.error("Error ocurred in signUP controller: ", error.response);
-=======
-    console.error("Error ocurred in signUP controller: ", error.response.data);
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     console.log(error);
     return res.status(500).json({
       success: false,
@@ -223,11 +212,7 @@ exports.login = async (req, res) => {
     }
 
     // 3 --> check user is already exist or not
-<<<<<<< HEAD
     var user = await User.findOne({ email });
-=======
-    const user = await User.findOne({ email });
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -255,7 +240,6 @@ exports.login = async (req, res) => {
         httpOnly: true,
       };
 
-<<<<<<< HEAD
       const profileId = user.additionalDetails;
       const userId = user._id;
 
@@ -265,9 +249,6 @@ exports.login = async (req, res) => {
 
       user = userDetails;
       console.log("User Details: >>>>>> ", user);
-
-=======
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
       res.cookie("token", token, Option).status(200).json({
         success: true,
         token,
@@ -296,8 +277,6 @@ exports.changePassword = async (req, res) => {
   try {
     // Get user data from req.user
     const userDetails = await User.findById(req.user.id);
-
-<<<<<<< HEAD
     console.log(userDetails);
 
     // Get old password, new password, and confirm new password from req.body
@@ -354,60 +333,6 @@ exports.changePassword = async (req, res) => {
       });
     }
 
-=======
-    // Get old password, new password, and confirm new password from req.body
-    const { oldPassword, newPassword, confirmNewPassword } = req.body;
-
-    // Validate old password
-    const isPasswordMatch = await bcrypt.compare(
-      oldPassword,
-      userDetails.password
-    );
-    if (!isPasswordMatch) {
-      // If old password does not match, return a 401 (Unauthorized) error
-      return res
-        .status(401)
-        .json({ success: false, message: "The password is incorrect" });
-    }
-
-    // Match new password and confirm new password
-    if (newPassword !== confirmNewPassword) {
-      // If new password and confirm new password do not match, return a 400 (Bad Request) error
-      return res.status(400).json({
-        success: false,
-        message: "The password and confirm password does not match",
-      });
-    }
-
-    // Update password
-    const encryptedPassword = await bcrypt.hash(newPassword, 10);
-    const updatedUserDetails = await User.findByIdAndUpdate(
-      req.user.id,
-      { password: encryptedPassword },
-      { new: true }
-    );
-
-    // Send notification email
-    try {
-      const emailResponse = await mailSender(
-        updatedUserDetails.email,
-        passwordUpdated(
-          updatedUserDetails.email,
-          `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
-        )
-      );
-      console.log("Email sent successfully:", emailResponse.response);
-    } catch (error) {
-      // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
-      console.error("Error occurred while sending email:", error);
-      return res.status(500).json({
-        success: false,
-        message: "Error occurred while sending email",
-        error: error.message,
-      });
-    }
-
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
     // Return success response
     return res
       .status(200)
