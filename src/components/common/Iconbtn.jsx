@@ -10,7 +10,6 @@ function Iconbtn({
   type,
 }) {
   return (
-<<<<<<< HEAD
     <button
       disabled={disabled}
       type={type}
@@ -21,11 +20,6 @@ function Iconbtn({
     >
       {children ? (
         <div className={customClasses}>
-=======
-    <button disabled={disabled} type={type} onClick={onClick}>
-      {children ? (
-        <div className="flex flex-row gap-2 items-center">
->>>>>>> 7953e65eac7bf48d4a32f70a1e4bdc97f2183dc7
           <span>{text}</span>
           {children}
         </div>
