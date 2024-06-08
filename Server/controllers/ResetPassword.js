@@ -2,6 +2,7 @@
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
+const crypto = require ("crypto");
 
 // resetPasswordEmail
 exports.resetPasswordEmail = async (req, res) => {
@@ -38,10 +39,12 @@ exports.resetPasswordEmail = async (req, res) => {
             {email: email},
             {
                 token: token,
-                resetPasswordExpires: Date.now() + 5*60*1000, 
+                resetPasswordExpires: Date.now() + 15*60*1000,  // token valid up 15min
             },
             {new: true},
         );
+
+        console.log("updatedDetails",updatedDetails);
 
         // Step: 5 --> create url
         const url = `http://localhost:3000/update-password/${token}`;
@@ -63,7 +66,7 @@ exports.resetPasswordEmail = async (req, res) => {
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "Somthing went wrong reset password mail !!",
+            message: "Somthing Went Wrong When Sending Reset Password Mail !!",
         });
     }
 
@@ -121,6 +124,8 @@ exports.resetPassword = async (req, res) => {
             });
 
         }
+
+        console.log( password );
 
         // Step: 6 --> if password is not expired then hash password 
         const hashedPassword = await bcrypt.hash(password, 10);
