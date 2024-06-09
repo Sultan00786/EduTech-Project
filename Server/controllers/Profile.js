@@ -172,14 +172,14 @@ exports.updateDisplayPicture = async (req, res) => {
     // console.log("REQuenst...........", req);
     const displayPicture = req.files.displayPicture;
     const userId = req.user.id;
-    console.log(userId);
+    console.log(userId, displayPicture);
     const image = await uploadImageToCloudinary(
       displayPicture,
       process.env.FOLDER_NAME,
       1000,
       1000
     );
-    // console.log(image);
+    console.log("Image >> ", image);
     await User.updateOne(
       { _id: userId },
       {
