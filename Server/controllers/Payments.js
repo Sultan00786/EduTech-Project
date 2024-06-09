@@ -1,16 +1,21 @@
 const { instance } = require("../config/razorpay");
 const Course = require("../models/Course");
 const User = require("../models/User");
-const { mailSender } = require("../utils/mailSender");
+const mailSender = require("../utils/mailSender");
+const crypto = require("crypto");
 const {
   courseEnrollmentEmail,
 } = require("../mail/templates/courseEnrollmentEmail");
 const { default: mongoose } = require("mongoose");
+const {
+  paymentSuccessEmail,
+} = require("../mail/templates/paymentSuccessEmail");
 
 // for multiple order
 
 exports.capturePayment = async (req, res) => {
-  const { courses } = req.dody;
+  const { courses } = req.body;
+  console.log(courses);
   const userId = req.user.id;
 
   if (courses.length === 0) {
@@ -75,32 +80,35 @@ exports.capturePayment = async (req, res) => {
 };
 
 // verify Signature of Razorpay and Server
-exports.verifySignature = async (res, req) => {
+exports.verifySignature = async (req, res) => {
   const razorpay_order_id = req.body?.razorpay_order_id;
-  const razorpay_payement_id = req.razorpay_payement_id;
+  const razorpay_payement_id = req.body?.razorpay_payment_id;
   const razorpay_signature = req.body?.razorpay_signature;
   const courses = req.body?.courses;
   const userId = req.user?.id;
 
-  if (
-    !razorpay_order_id ||
-    !razorpay_payement_id ||
-    !razorpay_signature ||
-    !courses ||
-    !userId
-  ) {
-    return res.status(200).json({
-      success: false,
-      message: "Payment Failed",
-    });
-  }
+  console.log(req.body);
 
-  const body = razorpay_order_id + "|" + razorpay_payement_id;
+  // if (
+  //   !razorpay_order_id ||
+  //   !razorpay_payement_id ||
+  //   !razorpay_signature ||
+  //   !courses ||
+  //   !userId
+  // )
+  //   return res.status(200).json({
+  //     success: false,
+  //     message: "Payment Fail",
+  //   });
 
+  let body = razorpay_order_id + "|" + razorpay_payement_id;
   const expectedSigniture = crypto
-    .createHamac("sha256", process.env.RAZORPAY_SECRET)
+    .createHmac("sha256", process.env.RAZORPAY_SECRET)
     .update(body.toString())
     .digest("hex");
+
+  console.log(expectedSigniture);
+  console.log(razorpay_signature);
 
   if (expectedSigniture == razorpay_signature) {
     // enrolled students in courses
@@ -114,7 +122,7 @@ exports.verifySignature = async (res, req) => {
   }
 
   return res.status(200).json({
-    success: "false",
+    success: false,
     message: "expectedSigniture is not valid, Payment Failed",
   });
 };
@@ -163,6 +171,35 @@ const enrollStudentFunc = async (courses, userId, res) => {
         message: error.message,
       });
     }
+  }
+};
+
+exports.sendPaymentSuccesssEmail = async (req, res) => {
+  const { orderId, paymentId, amount } = req.body;
+  const userId = req.user.id;
+
+  if (!orderId || !paymentId || !amount || !userId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Please provide all the fields" });
+  }
+
+  try {
+    // find student
+    const enrolledStudent = await User.findById(userId);
+    await mailSender(
+      enrolledStudent.email,
+      `Payment Recieved`,
+      paymentSuccessEmail(`${enrolledStudent.firstName}`),
+      amount / 100,
+      orderId,
+      paymentId
+    );
+  } catch (error) {
+    console.log("error in sending main :", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Could not send email" });
   }
 };
 
