@@ -38,11 +38,9 @@ function ChangeProfilePicture() {
     try {
       console.log("Uploading....");
       const formData = new FormData();
-      console.log("formData: \n", formData);
+      console.log("formData: \n", imgFile);
 
       formData.append("displayPicture", imgFile); // append function take input as key-value paire
-
-      console.log("formData: \n", formData.files);
       dispatch(changeProfilePicture(token, formData));
     } catch (error) {
       console.log("ERROR MESSAGE in handleFileUpload - ", error.message);

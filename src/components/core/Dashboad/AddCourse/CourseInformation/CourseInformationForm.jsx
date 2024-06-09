@@ -33,6 +33,7 @@ function CourseInformationForm() {
 
   const [tagList, setTagList] = useState([]);
   useEffect(() => {
+    toast.error("Must Select the Category");
     const getCategories = async () => {
       setLoading(true);
       const categories = await fetchCourseCategories();
@@ -178,7 +179,9 @@ function CourseInformationForm() {
             {...register("courseTitle", { required: true })}
             className=" w-full form-style"
           />
-          {errors.courseTitle && <span>Course Title is required</span>}
+          {editCourse
+            ? ""
+            : errors.courseTitle && <span>Course Title is required</span>}
         </div>
 
         <div className="flex flex-col gap-1">
@@ -192,9 +195,11 @@ function CourseInformationForm() {
             {...register("courseShortDesc", { required: true })}
             className="form-style"
           />
-          {errors.courseShortDesc && (
-            <span>Course Discription is required</span>
-          )}
+          {editCourse
+            ? ""
+            : errors.courseShortDesc && (
+                <span>Course Discription is required</span>
+              )}
         </div>
 
         <div className=" relative flex flex-col gap-1">
@@ -211,7 +216,9 @@ function CourseInformationForm() {
             })}
             className=" w-full form-style"
           />
-          {errors.coursePrice && <span>Course Price is required</span>}
+          {editCourse
+            ? ""
+            : errors.coursePrice && <span>Course Price is required</span>}
 
           <HiOutlineCurrencyRupee className=" absolute top-1/2 left-2 text-richblack-400 text-2xl" />
         </div>
@@ -267,9 +274,11 @@ function CourseInformationForm() {
             {...register("courseBenefits", { required: true })}
             className="form-style w-full min-h-[130px]"
           />
-          {errors.courseBenefits && (
-            <span>Benefits of the course are required</span>
-          )}
+          {editCourse
+            ? ""
+            : errors.courseBenefits && (
+                <span>Benefits of the course are required</span>
+              )}
         </div>
 
         <RequirementFied

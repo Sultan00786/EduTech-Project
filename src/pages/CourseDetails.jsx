@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchCourseDetails } from "../services/operations/courseDetailsAPI";
 import RatingStars from "../components/common/RatingStars";
 import GetAvgRating from "../utils/avgRating";
@@ -7,10 +7,15 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import Iconbtn from "../components/common/Iconbtn";
 import { MdArrowRight } from "react-icons/md";
 import Footer from "../components/common/Footer";
+import { buyCourse } from "../services/operations/studentFeatures";
+import { useDispatch, useSelector } from "react-redux";
 
 function CourseDetails() {
   const { courseId } = useParams();
-  console.log(courseId);
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [CourseDetails, setCourseDetais] = useState(null);
   const [avgReviewCount, setAvgReviewCount] = useState(0);
@@ -19,7 +24,6 @@ function CourseDetails() {
     const getCourseDetails = async () => {
       setLoading(true);
       const result = await fetchCourseDetails(courseId);
-      console.log("result >> ", result?.data[0]);
       if (result) setCourseDetais(result?.data[0]);
       setLoading(false);
     };
@@ -30,6 +34,13 @@ function CourseDetails() {
     const count = GetAvgRating(CourseDetails?.ratingAndReviews);
     setAvgReviewCount(count);
   }, [CourseDetails]);
+
+  const handleSubmitCourse = async () => {
+    if (token) {
+      buyCourse(token, [courseId], user, navigate, dispatch);
+      return;
+    }
+  };
 
   if (loading) {
     return (
@@ -81,6 +92,7 @@ function CourseDetails() {
                 </p>
                 <div className=" w-full flex flex-col gap-4">
                   <Iconbtn
+                    onClick={handleSubmitCourse}
                     customClasses={"w-full flex items-center justify-center"}
                     text={"Buy Now"}
                   />
