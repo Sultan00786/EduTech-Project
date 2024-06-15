@@ -80,7 +80,7 @@ router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 // Delete spesific course
 router.post("/deleteCourse", auth, isInstructor, deleteCourse);
 // Get Full details of couse
-router.post("/getFullCourseDetails", auth, isInstructor, getFullCourseDetails);
+router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)
