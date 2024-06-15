@@ -10,7 +10,7 @@ const { convertSecondsToDuration } = require("../utils/secToDuration");
 // createCourse handler function
 
 exports.createCourse = async (req, res) => {
-  console.log(" >> >> ", req.files);
+  // console.log(" >> >> ", req.files);
   try {
     // fetch all data from creating the course
     const {
@@ -59,7 +59,7 @@ exports.createCourse = async (req, res) => {
     const instructorDtails = await User.findById(userId);
     // TODO: Verify that userId and instructorDtails._ are same or not ?
 
-    console.log("Instructor Details: ", instructorDtails);
+    // console.log("Instructor Details: ", instructorDtails);
     if (!instructorDtails) {
       return res.status(404).json({
         success: false,
@@ -76,7 +76,7 @@ exports.createCourse = async (req, res) => {
         message: "Category Details not found",
       });
     }
-    console.log("Category ID: ", CategoryDetails);
+    // console.log("Category ID: ", CategoryDetails);
 
     // Uplaod Image to cloudinary
     const thumbnailImage = await uploadImageToCloudinary(
@@ -129,7 +129,7 @@ exports.createCourse = async (req, res) => {
       { new: true }
     );
 
-    console.log("Updated wli category:\n", updCat);
+    // console.log("Updated wli category:\n", updCat);
 
     // return response
     return res.status(200).json({
@@ -162,7 +162,7 @@ exports.editCourse = async (req, res) => {
 
     // If Thumbnail Image is found, update it
     if (req.files) {
-      console.log("thumbnail update", req.files);
+      // console.log("thumbnail update", req.files);
       const thumbnail = req.files.thumbnail;
       const thumbnailImage = await uploadImageToCloudinary(
         thumbnail,
@@ -316,7 +316,7 @@ exports.getFullCourseDetails = async (req, res) => {
       userId: userId,
     });
 
-    console.log("courseProgressCount : ", courseProgressCount);
+    // console.log("courseProgressCount : ", courseProgressCount);
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -391,7 +391,7 @@ exports.deleteCourse = async (req, res) => {
   try {
     const { courseId } = req.body;
 
-    console.log(req.body);
+    // console.log(req.body);
 
     // Find the course
     const course = await Course.findById(courseId);

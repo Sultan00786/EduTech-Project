@@ -30,7 +30,7 @@ exports.createCategory = async (req, res) => {
       name: name,
       description: description,
     });
-    console.log("Category Details is: ", CategoryDetails);
+    // console.log("Category Details is: ", CategoryDetails);
 
     // return res
     return res.status(200).json({
@@ -106,7 +106,7 @@ exports.categoryPageDetails = async (req, res) => {
 
     // Handle the case when there are no courses
     if (selectedCetogry.courses.length === 0) {
-      console.log("No courses found for the selected category.");
+      // console.log("No courses found for the selected category.");
       return res.status(404).json({
         success: false,
         message: "No courses found for the selected category.",
@@ -128,7 +128,7 @@ exports.categoryPageDetails = async (req, res) => {
       })
       .exec();
 
-    console.log("Different Course: ", differentCategory);
+    // console.log("Different Course: ", differentCategory);
 
     // * Step: 5 --> get top selling courses
     const allCategories = await Category.find()

@@ -6,6 +6,7 @@ import { AiFillPlayCircle } from "react-icons/ai";
 import Iconbtn from "../../common/Iconbtn";
 import { MdFlatware } from "react-icons/md";
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice";
+import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
 
 function VideoDetails() {
   const { courseId, sectionId, subSectionId } = useParams();
@@ -140,10 +141,10 @@ function VideoDetails() {
     ///dummy code, baad me we will replace it witht the actual call
     setLoading(true);
     //PENDING - > Course Progress PENDING
-    // const res = await markLectureAsComplete(
-    //   { courseId: courseId, subSectionId: subSectionId },
-    //   token
-    // );
+    const res = await markLectureAsComplete(
+      { courseId: courseId, subSectionId: subSectionId },
+      token
+    );
     //state update
     if (true) {
       dispathch(updateCompletedLectures(subSectionId));
