@@ -28,12 +28,16 @@ function CourseCard({ course, Height }) {
             <p>
               {course?.instructor?.firstName} {course?.instructor?.lastName}
             </p>
-            <div className="flex gap2 ">
+            <div className="flex gap-2 ">
               <span>{avgReviewCount || 0}</span>
               <RatingStars Review_Count={avgReviewCount || 0} />
-              <span>{course?.ratingAndReviews?.length} Ratings</span>
+              <span className=" text-richblack-300 text-sm">
+                {course?.ratingAndReviews?.length} Ratings
+              </span>
             </div>
-            <p>{course?.price}</p>
+            <p className=" font-bold text-richblack-5 text-xl">
+              Rs. {course?.price}
+            </p>
           </div>
         </div>
       </Link>

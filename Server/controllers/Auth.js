@@ -60,7 +60,7 @@ exports.sendOTP = async (req, res) => {
       email: email,
       otp: otp,
     });
-    console.log("otp body \n", otpBody);
+    // console.log("otp body \n", otpBody);
 
     // return response successful
     return res.status(200).json({
@@ -135,7 +135,7 @@ exports.signUp = async (req, res) => {
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-    console.log("Recent OTP is: ", recentOtp[0].otp);
+    // console.log("Recent OTP is: ", recentOtp[0].otp);
 
     // then validation karlo OTP
     if (!recentOtp[0].otp) {
@@ -228,7 +228,7 @@ exports.login = async (req, res) => {
         accountType: user.accountType,
       };
 
-      console.log("Payload of token: ", payload);
+      // console.log("Payload of token: ", payload);
 
       const token = jwt.sign(payload, process.env.JWT_SECRET);
       user.token = token; // transfer token in user json object
@@ -248,7 +248,7 @@ exports.login = async (req, res) => {
         .exec();
 
       user = userDetails;
-      console.log("User Details: >>>>>> ", user);
+      // console.log("User Details: >>>>>> ", user);
       res.cookie("token", token, Option).status(200).json({
         success: true,
         token,
@@ -277,7 +277,7 @@ exports.changePassword = async (req, res) => {
   try {
     // Get user data from req.user
     const userDetails = await User.findById(req.user.id);
-    console.log(userDetails);
+    // console.log(userDetails);
 
     // Get old password, new password, and confirm new password from req.body
     const { oldPassword, newPassword, confirmNewPassword } = req.body;

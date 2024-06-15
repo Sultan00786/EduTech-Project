@@ -19,11 +19,13 @@ function CourseDetails() {
   const [loading, setLoading] = useState(false);
   const [CourseDetails, setCourseDetais] = useState(null);
   const [avgReviewCount, setAvgReviewCount] = useState(0);
+  const [lecturesLength, setLectrueLength] = useState();
 
   useEffect(() => {
     const getCourseDetails = async () => {
       setLoading(true);
       const result = await fetchCourseDetails(courseId);
+      console.log("course >> ", result?.data[0]);
       if (result) setCourseDetais(result?.data[0]);
       setLoading(false);
     };
@@ -33,6 +35,13 @@ function CourseDetails() {
   useEffect(() => {
     const count = GetAvgRating(CourseDetails?.ratingAndReviews);
     setAvgReviewCount(count);
+
+    // finding no. of Lectures
+    let numLecture = 0;
+    CourseDetails?.courseContent?.map((section) => {
+      numLecture += section?.subSection?.length;
+    });
+    setLectrueLength(numLecture);
   }, [CourseDetails]);
 
   const handleSubmitCourse = async () => {
@@ -120,11 +129,30 @@ function CourseDetails() {
         </div>
       </div>
 
-      <div>
-        <div>
-          <div></div>
-          <div></div>
-          <div></div>
+      <div className=" w-11/12 mx-auto ">
+        <div className=" w-11/12 mx-auto">
+          <div className=" w-[850px] mt-9">
+            <div className=" p-6 flex flex-col gap-4 border-richblack-400 border-[1px]">
+              <h1 className=" text-richblack-5 text-3xl font-bold">
+                What you'll learn
+              </h1>
+              <p className=" text-richblack-5">
+                {CourseDetails?.whatYouWillLearn}
+              </p>
+            </div>
+
+            <div>
+              <h2>Course Content</h2>
+              <div>
+                <p>
+                  {CourseDetails?.courseContent?.length} section(s){" "}
+                  {lecturesLength} lectures() 10s total length
+                </p>
+              </div>
+            </div>
+
+            <div></div>
+          </div>
         </div>
       </div>
       {/* <Footer /> */}

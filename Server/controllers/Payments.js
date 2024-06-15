@@ -10,6 +10,7 @@ const { default: mongoose } = require("mongoose");
 const {
   paymentSuccessEmail,
 } = require("../mail/templates/paymentSuccessEmail");
+const CourseProgress = require("../models/CourseProgress");
 
 // for multiple order
 
@@ -149,10 +150,18 @@ const enrollStudentFunc = async (courses, userId, res) => {
           .json({ success: false, message: "Course not Found" });
       }
 
+      const courseProgress = await CourseProgress.create({
+        courseID: courseId,
+        userId: userId,
+        completedVideos: [],
+      });
+
+      console.log("Course Progress create >> ", courseProgress);
+
       // fint student and add the course to thier list of enrolledCourses
       const enrolledStudent = await User.findByIdAndUpdate(
         userId,
-        { $push: { courses: courseId } },
+        { $push: { courses: courseId, courseProgress: courseProgress._id } },
         { new: true }
       );
 

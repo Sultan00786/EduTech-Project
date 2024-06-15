@@ -3,13 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 import { logout } from "../../../services/operations/authAPI";
+import ConfirmationModal from "../../common/ConfirmationModal";
 
 function ProfileDropDown() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user, image } = useSelector((state) => state.profile);
+  const [confirmationModal, setConfirmationModal] = useState(null);
+
+  const data = {
+    text1: "Are you sure?",
+    text2: "You wiil be logged out from your account?",
+    btn1Text: "Logout",
+    btn2Text: "Cancel",
+    btn1Handler: () => dispatch(logout(navigate)),
+    btn2Handler: () => setConfirmationModal(null),
+  };
 
   const [showMenue, setShowMenue] = useState(false);
+
+  function confirmationHandler() {
+    setConfirmationModal(data);
+  }
 
   return (
     <div
@@ -41,13 +56,11 @@ function ProfileDropDown() {
         >
           Dashboard
         </div>
-        <div
-          className="cursor-pointer "
-          onClick={() => dispatch(logout(navigate))}
-        >
+        <div className="cursor-pointer " onClick={() => confirmationHandler()}>
           LogOut
         </div>
       </div>
+      {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
     </div>
   );
 }
