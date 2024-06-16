@@ -79,6 +79,10 @@ const couresSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  progressPercentage: {
+    type: Number,
+    require: true,
+  },
 });
 
 module.exports = mongoose.model("Course", couresSchema);

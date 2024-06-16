@@ -2,6 +2,7 @@ const { TopologyDescriptionChangedEvent } = require("mongodb");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const CourseProgress = require("../models/CourseProgress");
 
 // udate Profile
 exports.updateProfile = async (req, res) => {
@@ -222,6 +223,29 @@ exports.getEnrolledCourses = async (req, res) => {
         },
       })
       .exec();
+
+    for (let i = 0; i < userDetails.courses.length; i++) {
+      const courseProgress = await CourseProgress.findOne({
+        userId: userId,
+        courseID: userDetails.courses[i]._id,
+      }).populate("completedVideos");
+
+      // console.log("CourseProgress >> ", courseProgress);
+
+      let totalProgressInSec = 0;
+      for (let j = 0; j < courseProgress.completedVideos.length; j++) {
+        totalProgressInSec += parseFloat(
+          courseProgress.completedVideos[j].timeDuration
+        );
+      }
+      const totalDurationInSec = userDetails.courses[i].durationInSecond;
+      const ans = (totalProgressInSec / totalDurationInSec) * 100;
+      console.log(totalProgressInSec);
+      console.log(totalDurationInSec);
+      userDetails.courses[i].progressPercentage = Math.floor(ans);
+      await userDetails.courses[i].save();
+    }
+
     if (!userDetails) {
       return res.status(400).json({
         success: false,
