@@ -182,6 +182,8 @@ exports.editCourse = async (req, res) => {
       }
     }
 
+    // 
+
     await course.save();
 
     const updatedCourse = await Course.findOne({
@@ -241,7 +243,6 @@ exports.getAllCourses = async (req, res) => {
 };
 
 // getCourseDetails
-
 exports.getCourseDetails = async (req, res) => {
   try {
     // get id

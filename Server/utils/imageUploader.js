@@ -12,12 +12,12 @@ const uploadImageToCloudinary = async (file, folder, height, quality) => {
   }
 
   try {
-    console.log("hellow response >> ", file.tempFilePath);
+    // console.log("hellow response >> ", file.tempFilePath);
     const response = await cloudinary.uploader.upload(
       file.tempFilePath,
       options
     );
-    console.log("hellow response >> ", response);
+    // console.log("hellow response >> ", response);
     return response;
   } catch (error) {
     console.log(error);

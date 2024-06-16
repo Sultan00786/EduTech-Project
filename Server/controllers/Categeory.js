@@ -4,7 +4,6 @@ function getRandomInt(max) {
 }
 
 // createe Category ka handler function
-
 exports.createCategory = async (req, res) => {
   /**
    * Step: 1 --> data fetch
@@ -47,7 +46,6 @@ exports.createCategory = async (req, res) => {
 };
 
 // Get All Categorys ka handler function
-
 exports.showAllCategories = async (req, res) => {
   try {
     const allCategorys = await Category.find(
