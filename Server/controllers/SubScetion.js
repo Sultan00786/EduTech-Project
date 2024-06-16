@@ -37,10 +37,12 @@ exports.createSubSection = async (req, res) => {
       process.env.FOLDER_NAME
     );
 
+    // console.log("video >>>> ", uplaodDetials.duration);
+
     // * Step: 5 --> create a sub section
     const SubSectionDetails = await SubSection.create({
       title: title,
-      timeDuration: timeDuration,
+      timeDuration: uplaodDetials.duration,
       description: description,
       videoUrl: uplaodDetials.secure_url,
     });
