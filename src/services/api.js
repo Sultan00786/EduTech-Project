@@ -21,6 +21,7 @@ export const profileEndPoint = {
 export const profileEndpoints = {
   GET_USER_DETAILS_API: BASE_URL + "/profile/getUserDetails",
   GET_USER_ENROLLED_COURSES_API: BASE_URL + "/profile/getEnrolledCourses",
+  GET_INSTRUCTOR_DATA_API: BASE_URL + "/profile/instructorDashboard",
 };
 
 // STUDENTS ENDPOINTS
