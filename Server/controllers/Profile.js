@@ -3,6 +3,7 @@ const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const CourseProgress = require("../models/CourseProgress");
+const Course = require("../models/Course");
 
 // udate Profile
 exports.updateProfile = async (req, res) => {
@@ -260,6 +261,39 @@ exports.getEnrolledCourses = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: error.message,
+    });
+  }
+};
+
+exports.instructorDashboard = async (req, res) => {
+  console.log("hellow");
+  try {
+    const courseDetail = await Course.find({ instructor: req.user.id });
+
+    // console.log(courseDetail);
+
+    const courseData = courseDetail.map((course) => {
+      const totalStudentsEnrolled = course.studentsEnrolled.length;
+      const totalAmountGenerated = totalStudentsEnrolled * course.price;
+
+      // create an new object with the additional fields
+      const courseDataWithStats = {
+        _id: course._id,
+        courseName: course.courseName,
+        courseDiscription: course.courseDiscription,
+        totalStudentsEnrolled: totalStudentsEnrolled,
+        totalAmountGenerated: totalAmountGenerated,
+      };
+      return courseDataWithStats;
+    });
+
+    res.status(200).json({
+      courses: courseData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 };
