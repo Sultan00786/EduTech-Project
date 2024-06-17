@@ -27,6 +27,7 @@ import Catalog from "./pages/Catalog";
 import CourseDetails from "./pages/CourseDetails";
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+import Instructor from "./components/core/Dashboad/InstructorDashboard/Instructor";
 
 function App() {
   const { user } = useSelector((state) => state.profile);
@@ -114,6 +115,7 @@ function App() {
                 path="dashboard/edit-course/:courseId"
                 element={<EditCourse />}
               />
+              <Route path="dashboard/instructor" element={<Instructor />} />
             </>
           )}
         </Route>
