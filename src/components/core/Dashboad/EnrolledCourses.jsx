@@ -40,7 +40,7 @@ function EnrolledCourses() {
           <div className=" border-[1px] border-richblack-700 rounded-xl ">
             <div className=" bg-richblack-700 rounded-t-xl flex flex-row items-center px-6 py-3 text-richblack-5 font-semibold text-lg">
               <p className=" w-[45%]">Course Name</p>
-              <p className=" w-[25%]">Duration</p>
+              <p className="w-[25%] flex flex-col items-start ">Duration</p>
               <p className=" w-[30%]">Progress</p>
             </div>
 
@@ -73,7 +73,9 @@ function EnrolledCourses() {
                 </div>
 
                 {/* <div className="w-[25%]">{course?.totalDuration}</div> */}
-                <div className="w-[25%]">10s</div>
+                <div className="w-[25%] flex flex-col items-start ">
+                  {course?.totalDuration}
+                </div>
 
                 <div className="w-[30%] flex flex-col gap-2">
                   <p>Progress: {course.progressPercentage || 0}%</p>

@@ -15,6 +15,10 @@ import {
   updateSection,
 } from "../../../../../services/operations/courseDetailsAPI";
 import NestedView from "./NestedView";
+import { apiConnector } from "../../../../../services/apiconnector";
+import { courseEndpoints } from "../../../../../services/api";
+
+const {CREAT_COURSE_DURATION} = courseEndpoints;
 
 function CourseBuilder() {
   const {
@@ -40,7 +44,7 @@ function CourseBuilder() {
     dispatch(setEditCourse(true));
   };
 
-  const goToNext = () => {
+  const goToNext = async() => {
     // console.log(course);
 
     if (course.courseContent.length === 0) {
@@ -53,6 +57,16 @@ function CourseBuilder() {
     ) {
       toast.error("Please add atleast one lecture in each section");
       return;
+    }
+
+    try {
+      setLoading(true);
+      const result = await apiConnector("POST", CREAT_COURSE_DURATION, {courseId: course._id});
+      console.log(result);
+      setLoading(false)
+    } catch (error) {
+      console.log(error);
+      throw error.message;
     }
 
     // if everything is good

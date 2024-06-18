@@ -2,6 +2,8 @@ const { TopologyDescriptionChangedEvent } = require("mongodb");
 const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const CourseProgress = require("../models/CourseProgress");
+const Course = require("../models/Course");
 
 // udate Profile
 exports.updateProfile = async (req, res) => {
@@ -222,6 +224,29 @@ exports.getEnrolledCourses = async (req, res) => {
         },
       })
       .exec();
+
+    for (let i = 0; i < userDetails.courses.length; i++) {
+      const courseProgress = await CourseProgress.findOne({
+        userId: userId,
+        courseID: userDetails.courses[i]._id,
+      }).populate("completedVideos");
+
+      // console.log("CourseProgress >> ", courseProgress);
+
+      let totalProgressInSec = 0;
+      for (let j = 0; j < courseProgress.completedVideos.length; j++) {
+        totalProgressInSec += parseFloat(
+          courseProgress.completedVideos[j].timeDuration
+        );
+      }
+      const totalDurationInSec = userDetails.courses[i].durationInSecond;
+      const ans = (totalProgressInSec / totalDurationInSec) * 100;
+      console.log(totalProgressInSec);
+      console.log(totalDurationInSec);
+      userDetails.courses[i].progressPercentage = Math.floor(ans);
+      await userDetails.courses[i].save();
+    }
+
     if (!userDetails) {
       return res.status(400).json({
         success: false,
@@ -236,6 +261,39 @@ exports.getEnrolledCourses = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: error.message,
+    });
+  }
+};
+
+exports.instructorDashboard = async (req, res) => {
+  console.log("hellow");
+  try {
+    const courseDetail = await Course.find({ instructor: req.user.id });
+
+    // console.log(courseDetail);
+
+    const courseData = courseDetail.map((course) => {
+      const totalStudentsEnrolled = course.studentsEnrolled.length;
+      const totalAmountGenerated = totalStudentsEnrolled * course.price;
+
+      // create an new object with the additional fields
+      const courseDataWithStats = {
+        _id: course._id,
+        courseName: course.courseName,
+        courseDiscription: course.courseDiscription,
+        totalStudentsEnrolled: totalStudentsEnrolled,
+        totalAmountGenerated: totalAmountGenerated,
+      };
+      return courseDataWithStats;
+    });
+
+    res.status(200).json({
+      courses: courseData,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: "Internal Server Error",
     });
   }
 };

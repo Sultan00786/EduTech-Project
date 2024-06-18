@@ -44,7 +44,7 @@ const {
 } = require("../controllers/RatingAndReview");
 
 // Course Progress Import
-const { updateCourseProgress } = require("../controllers/CourseProgress");
+const { updateCourseProgress, createTotalCorseDuration } = require("../controllers/CourseProgress");
 
 // Importing Middlewares
 const {
@@ -86,6 +86,8 @@ router.post("/deleteCourse", auth, isInstructor, deleteCourse);
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 // Post Course Progress
 router.post("/updateCourseProgress", auth, updateCourseProgress);
+// Post total time duration of course
+router.post("/createTotalCorseDuration", createTotalCorseDuration);
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

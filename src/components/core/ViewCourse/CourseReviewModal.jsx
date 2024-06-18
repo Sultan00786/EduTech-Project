@@ -4,17 +4,18 @@ import { useSelector } from "react-redux";
 import ReactStars from "react-rating-stars-component";
 import Iconbtn from "../../common/Iconbtn";
 import { createRating } from "../../../services/operations/courseDetailsAPI";
+import { IoCloseCircleSharp } from "react-icons/io5";
 
 function CourseReviewModal({ setReviewModal }) {
   const { user } = useSelector((state) => state.profile);
   const { token } = useSelector((state) => state.auth);
-  const { courseExperience } = useSelector((state) => state.viewCourse);
+  const { courseEntireData } = useSelector((state) => state.viewCourse);
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm(); 
+  } = useForm();
 
   useEffect(() => {
     setValue("courseExperience", "");
@@ -28,7 +29,7 @@ function CourseReviewModal({ setReviewModal }) {
   const onSubmit = async (data) => {
     await createRating(
       {
-        courseId: courseExperience._id,
+        courseId: courseEntireData._id,
         rating: data.courseRating,
         review: data.courseExperience,
       },
@@ -37,12 +38,14 @@ function CourseReviewModal({ setReviewModal }) {
     setReviewModal(false);
   };
   return (
-    <div>
-      <div>
+    <div className="fixed inset-0 z-[1000] !mt-0 grid place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
+      <div className="p-5 bg-richblack-900 flex flex-col gap-2 w-[600px] rounded-xl border-[1px] border-richblack-500 ">
         {/* Modal Header */}
-        <div>
-          <p>Add Review</p>
-          <button onClick={() => setReviewModal(false)}>Close</button>
+        <div className="flex items-center justify-between">
+          <p className=" text-richblack-5 font-bold text-2xl">Add Review</p>
+          <button onClick={() => setReviewModal(false)}>
+            <IoCloseCircleSharp className=" text-richblack-300 text-xl" />
+          </button>
         </div>
 
         {/* Modal body */}
@@ -60,7 +63,10 @@ function CourseReviewModal({ setReviewModal }) {
               <p>Posting Pulblicly</p>
             </div>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className=" flex flex-col items-center"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             {/* stars */}
             <ReactStars
               count={5}
@@ -70,7 +76,7 @@ function CourseReviewModal({ setReviewModal }) {
             />
 
             {/* text area */}
-            <div>
+            <div className=" w-full">
               <label htmlFor="courseExperience" className="lable-style">
                 Add Your Experience
               </label>
@@ -86,8 +92,13 @@ function CourseReviewModal({ setReviewModal }) {
             </div>
 
             {/* buttons */}
-            <div>
-              <button onClick={() => setReviewModal(false)}>Cancle</button>
+            <div className=" w-full flex items-center justify-between">
+              <button
+                className="flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900"
+                onClick={() => setReviewModal(false)}
+              >
+                Cancle
+              </button>
               <Iconbtn type={"submit"} text={"Save"} />
             </div>
           </form>

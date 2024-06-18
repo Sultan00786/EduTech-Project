@@ -71,6 +71,18 @@ const couresSchema = new mongoose.Schema({
     type: String,
     enum: ["Draft", "Published"],
   },
+  totalDuration: {
+    type: String,
+    require: true,
+  },
+  durationInSecond: {
+    type: Number,
+    require: true,
+  },
+  progressPercentage: {
+    type: Number,
+    require: true,
+  },
 });
 
 module.exports = mongoose.model("Course", couresSchema);

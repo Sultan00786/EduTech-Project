@@ -33,7 +33,7 @@ function ViewCourse() {
         courseData?.courseDetails?.courseContent?.forEach((sec) => {
           lectures += sec.subSection.length;
         });
-        
+
         dispathch(setTotalNoOfLectures(lectures));
       }
     };
