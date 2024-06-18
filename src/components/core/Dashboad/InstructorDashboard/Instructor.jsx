@@ -110,8 +110,14 @@ function Instructor() {
         </div>
         <div className="flex items-center gap-3 justify-between">
           {courses?.map((course, index) => (
-            <div onClick={() => navigate(`/courses/${course?._id}`)}>
-              <img src={course?.thumbnail} className=" w-fit rounded-lg " />
+            <div
+              className=" cursor-pointer"
+              onClick={() => navigate(`/courses/${course?._id}`)}
+            >
+              <img
+                src={course?.thumbnail}
+                className=" w-fit rounded-lg aspect-[16/9] bg-cover "
+              />
               <p className=" text-richblue-5 font-semibold">
                 {course?.courseName}
               </p>
