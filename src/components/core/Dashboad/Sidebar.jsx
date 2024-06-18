@@ -38,8 +38,8 @@ function Sidebar() {
   }
 
   return (
-    <div className=" min-h-[100vh] ">
-      <div className="flex min-w-[222px] h-full flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblack-800 ">
+    <div className=" min-h-[calc[100vh - 3.5rem]] border-r-[1px] border-richblack-700  bg-richblack-800  ">
+      <div className="flex min-w-[222px] flex-col ">
         <div className="flex flex-col">
           {sidebarLinks.map((link) => {
             // console.log("------->",link.type);
