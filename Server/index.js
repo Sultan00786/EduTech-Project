@@ -14,7 +14,6 @@ const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
 
 dotenv.config();
-const PORT = process.env.PORT || 4000;
 
 // database Connect
 database.connect();
@@ -53,6 +52,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
   console.log(`App is running at ${PORT}`);
 });
