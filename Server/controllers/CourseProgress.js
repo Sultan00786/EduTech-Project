@@ -1,4 +1,3 @@
-const { Await } = require("react-router-dom");
 const CourseProgress = require("../models/CourseProgress");
 const SubSection = require("../models/SubSection");
 const Course = require("../models/Course");
