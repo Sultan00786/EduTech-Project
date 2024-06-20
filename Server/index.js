@@ -54,5 +54,5 @@ app.get("/", (req, res) => {
 
 const port = 10000;
 app.listen(port, () => {
-  console.log(`App is running at ${PORT}`);
+  console.log(`App is running at ${port}`);
 });
