@@ -18,14 +18,23 @@ dotenv.config();
 // database Connect
 database.connect();
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, Content-Type, Accept, Authorization"
+  );
+  next();
+});
+
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    // it entertain the frontend request
-    origin: process.env.CLIENT_SITE,
-    credentials: true,
+    origin: process.env.CLIENT_SITE, // Allow this origin
+    optionsSuccessStatus: 200,
   })
 );
 app.use(
@@ -52,7 +61,7 @@ app.get("/", (req, res) => {
   });
 });
 
-const port = 10000;
+const port = process.env.PORT;
 app.listen(port, () => {
-  console.log(`App is running at ${PORT}`);
+  console.log(`App is running at ${port}`);
 });
