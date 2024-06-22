@@ -33,9 +33,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    // it entertain the frontend request
-    origin: process.env.CLIENT_SITE,
-    credentials: true,
+    origin: process.env.CLIENT_SITE, // Allow this origin
+    optionsSuccessStatus: 200,
   })
 );
 app.use(
@@ -62,7 +61,7 @@ app.get("/", (req, res) => {
   });
 });
 
-const port = 10000;
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`App is running at ${port}`);
 });
