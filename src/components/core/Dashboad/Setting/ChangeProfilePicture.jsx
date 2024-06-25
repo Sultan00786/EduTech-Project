@@ -55,7 +55,7 @@ function ChangeProfilePicture() {
     <div className="flex flex-row items gap-x-3 rounded-md border-[1px] border-richblack-700 bg-richblack-800 px-10 py-7 text-richblack-5">
       <img
         className="aspect-square w-[78px] rounded-full object-cover"
-        src={user?.image}
+        src={previewSource ? previewSource : user?.image}
       />
 
       <div className=" flex flex-col text-richblack-5 font-semibold gap-3">
