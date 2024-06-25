@@ -106,7 +106,7 @@ function CoursesTable({ courses, setCourses }) {
               </td>
 
               <td className=" text-richblack-200 flex items-center justify-center">
-                <p>2hr 30min</p>
+                <p>{course?.totalDuration}</p>
               </td>
 
               <td className=" text-richblack-200 flex items-center gap-1">
