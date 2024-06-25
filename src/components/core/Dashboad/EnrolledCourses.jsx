@@ -68,7 +68,7 @@ function EnrolledCourses() {
                   className=" w-[45%] flex items-center gap-2"
                 >
                   <img
-                    className="h-14 w-14 rounded-lg object-cover"
+                    className="w-14 rounded-lg aspect-video object-cover"
                     src={course.thumbnail}
                   />
                   <div className=" flex flex-col gap-1">
