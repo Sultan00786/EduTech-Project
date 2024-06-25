@@ -7,7 +7,7 @@ import { ACCOUNT_TYPE } from "../../../utils/constants";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setSignupData } from "../../../slices/authSlice";
+import { setSignupData } from "../../../slices/authSlice"
 import { sendOtp } from "../../../services/operations/authAPI";
 
 function SignForm({ btnText }) {
