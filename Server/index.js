@@ -18,6 +18,13 @@ dotenv.config();
 // database Connect
 database.connect();
 
+app.options("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "https://example.com");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.sendStatus(204);
+});
+
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
