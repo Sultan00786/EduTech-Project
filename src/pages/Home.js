@@ -25,7 +25,7 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className=" h-full flex items-center justify-center">
+      <div className=" h-[92vh] flex items-center justify-center">
         <div className="loader"></div>
       </div>
     );
