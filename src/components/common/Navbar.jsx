@@ -3,7 +3,7 @@ import logo from "../../assets/Logo/Logo-Full-Light.png";
 import { NavbarLinks } from "../../data/navbar-links";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { HiOutlineShoppingCart, HiSearch } from "react-icons/hi";
 import ProfileDropDown from "../core/Auth/ProfileDropDown";
 import { apiConnector } from "../../services/apiconnector";
@@ -11,6 +11,7 @@ import { categories } from "../../services/api";
 import { IoIosArrowDown } from "react-icons/io";
 import { ACCOUNT_TYPE } from "../../utils/constants";
 import toast from "react-hot-toast";
+import { setLoading } from "../../slices/authSlice";
 
 function Navbar() {
   const location = useLocation();
@@ -18,6 +19,7 @@ function Navbar() {
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.profile);
   const { totalItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
 
   const matchPath = (path) => {
     return path === location.pathname ? true : false;
@@ -26,14 +28,15 @@ function Navbar() {
   const [subLinks, setSubLinks] = useState([]);
 
   const fetchSublinks = async () => {
+    dispatch(setLoading(true));
     try {
       const result = await apiConnector("GET", categories.CATEGORIES_API);
-      // console.log("Printing Sublinks result: ", result);
       setSubLinks(result.data.allCategorys);
     } catch (error) {
       console.log("Could Not Fetch The Category List");
       toast.error("Could Not Fetch The Category List");
     }
+    dispatch(setLoading(false));
   };
 
   useEffect(() => {
