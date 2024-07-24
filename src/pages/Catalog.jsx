@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { apiConnector } from "../services/apiconnector";
 import { categories } from "../services/api";
 import toast from "react-hot-toast";
@@ -13,6 +13,7 @@ const { CATEGORIES_API } = categories;
 
 const Catalog = () => {
   const { catalogName } = useParams();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [categoryDetails, setCategoryDetails] = useState();
 
@@ -36,7 +37,13 @@ const Catalog = () => {
         categoryId: currentCategory[0]._id,
       });
 
-      if (response) setCategoryDetails(response);
+      console.log("Response >> ", response);
+
+      if (response.length !== 0) setCategoryDetails(response);
+      else {
+        navigate("/");
+        toast.error("No Course available !!");
+      }
       // console.log("Details >> ", categoryDetails);
       setLoading(false);
     }

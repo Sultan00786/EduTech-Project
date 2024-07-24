@@ -33,8 +33,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.CLIENT_SITE, // Allow this origin
-    optionsSuccessStatus: 200,
+    origin: "*",
+    methods: "GET,PUT,POST,DELETE",
   })
 );
 app.use(

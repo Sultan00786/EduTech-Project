@@ -11,18 +11,18 @@ import { deleteCourse } from "../../../../services/operations/courseDetailsAPI";
 
 function CoursesTable({ courses, setCourses }) {
   const [confirmModal, setConfirmModal] = useState(null);
+  const [longDiscription, setLongDiscription] = useState(false);
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handlerDelete = async (courseId) => {
-
     setLoading(true);
     const result = deleteCourse({ courseId: courseId }, token); // always pass values in key value pairs
     if (result) {
       const updatedCourses = courses.filter((elem) => elem._id !== courseId);
-      // console.log(updatedCourses);
+      console.log(updatedCourses);
       setCourses(updatedCourses);
     }
     setLoading(false);
@@ -49,7 +49,7 @@ function CoursesTable({ courses, setCourses }) {
               <td className=" w-[60%] flex gap-2 mb-3">
                 <img
                   width={230}
-                  className=" rounded-md"
+                  className=" h-fit rounded-lg aspect-video object-cover"
                   src={course?.thumbnail}
                   alt={course.courseName}
                 />
@@ -59,8 +59,33 @@ function CoursesTable({ courses, setCourses }) {
                     {course.courseName}{" "}
                   </p>
                   <p className=" text-richblack-200 text-sm">
-                    {" "}
-                    {course.courseDiscription}{" "}
+                    {course?.courseDiscription?.length > 100 ? (
+                      longDiscription ? (
+                        <div>
+                          {course?.courseDiscription}
+                          <span
+                            onClick={() => setLongDiscription(!longDiscription)}
+                            className=" cursor-pointer text-richblack-50 hover:text-richblack-5 font-bold"
+                          >
+                            {" "}
+                            read less
+                          </span>
+                        </div>
+                      ) : (
+                        <div>
+                          {course?.courseDiscription?.substr(0, 100)}
+                          <span
+                            onClick={() => setLongDiscription(!longDiscription)}
+                            className=" cursor-pointer text-richblack-50 hover:text-richblack-5 font-bold"
+                          >
+                            {" "}
+                            read more
+                          </span>
+                        </div>
+                      )
+                    ) : (
+                      course?.courseDiscription
+                    )}
                   </p>
                   <p className=" text-richblack-50 text-md font-bold">
                     {" "}
@@ -81,7 +106,7 @@ function CoursesTable({ courses, setCourses }) {
               </td>
 
               <td className=" text-richblack-200 flex items-center justify-center">
-                <p>2hr 30min</p>
+                <p>{course?.totalDuration}</p>
               </td>
 
               <td className=" text-richblack-200 flex items-center gap-1">
