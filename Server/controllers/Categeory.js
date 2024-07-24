@@ -85,6 +85,7 @@ exports.categoryPageDetails = async (req, res) => {
   try {
     // * Step: 1 --> get categoryId
     const { categoryId } = req.body;
+    console.log("categoryId: ", categoryId);
     // * Step: 2 --> get cousrses for specified categoryId
     const selectedCetogry = await Category.findById(categoryId)
       .populate({
@@ -116,6 +117,8 @@ exports.categoryPageDetails = async (req, res) => {
       _id: { $ne: categoryId },
     });
 
+    console.log("selectedCetogry: ", selectedCetogry);
+
     let differentCategory = await Category.findOne(
       categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
         ._id
@@ -125,6 +128,8 @@ exports.categoryPageDetails = async (req, res) => {
         match: { status: "Published" },
       })
       .exec();
+
+    console.log("differentCategory: ", differentCategory);
 
     // console.log("Different Course: ", differentCategory);
 
@@ -145,6 +150,7 @@ exports.categoryPageDetails = async (req, res) => {
       .slice(0, 10);
 
     // * Step: 6 --> return res
+    console.log("mostSellingCourses: ", mostSellingCourses);
     return res.status(200).json({
       success: true,
       data: {
