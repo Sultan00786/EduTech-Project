@@ -225,6 +225,8 @@ exports.getEnrolledCourses = async (req, res) => {
       })
       .exec();
 
+    console.log(userDetails);
+
     for (let i = 0; i < userDetails.courses.length; i++) {
       const courseProgress = await CourseProgress.findOne({
         userId: userId,
@@ -241,8 +243,6 @@ exports.getEnrolledCourses = async (req, res) => {
       }
       const totalDurationInSec = userDetails.courses[i].durationInSecond;
       const ans = (totalProgressInSec / totalDurationInSec) * 100;
-      console.log(totalProgressInSec);
-      console.log(totalDurationInSec);
       userDetails.courses[i].progressPercentage = Math.floor(ans);
       await userDetails.courses[i].save();
     }

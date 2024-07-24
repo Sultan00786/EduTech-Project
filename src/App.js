@@ -34,7 +34,7 @@ function App() {
   return (
     <div className=" w-screen min-h-screen bg-richblack-900 flex flex-col font-inter">
       <Navbar />
-      <Routes>
+      <Routes >
         <Route path="/" element={<Home />} />
         <Route path="/catalog/:catalogName" element={<Catalog />} />
         <Route path="/courses/:courseId" element={<CourseDetails />} />

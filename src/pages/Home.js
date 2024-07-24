@@ -11,6 +11,7 @@ import InstructorSection from "../components/core/Homepage/InstructorSection";
 import ExploreMore from "../components/core/Homepage/ExploreMore";
 import Footer from "../components/common/Footer";
 import ReviewSlider from "../components/common/ReviewSlider";
+import { useSelector } from "react-redux";
 
 /**
  * Section 1
@@ -20,6 +21,16 @@ import ReviewSlider from "../components/common/ReviewSlider";
  */
 
 const Home = () => {
+  const { loading } = useSelector((state) => state.auth);
+
+  if (loading) {
+    return (
+      <div className=" h-[92vh] flex items-center justify-center">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
   return (
     <div>
       {/* Section 1 */}

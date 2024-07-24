@@ -15,7 +15,7 @@ const {
 
 export function sendOtp(email, navigate) {
   return async (dispatch) => {
-    const toatId = toast.loading("Loading...");
+    const toatId = toast.loading("Loading...")
     dispatch(setLoading(true));
 
     try {

@@ -38,7 +38,6 @@ function EditProfile() {
 
   const onsubmit = async (data) => {
     if (isFormUpdate(data)) {
-      console.log("hellow ??????????????????");
       const formData = new FormData();
       const values = getValues();
 

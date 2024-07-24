@@ -64,7 +64,7 @@ function CourseDetails() {
       <div className=" bg-richblack-800 py-14">
         <div className=" w-11/12 mx-auto">
           <div className=" relative w-11/12 mx-auto">
-            <div className="flex flex-col gap-2">
+            <div className=" w-[850px] flex flex-col gap-2">
               <h1 className=" text-richblue-5 text-4xl font-bold">
                 {CourseDetails?.courseName}
               </h1>
@@ -142,12 +142,15 @@ function CourseDetails() {
             </div>
 
             <div>
-              <h2>Course Content</h2>
-              <div>
-                <p>
-                  {CourseDetails?.courseContent?.length} section(s){" "}
-                  {lecturesLength} lectures() 10s total length
-                </p>
+              <h2 className="text-yellow-50 text-3xl font-semibold mt-5">
+                Course Content
+              </h2>
+              <div className=" pl-7 text-richblack-100 text-lg">
+                <ul>
+                  <li>{CourseDetails?.courseContent?.length} sections</li>
+                  <li>{lecturesLength} lectures</li>
+                  <li>{CourseDetails?.totalDuration} Total Length</li>
+                </ul>
               </div>
             </div>
 
@@ -155,7 +158,10 @@ function CourseDetails() {
           </div>
         </div>
       </div>
-      {/* <Footer /> */}
+
+      <div className="mt-32">
+        <Footer />
+      </div>
     </div>
   );
 }

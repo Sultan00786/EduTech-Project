@@ -35,7 +35,14 @@ function EnrolledCourses() {
             Loading..
           </div>
         ) : !enrolledCourses.length ? (
-          <p>You have not enrolled in any course yet</p> // enrolledCourse ki nahi lenght hie then
+          <div>
+            <p className="border-b border-b-richblack-400 pb-2 font-semibold text-richblack-400">
+              0 Enrolled Courses
+            </p>
+            <p className="mt-14 text-center text-3xl text-richblack-100">
+              You haven't Enrolled in any Course!!
+            </p>
+          </div>
         ) : (
           <div className=" border-[1px] border-richblack-700 rounded-xl ">
             <div className=" bg-richblack-700 rounded-t-xl flex flex-row items-center px-6 py-3 text-richblack-5 font-semibold text-lg">
@@ -61,7 +68,7 @@ function EnrolledCourses() {
                   className=" w-[45%] flex items-center gap-2"
                 >
                   <img
-                    className="h-14 w-14 rounded-lg object-cover"
+                    className="w-14 rounded-lg aspect-video object-cover"
                     src={course.thumbnail}
                   />
                   <div className=" flex flex-col gap-1">
