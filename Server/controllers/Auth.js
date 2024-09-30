@@ -105,6 +105,8 @@ exports.signUp = async (req, res) => {
       otp,
     } = req.body;
 
+    console.log("OTP is: ", otp);
+
     // Required data ka validation karlo
     if (!(firstName && lastName && email && password && confirmPassword)) {
       return res.status(403).json({
@@ -135,6 +137,8 @@ exports.signUp = async (req, res) => {
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
+
+    console.log("Recent OTP is: ", recentOtp);
     // console.log("Recent OTP is: ", recentOtp[0].otp);
 
     // then validation karlo OTP

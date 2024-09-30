@@ -20,8 +20,6 @@ database.connect();
 
 app.options("/", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "https://example.com");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.sendStatus(204);
 });
 
@@ -30,10 +28,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "*",
+    origin: process.env.CLINT_SITE,
     methods: "GET,PUT,POST,DELETE",
   })
 );
+
 app.use(
   fileUpload({
     useTempFiles: true,
@@ -58,7 +57,7 @@ app.get("/", (req, res) => {
   });
 });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 27017;
 app.listen(port, () => {
   console.log(`App is running at ${port}`);
 });
