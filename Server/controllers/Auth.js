@@ -55,7 +55,6 @@ exports.sendOTP = async (req, res) => {
     }
 
     // After unique otp, store that in DB
-    const otpPayload = { email, otp };
     const otpBody = await OTP.create({
       email: email,
       otp: otp,
