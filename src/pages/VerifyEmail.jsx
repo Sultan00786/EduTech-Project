@@ -75,7 +75,7 @@ const VerifyEmail = () => {
             </div>
 
             <button type="submit" onClick={submitHandler}>
-              <CTAButton>Verify Email</CTAButton>
+              <CTAButton active={true} >Verify Email</CTAButton>
             </button>
           </form>
 

@@ -19,25 +19,28 @@ dotenv.config();
 database.connect();
 
 app.options("/", (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "https://example.com");
-  res.sendStatus(204);
+   res.setHeader(
+      "Access-Control-Allow-Origin",
+      process.env.CLINT_SITE
+   );
+   res.sendStatus(204);
 });
 
 // middlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  cors({
-    origin: process.env.CLINT_SITE,
-    methods: "GET,PUT,POST,DELETE",
-  })
+   cors({
+      origin: process.env.CLINT_SITE,
+      methods: "GET,PUT,POST,DELETE",
+   })
 );
 
 app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/temp",
-  })
+   fileUpload({
+      useTempFiles: true,
+      tempFileDir: "/temp",
+   })
 );
 
 // cloudinary connection
@@ -51,13 +54,13 @@ app.use("/api/v1/payment", paymentRoutes);
 
 // def route
 app.get("/", (req, res) => {
-  return res.json({
-    success: true,
-    message: "Your server is up and running...",
-  });
+   return res.json({
+      success: true,
+      message: "Your server is up and running...",
+   });
 });
 
 const port = process.env.PORT || 27017;
 app.listen(port, () => {
-  console.log(`App is running at ${port}`);
+   console.log(`App is running at ${port}`);
 });
