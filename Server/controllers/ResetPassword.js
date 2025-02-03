@@ -45,6 +45,7 @@ exports.resetPasswordEmail = async (req, res) => {
 
       // Step: 5 --> create url
       const url = `${process.env.CLINT_SITE}/update-password/${token}`;
+      console.log(url);
 
       // Step: 6 --> Send mail containing the url
       await mailSender(

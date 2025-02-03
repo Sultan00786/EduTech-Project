@@ -19,10 +19,7 @@ dotenv.config();
 database.connect();
 
 app.options("/", (req, res) => {
-   res.setHeader(
-      "Access-Control-Allow-Origin",
-      process.env.CLINT_SITE
-   );
+   res.setHeader("Access-Control-Allow-Origin", process.env.CLINT_SITE);
    res.sendStatus(204);
 });
 
