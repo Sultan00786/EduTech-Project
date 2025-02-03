@@ -1,10 +1,9 @@
 import React from "react";
-import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { FaEarthAfrica } from "react-icons/fa6";
+import { HiChatBubbleLeftRight } from "react-icons/hi2";
 import { IoCall } from "react-icons/io5";
-import ContactFormSection from "../components/core/AboutPage/ContactFormSection";
-import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
+import ContactFormSection from "../components/core/AboutPage/ContactFormSection";
 
 function ContactUs() {
   return (
