@@ -43,7 +43,7 @@ function ViewCourse() {
 
   return (
     <div className="  flex min-h-[calc(100vh-3.5rem)] text-white">
-      <div className="flex w-full">
+      <div className="flex w-full ">
         <VideoDetailsSidebar setReviewModal={setReviewModal} />
         <div className=" w-full">
           <Outlet />

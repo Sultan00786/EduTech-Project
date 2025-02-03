@@ -46,8 +46,9 @@ function Navbar() {
 
    return (
       <div
-         className={`flex z-10 h-14 w-full items-center justify-center bg-richblack-800 border-b-[2px] border-b-richblack-700 ${
-            location.pathname.includes("dashboard") && "fixed"
+         className={`flex z-30 h-14 w-full items-center justify-center bg-richblack-800 border-b-[2px] border-b-richblack-700 ${
+            (location.pathname.includes("dashboard") && "fixed") ||
+            (location.pathname.includes("view-course") && "fixed")
          }`}
       >
          <div className="flex w-11/12 max-w-maxContent items-center justify-between">
