@@ -31,7 +31,6 @@ function Navbar() {
       dispatch(setLoading(true));
       try {
          const result = await apiConnector("GET", categories.CATEGORIES_API);
-         console.log(result);
          setSubLinks(result.data.allCategorys);
       } catch (error) {
          console.log(error);
@@ -56,7 +55,7 @@ function Navbar() {
             {/* nav link */}
             <nav>
                <ul className="flex gap-x-6 ">
-                  {NavbarLinks.map((link, index) => {
+                  {NavbarLinks?.map((link, index) => {
                      return (
                         <li key={index}>
                            {link.title === "Catalog" ? (
@@ -70,7 +69,7 @@ function Navbar() {
                                                     h-6 w-6 rotate-45 bg-richblack-5 rounded "
                                     ></div>
 
-                                    {subLinks.length ? (
+                                    {subLinks?.length ? (
                                        subLinks.map((subLinks, index) => {
                                           return (
                                              <Link

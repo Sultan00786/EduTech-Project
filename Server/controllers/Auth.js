@@ -41,7 +41,6 @@ exports.sendOTP = async (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    // console.log("OTP generated: ", otp);
 
     // check unique otp or not
     const result = await OTP.findOne({ otp: otp });
@@ -59,7 +58,6 @@ exports.sendOTP = async (req, res) => {
       email: email,
       otp: otp,
     });
-    // console.log("otp body \n", otpBody);
 
     // return response successful
     return res.status(200).json({
@@ -104,8 +102,6 @@ exports.signUp = async (req, res) => {
       otp,
     } = req.body;
 
-    console.log("OTP is: ", otp);
-
     // Required data ka validation karlo
     if (!(firstName && lastName && email && password && confirmPassword)) {
       return res.status(403).json({
@@ -136,9 +132,6 @@ exports.signUp = async (req, res) => {
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-
-    console.log("Recent OTP is: ", recentOtp);
-    // console.log("Recent OTP is: ", recentOtp[0].otp);
 
     // then validation karlo OTP
     if (!recentOtp[0].otp) {
@@ -231,8 +224,6 @@ exports.login = async (req, res) => {
         accountType: user.accountType,
       };
 
-      // console.log("Payload of token: ", payload);
-
       const token = jwt.sign(payload, process.env.JWT_SECRET);
       user.token = token; // transfer token in user json object
       user.password = undefined;
@@ -251,7 +242,6 @@ exports.login = async (req, res) => {
         .exec();
 
       user = userDetails;
-      // console.log("User Details: >>>>>> ", user);
       res.cookie("token", token, Option).status(200).json({
         success: true,
         token,
@@ -280,7 +270,7 @@ exports.changePassword = async (req, res) => {
   try {
     // Get user data from req.user
     const userDetails = await User.findById(req.user.id);
-    // console.log(userDetails);
+    
 
     // Get old password, new password, and confirm new password from req.body
     const { oldPassword, newPassword, confirmNewPassword } = req.body;
@@ -325,7 +315,7 @@ exports.changePassword = async (req, res) => {
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
       );
-      // console.log("Email sent successfully:", emailResponse);
+      
     } catch (error) {
       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
       console.error("Error occurred while sending email:", error);
