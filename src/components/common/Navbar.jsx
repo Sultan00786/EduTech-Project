@@ -30,10 +30,8 @@ function Navbar() {
    const fetchSublinks = async () => {
       dispatch(setLoading(true));
       try {
-         const result = await apiConnector(
-            "GET",
-            categories.CATEGORIES_API
-         );
+         const result = await apiConnector("GET", categories.CATEGORIES_API);
+         console.log(result);
          setSubLinks(result.data.allCategorys);
       } catch (error) {
          console.log(error);
@@ -73,23 +71,19 @@ function Navbar() {
                                     ></div>
 
                                     {subLinks.length ? (
-                                       subLinks.map(
-                                          (subLinks, index) => {
-                                             return (
-                                                <Link
-                                                   to={`/catalog/${subLinks.name
-                                                      .split(" ")
-                                                      .join("-")
-                                                      .toLowerCase()}`}
-                                                   key={index}
-                                                >
-                                                   {
-                                                      subLinks.name
-                                                   }
-                                                </Link>
-                                             );
-                                          }
-                                       )
+                                       subLinks.map((subLinks, index) => {
+                                          return (
+                                             <Link
+                                                to={`/catalog/${subLinks.name
+                                                   .split(" ")
+                                                   .join("-")
+                                                   .toLowerCase()}`}
+                                                key={index}
+                                             >
+                                                {subLinks.name}
+                                             </Link>
+                                          );
+                                       })
                                     ) : (
                                        <div></div>
                                     )}
@@ -123,16 +117,10 @@ function Navbar() {
                      <span className=" cursor-pointer ">
                         <HiSearch />
                      </span>
-                     {user?.accountType ===
-                        ACCOUNT_TYPE.STUDENT && (
-                        <Link
-                           to="/dashboard/cart"
-                           className="relative "
-                        >
+                     {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                        <Link to="/dashboard/cart" className="relative ">
                            <HiOutlineShoppingCart />
-                           {totalItems > 0 && (
-                              <span>{totalItems}</span>
-                           )}
+                           {totalItems > 0 && <span>{totalItems}</span>}
                         </Link>
                      )}
                   </div>
