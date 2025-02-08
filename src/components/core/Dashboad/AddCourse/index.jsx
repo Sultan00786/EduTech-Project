@@ -1,6 +1,7 @@
 import React from "react";
 import RenderSteps from "./RenderSteps";
 import logo from "../../../../assets/Logo/thunder-bolt-flash-lighting-icon-png.webp";
+import { use } from "react";
 
 function AddCourse() {
    return (
