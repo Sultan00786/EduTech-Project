@@ -119,7 +119,7 @@ function InstructorPieChart({ instructorData }) {
             ) : (
                <div className=" absolute top-[33%] left-[10%] w-10/12">
                   {filterIncomeData?.length == 0 && (
-                     <p className=" text-richblack-500 text-4xl font-bold text-center underline ">
+                     <p className=" z-10 text-richblack-500 text-4xl font-bold text-center underline ">
                         No data available for total Income Revenue
                      </p>
                   )}

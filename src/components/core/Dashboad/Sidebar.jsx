@@ -79,9 +79,11 @@ function Sidebar() {
             </button>
          </div>
 
-         {confirmationModal && (
-            <ConfirmationModal modalData={confirmationModal} />
-         )}
+         <div className=" z-50">
+            {confirmationModal && (
+               <ConfirmationModal modalData={confirmationModal} />
+            )}
+         </div>
       </div>
    );
 }
