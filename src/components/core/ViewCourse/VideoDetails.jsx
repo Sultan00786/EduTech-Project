@@ -162,7 +162,7 @@ function VideoDetails() {
             {!videoData ? (
                <div>No Data Found</div>
             ) : (
-               <div className=" relative p-6 pt-20 mx-auto select-none pl-[240px] w-[86%] flex">
+               <div className=" relative p-6 pt-20 mx-auto select-none pl-[350px] w-[96%] flex">
                   <Player
                      ref={playerRef}
                      aspectRatio="16:9"

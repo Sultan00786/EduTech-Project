@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-   Chart as ChartJS,
-   ArcElement,
-   Tooltip,
-   Legend,
-} from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import PieChartLebels from "./PieChartLebels";
 
@@ -95,7 +90,7 @@ function InstructorPieChart({ instructorData }) {
                Income
             </button>
          </div>
-         <div className="flex items-center justify-between gap-4 px-14">
+         <div className=" relative flex items-center justify-between gap-4 px-14">
             <PieChartLebels
                data={
                   pieDataFor === "student"
@@ -113,6 +108,23 @@ function InstructorPieChart({ instructorData }) {
                width={400}
                height={400}
             />
+            {pieDataFor === "student" ? (
+               <div className=" absolute top-[33%] left-[10%] w-10/12">
+                  {filterStudentData?.length == 0 && (
+                     <p className=" text-richblack-500 text-4xl font-bold text-center underline ">
+                        No data available for students enrolled
+                     </p>
+                  )}
+               </div>
+            ) : (
+               <div className=" absolute top-[33%] left-[10%] w-10/12">
+                  {filterIncomeData?.length == 0 && (
+                     <p className=" z-10 text-richblack-500 text-4xl font-bold text-center underline ">
+                        No data available for total Income Revenue
+                     </p>
+                  )}
+               </div>
+            )}
          </div>
       </div>
    );

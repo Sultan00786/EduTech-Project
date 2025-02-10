@@ -46,7 +46,7 @@ function VideoDetailsSidebar({ setReviewModal }) {
    }, [courseSectionData, courseEntireData, location.pathname]);
 
    return (
-      <div className=" z-10 flex min-w-[222px] h-full flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblack-800 pt-14 fixed">
+      <div className=" z-10 flex w-[324px] h-full flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblack-800 pt-14 fixed z-[2]">
          <div>
             {/* Buttons and heading */}
             <div>
