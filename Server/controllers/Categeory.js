@@ -115,19 +115,29 @@ exports.categoryPageDetails = async (req, res) => {
       selectedCetogry.courses.sort((a, b) => sortFunc(a, b));
 
       // * Step: 4 --> get course for different categorie
-      const categoriesExceptSelected = await Category.find({
-         _id: { $ne: categoryId },
-      });
+      // const categoriesExceptSelected = await Category.find({
+      //    _id: { $ne: categoryId },
+      // });
 
-      let differentCategory = await Category.findOne(
-         categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
-            ._id
-      )
+      // let differentCategory = await Category.findOne(
+      //    categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
+      //       ._id
+      // )
+      //    .populate({
+      //       path: "courses",
+      //       match: { status: "Published" },
+      //    })
+      //    .exec();
+      const freeCategory = await Category.findOne({ name: "Free" })
          .populate({
             path: "courses",
             match: { status: "Published" },
+            populate: { path: "instructor ratingAndReviews" },
          })
          .exec();
+      let freeCourses = [];
+      if (freeCategory) 
+         freeCourses = freeCategory.courses;
 
       // * Step: 5 --> get top selling courses
       const allCourse = await Course.find()
@@ -139,7 +149,7 @@ exports.categoryPageDetails = async (req, res) => {
       const mostSellingCourses = allCourse
          .sort((a, b) => b.sold - a.sold)
          .slice(0, 10);
-        
+
       // sorting on basis of avg rating
       mostSellingCourses.sort((a, b) => sortFunc(a, b));
 
@@ -148,7 +158,8 @@ exports.categoryPageDetails = async (req, res) => {
          success: true,
          data: {
             selectedCetogry,
-            differentCategory,
+            // differentCategory,
+            freeCourses,
             mostSellingCourses,
          },
       });

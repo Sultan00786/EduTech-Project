@@ -47,6 +47,7 @@ const Catalog = () => {
          // console.log("Details >> ", categoryDetails);
          setLoading(false);
       }
+
       getCategoryId();
    }, [catalogName]);
 
@@ -87,9 +88,7 @@ const Catalog = () => {
                   Free Courses
                </p>
                <div>
-                  <CourseSlider
-                     courses={categoryDetails?.differentCategory?.courses}
-                  />
+                  <CourseSlider courses={categoryDetails?.freeCourses} />
                </div>
             </div>
 
