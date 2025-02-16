@@ -13,6 +13,7 @@ const ProfileDropDown = () => {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const [open, setOpen] = useState(false);
+   const [confirmationModal, setConfirmationModal] = useState(null);
 
    return (
       <div onClick={() => setOpen(!open)} className="relative cursor-pointer">
@@ -32,8 +33,8 @@ const ProfileDropDown = () => {
          {open && (
             <div
                className="absolute -left-[30%] top-[120%] z-[100] divide-y-[1px] divide-richblack-700
-          overflow-hidden rounded-md border-[2px] border-richblack-700 bg-richblack-800
-          transition-all duration-200"
+                overflow-hidden rounded-md border-[2px] border-richblack-700 bg-richblack-800
+                transition-all duration-200"
             >
                {/* <div
                   className="absolute right-[10%] -top-2 h-6 w-6 rotate-45 rounded bg-richblack-800
@@ -65,17 +66,29 @@ const ProfileDropDown = () => {
                )}
 
                <div
-                  onClick={() => {
-                     dispatch(logout());
-                     navigate("/");
+                  onClick={(e) => {
+                     e.stopPropagation();
+                     setConfirmationModal({
+                        text1: "Are you sure?",
+                        text2: "You will be logged out of your account.",
+                        btn1Text: "Logout",
+                        btn2Text: "Cancel",
+                        btn1Handler: () => dispatch(logout(navigate)),
+                        btn2Handler: () => setConfirmationModal(null),
+                     });
                   }}
-                  className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100
-              hover:bg-richblack-700 hover:text-white transition-all duration-200 cursor-pointer"
+                  className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-pink-200/70
+                  hover:bg-richblack-700 hover:text-pink-200 transition-all duration-200 cursor-pointer"
                >
                   <VscSignOut className="text-lg" />
                   Logout
                </div>
             </div>
+         )}
+
+         {/* Confirmation Modal */}
+         {confirmationModal && (
+            <ConfirmationModal modalData={confirmationModal} />
          )}
       </div>
    );

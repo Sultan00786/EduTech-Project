@@ -70,11 +70,11 @@ function Sidebar() {
             {/* Logout */}
             <button
                onClick={confirmationHandler}
-               className="text-sm font-medium text-richblack-300 ml-[32px]"
+               className="text-sm font-medium text-pink-200/70 ml-[32px]"
             >
                <div className="flex items-center gap-x-2">
                   <VscSignOut className=" text-lg" />
-                  <span>Logout</span>
+                  <span className="">Logout</span>
                </div>
             </button>
          </div>
