@@ -4,65 +4,81 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 import { logout } from "../../../services/operations/authAPI";
 import ConfirmationModal from "../../common/ConfirmationModal";
+import { IoIosArrowDown } from "react-icons/io";
+import { VscDashboard, VscSignOut } from "react-icons/vsc";
+import { ACCOUNT_TYPE } from "../../../utils/constants";
 
-function ProfileDropDown() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user, image } = useSelector((state) => state.profile);
-  const [confirmationModal, setConfirmationModal] = useState(null);
+const ProfileDropDown = () => {
+   const { user } = useSelector((state) => state.profile);
+   const dispatch = useDispatch();
+   const navigate = useNavigate();
+   const [open, setOpen] = useState(false);
 
-  const data = {
-    text1: "Are you sure?",
-    text2: "You wiil be logged out from your account?",
-    btn1Text: "Logout",
-    btn2Text: "Cancel",
-    btn1Handler: () => dispatch(logout(navigate)),
-    btn2Handler: () => setConfirmationModal(null),
-  };
+   return (
+      <div onClick={() => setOpen(!open)} className="relative cursor-pointer">
+         <div className="flex items-center gap-x-1">
+            <img
+               src={user?.image}
+               alt={`profile-${user?.firstName}`}
+               className="w-[30px] aspect-square rounded-full object-cover"
+            />
+            <IoIosArrowDown
+               className={`text-lg text-richblack-100 group-hover:text-white group-hover:rotate-180 transition-all duration-200 ${
+                  open ? "rotate-180" : ""
+               } transition-all duration-200`}
+            />
+         </div>
 
-  const [showMenue, setShowMenue] = useState(false);
+         {open && (
+            <div
+               className="absolute -left-[30%] top-[120%] z-[100] divide-y-[1px] divide-richblack-700
+          overflow-hidden rounded-md border-[2px] border-richblack-700 bg-richblack-800
+          transition-all duration-200"
+            >
+               {/* <div
+                  className="absolute right-[10%] -top-2 h-6 w-6 rotate-45 rounded bg-richblack-800
+            translate-y-[20%] border-l-[1px] border-t-[1px] border-richblack-700"
+               ></div> */}
 
-  function confirmationHandler() {
-    setConfirmationModal(data);
-  }
+               {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                  <Link to="/dashboard/enrolled-courses" className="block">
+                     <div
+                        className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100
+                hover:bg-richblack-700 hover:text-white transition-all duration-200"
+                     >
+                        <VscDashboard className="text-lg" />
+                        Dashboard
+                     </div>
+                  </Link>
+               )}
 
-  return (
-    <div
-      onClick={() => {
-        setShowMenue(!showMenue);
-      }}
-      className=" relative flex items-center gap-1  "
-    >
-      <img
-        width={27}
-        className="aspect-square rounded-full object-cover"
-        src={image ? image : user.image}
-      />
+               {user?.accountType === ACCOUNT_TYPE.INSTRUCTOR && (
+                  <Link to="/dashboard/instructor" className="block">
+                     <div
+                        className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100
+                hover:bg-richblack-700 hover:text-white transition-all duration-200"
+                     >
+                        <VscDashboard className="text-lg" />
+                        Dashboard
+                     </div>
+                  </Link>
+               )}
 
-      <div className=" text-richblack-200 font-medium cursor-pointer ">
-        <FaChevronDown />
+               <div
+                  onClick={() => {
+                     dispatch(logout());
+                     navigate("/");
+                  }}
+                  className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100
+              hover:bg-richblack-700 hover:text-white transition-all duration-200 cursor-pointer"
+               >
+                  <VscSignOut className="text-lg" />
+                  Logout
+               </div>
+            </div>
+         )}
       </div>
-
-      <div
-        className={` flex flex-col content-start z-50 ${
-          !showMenue ? " opacity-0 " : " opacity-100 "
-        } bg-richblack-800 text-richblack-100 absolute top-10 -left-3 border-[1px] rounded-md px-4 py-2 border-richblack-600 `}
-      >
-        <div
-          className=" w-full cursor-pointer"
-          onClick={() => {
-            navigate("/dashboard/my-profile");
-          }}
-        >
-          Dashboard
-        </div>
-        <div className="cursor-pointer " onClick={() => confirmationHandler()}>
-          LogOut
-        </div>
-      </div>
-      {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
-    </div>
-  );
-}
+   );
+};
 
 export default ProfileDropDown;

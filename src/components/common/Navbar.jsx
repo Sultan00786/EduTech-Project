@@ -121,37 +121,52 @@ function Navbar() {
             </nav>
 
             {/* Login/SignUp/Dashboard */}
-            <div className=" flex gap-x-4 items-center  ">
-               {" "}
-               {/*&&*/}
-               {
-                  <div className=" flex gap-x-3 text-2xl text-richblack-200 ">
-                     <span className=" cursor-pointer ">
-                        <HiSearch />
-                     </span>
-                     {user?.accountType === ACCOUNT_TYPE.STUDENT && (
-                        <Link to="/dashboard/cart" className="relative ">
-                           <HiOutlineShoppingCart />
-                           {totalItems > 0 && <span>{totalItems}</span>}
-                        </Link>
-                     )}
+            <div className="flex gap-x-4 items-center">
+               {/* Search and Cart */}
+               <div className="flex gap-x-4 items-center text-2xl text-richblack-100">
+                  <span className="cursor-pointer hover:text-white transition-all duration-200">
+                     <HiSearch />
+                  </span>
+                  {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+                     <Link to="/dashboard/cart" className="relative">
+                        <HiOutlineShoppingCart className="hover:text-white transition-all duration-200" />
+                        {totalItems > 0 && (
+                           <span className="absolute -top-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-white border-[1px] border-richblack-700">
+                              {totalItems}
+                           </span>
+                        )}
+                     </Link>
+                  )}
+               </div>
+
+               {/* Login/Signup buttons */}
+               {token === null && (
+                  <div className="flex gap-x-4 items-center">
+                     <Link to="/login">
+                        <button
+                           className="text-richblack-100 px-3 py-2 border-[1px] border-richblack-700 rounded-md
+                           bg-richblack-800 hover:bg-richblack-700 hover:text-white transition-all duration-200"
+                        >
+                           Log in
+                        </button>
+                     </Link>
+                     <Link to="/signup">
+                        <button
+                           className="text-richblack-100 px-3 py-2 border-[1px] border-richblack-700 rounded-md
+                           bg-richblack-800 hover:bg-richblack-700 hover:text-white transition-all duration-200"
+                        >
+                           Sign Up
+                        </button>
+                     </Link>
                   </div>
-               }
-               {token === null && (
-                  <Link to="/login">
-                     <div className=" border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-white  ">
-                        Log in
-                     </div>
-                  </Link>
                )}
-               {token === null && (
-                  <Link to="/signup">
-                     <div className="  border border-richblack-700 bg-richblack-900 px-[14px] py-[5px] text-richblue-25 rounded-md transition-all duration-200 hover:scale-105 hover:bg-richblack-800 hover:border-richblack-50 hover:text-whitess ">
-                        Sign Up
-                     </div>
-                  </Link>
+
+               {/* Profile Dropdown */}
+               {token !== null && (
+                  <div className="relative">
+                     <ProfileDropDown />
+                  </div>
                )}
-               {token !== null && <ProfileDropDown />}
             </div>
          </div>
       </div>
