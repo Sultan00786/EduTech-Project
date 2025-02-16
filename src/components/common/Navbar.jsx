@@ -64,32 +64,40 @@ function Navbar() {
                      return (
                         <li key={index}>
                            {link.title === "Catalog" ? (
-                              <div className=" relative text-richblack-50 gap-1 flex items-center group ">
-                                 <p>{link.title}</p>
-                                 <IoIosArrowDown className=" mt-1 text " />
+                              <div className="relative text-richblack-50 flex items-center gap-2 group cursor-pointer">
+                                 <p className="group-hover:text-white transition-all duration-200">
+                                    {link.title}
+                                 </p>
+                                 <IoIosArrowDown className="text-lg group-hover:text-white group-hover:rotate-180 transition-all duration-200" />
 
-                                 <div className=" z-10 invisible absolute left-[10%] top-[45%] translate-x-[-60%] translate-y-[30%] flex flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[300px] ">
+                                 <div
+                                    className="invisible absolute z-[100] left-[50%] top-[50%] translate-x-[-50%] translate-y-[3rem] flex flex-col bg-richblack-800 p-4 text-richblack-900 opacity-0 
+                                  transition-all duration-200 group-hover:visible group-hover:opacity-100 min-w-[300px]
+                                  border-[2px] border-richblack-700 rounded-md"
+                                 >
                                     <div
-                                       className=" absolute left-[68%] translate-x-[100%] translate-y-[-100%]
-                                                    h-6 w-6 rotate-45 bg-richblack-5 rounded "
+                                       className="absolute z-[99] left-[50%] top-0 h-6 w-6 rotate-45 rounded bg-richblack-800 
+                                       translate-x-[80%] translate-y-[-40%] border-l-[1px] border-t-[2px] border-richblack-700"
                                     ></div>
 
                                     {subLinks?.length ? (
-                                       subLinks.map((subLinks, index) => {
-                                          return (
-                                             <Link
-                                                to={`/catalog/${subLinks.name
-                                                   .split(" ")
-                                                   .join("-")
-                                                   .toLowerCase()}`}
-                                                key={index}
-                                             >
-                                                {subLinks.name}
-                                             </Link>
-                                          );
-                                       })
+                                       subLinks.map((subLink, index) => (
+                                          <Link
+                                             to={`/catalog/${subLink.name
+                                                .split(" ")
+                                                .join("-")
+                                                .toLowerCase()}`}
+                                             key={index}
+                                             className=" z-[100] rounded-lg px-4 py-3 text-[15px] text-richblack-50 font-semibold 
+                                                hover:bg-richblack-700 hover:text-white transition-all duration-200"
+                                          >
+                                             <p>{subLink.name}</p>
+                                          </Link>
+                                       ))
                                     ) : (
-                                       <div></div>
+                                       <div className="text-center text-richblack-900 font-semibold py-3">
+                                          No Courses Found
+                                       </div>
                                     )}
                                  </div>
                               </div>
