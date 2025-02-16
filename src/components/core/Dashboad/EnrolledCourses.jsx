@@ -8,6 +8,7 @@ function EnrolledCourses() {
    const { token } = useSelector((state) => state.auth);
    const [enrolledCourses, setEnrolledCourses] = useState(null);
    const [enCourseLen, setEnCourseLen] = useState(0);
+   const [showStates, setShowStates] = useState({});
    const navigate = useNavigate();
 
    const getEnrolledCourses = async () => {
@@ -19,6 +20,13 @@ function EnrolledCourses() {
       } catch (error) {
          console.log("Unable to Fetch Enrolled Course :\n", error);
       }
+   };
+
+   const handleShowMore = (courseId) => {
+      setShowStates((prev) => ({
+         ...prev,
+         [courseId]: !prev[courseId],
+      }));
    };
 
    useEffect(() => {
@@ -57,7 +65,7 @@ function EnrolledCourses() {
                   {enrolledCourses.map((course, index) => (
                      <div
                         key={index}
-                        className={` flex flex-row items-center px-6 py-3 ${
+                        className={`group flex flex-row items-center px-6 py-3 hover:bg-richblack-700/20 transition-all duration-200 ${
                            index === enCourseLen - 1 ? "" : " border-b-[1px]"
                         } border-richblack-700`}
                      >
@@ -67,34 +75,57 @@ function EnrolledCourses() {
                                  `/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`
                               );
                            }}
-                           className=" w-[45%] flex items-center gap-2"
+                           className="w-[45%] flex items-center gap-4 cursor-pointer"
                         >
                            <img
-                              className="w-14 rounded-lg aspect-video object-cover"
+                              className="w-32 h-20 rounded-md object-cover aspect-video transition-all duration-200 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(0,223,255,0.25)] hover:rotate-2"
                               src={course.thumbnail}
                            />
-                           <div className=" flex flex-col gap-1">
-                              <p> {course.courseName} </p>
-                              <p className=" text-richblack-300 text-sm">
-                                 {course.courseDiscription.length > 50
-                                    ? course.courseDiscription.slice(0, 50) +
-                                      "..."
-                                    : course.courseDiscription}
+                           <div className="flex flex-col gap-2">
+                              <p className="text-lg font-semibold text-richblack-50 group-hover:text-yellow-50 transition-colors duration-200">
+                                 {course.courseName}
                               </p>
+                              <div>
+                                 <p className="text-richblack-300 text-sm group-hover:text-richblack-100 transition-colors duration-200 pr-7">
+                                    {showStates[course._id]
+                                       ? course.courseDiscription
+                                       : course.courseDiscription.length > 50
+                                       ? course.courseDiscription.slice(0, 50) +
+                                         "..."
+                                       : course.courseDiscription}
+                                 </p>
+                                 {course.courseDiscription.length > 50 && (
+                                    <button
+                                       className="text-richblack-50 text-sm font-semibold hover:text-white transition-colors duration-200"
+                                       onClick={(e) => {
+                                          e.stopPropagation();
+                                          handleShowMore(course._id);
+                                       }}
+                                    >
+                                       {showStates[course._id]
+                                          ? "Show Less"
+                                          : "Show More"}
+                                    </button>
+                                 )}
+                              </div>
                            </div>
                         </div>
 
-                        {/* <div className="w-[25%]">{course?.totalDuration}</div> */}
-                        <div className="w-[25%] flex flex-col items-start ">
+                        <div className="w-[25%] flex flex-col items-start text-richblack-50 group-hover:text-blue-200 font-semibold transition-colors duration-200">
                            {course?.totalDuration}
                         </div>
 
                         <div className="w-[30%] flex flex-col gap-2">
-                           <p>Progress: {course.progressPercentage || 0}%</p>
+                           <p className="group-hover:text-yellow-50 transition-colors duration-200">
+                              Progress: {course.progressPercentage || 0}%
+                           </p>
                            <ProgressBar
                               completed={course.progressPercentage || 0}
                               height="8px"
                               isLabelVisible={false}
+                              bgColor="#FFD60A"
+                              baseBgColor="#2C333F"
+                              transitionDuration="200"
                            />
                         </div>
                      </div>
