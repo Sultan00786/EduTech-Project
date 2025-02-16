@@ -39,8 +39,8 @@ function Sidebar() {
 
    return (
       <div className=" fixed min-h-[100vh] border-r-[1px] border-richblack-700  bg-richblack-800">
-         <div className="flex min-w-[222px] flex-col ">
-            <div className="flex flex-col">
+         <div className="flex min-w-[222px] flex-col justify-between min-h-[calc(100vh-70px)] ">
+            <div className="flex flex-col pt-5">
                {sidebarLinks.map((link) => {
                   // console.log("------->",link.type);
                   // ( undifined != undifined ) is false statement
@@ -55,28 +55,30 @@ function Sidebar() {
                })}
             </div>
 
-            <div className=" mx-auto mt-6 w-11/12 mb-5 border-t-[1px] border-richblack-600 "></div>
+            <div className="flex flex-col">
+               <div className=" mx-auto mt-6 w-11/12 mb-5 border-t-[1px] border-richblack-600 "></div>
 
-            {/* Setting */}
-            <SidebarLink
-               className=" h-full absolute -left-[22px]"
-               link={{
-                  name: "Settings",
-                  path: "dashboard/settings",
-               }}
-               iconName="VscSettingsGear"
-            />
+               {/* Setting */}
+               <SidebarLink
+                  className=" h-full absolute -left-[22px]"
+                  link={{
+                     name: "Settings",
+                     path: "/dashboard/settings",
+                  }}
+                  iconName="VscSettingsGear"
+               />
 
-            {/* Logout */}
-            <button
-               onClick={confirmationHandler}
-               className="text-sm font-medium text-pink-200/70 ml-[32px]"
-            >
-               <div className="flex items-center gap-x-2">
-                  <VscSignOut className=" text-lg" />
-                  <span className="">Logout</span>
-               </div>
-            </button>
+               {/* Logout */}
+               <button
+                  onClick={confirmationHandler}
+                  className="text-sm font-medium text-pink-200/70 ml-[32px] w-full"
+               >
+                  <div className="flex items-center gap-x-2 pt-2">
+                     <VscSignOut className=" text-xl" />
+                     <span className="">Logout</span>
+                  </div>
+               </button>
+            </div>
          </div>
 
          <div className=" z-50">
