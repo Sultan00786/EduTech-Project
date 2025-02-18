@@ -22,6 +22,6 @@ router.post(
    isStudent,
    sendPaymentSuccesssEmail
 );
-router.post("/addFreeCourseToUser", auth, isStudent, addFreeCourseToUser);
+router.post("/buyCourseFree", auth, isStudent, addFreeCourseToUser);
 
 module.exports = router;

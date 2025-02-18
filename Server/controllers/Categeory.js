@@ -57,7 +57,7 @@ exports.showAllCategories = async (req, res) => {
             name: true,
             description: true,
          }
-      );
+      ).sort({ createdAt: -1 });
 
       return res.status(200).json({
          success: true,
@@ -112,32 +112,32 @@ exports.categoryPageDetails = async (req, res) => {
       }
 
       // sorting on basis of avg rating
-      selectedCetogry.courses.sort((a, b) => sortFunc(a, b));
+      selectedCetogry?.courses.sort((a, b) => sortFunc(a, b));
 
       // * Step: 4 --> get course for different categorie
-      // const categoriesExceptSelected = await Category.find({
-      //    _id: { $ne: categoryId },
-      // });
+      const categoriesExceptSelected = await Category.find({
+         _id: { $ne: categoryId },
+      });
 
-      // let differentCategory = await Category.findOne(
-      //    categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
-      //       ._id
-      // )
-      //    .populate({
-      //       path: "courses",
-      //       match: { status: "Published" },
-      //    })
-      //    .exec();
-      const freeCategory = await Category.findOne({ name: "Free" })
+      let differentCategory = await Category.findOne(
+         categoriesExceptSelected[getRandomInt(categoriesExceptSelected.length)]
+            ._id
+      )
          .populate({
             path: "courses",
             match: { status: "Published" },
-            populate: { path: "instructor ratingAndReviews" },
          })
          .exec();
-      let freeCourses = [];
-      if (freeCategory) 
-         freeCourses = freeCategory.courses;
+
+      // const freeCategory = await Category.findOne({ name: "Free" })
+      //    .populate({
+      //       path: "courses",
+      //       match: { status: "Published" },
+      //       populate: { path: "instructor ratingAndReviews" },
+      //    })
+      //    .exec();
+      // let freeCourses = [];
+      // if (freeCategory) freeCourses = freeCategory.courses;
 
       // * Step: 5 --> get top selling courses
       const allCourse = await Course.find()
@@ -158,8 +158,7 @@ exports.categoryPageDetails = async (req, res) => {
          success: true,
          data: {
             selectedCetogry,
-            // differentCategory,
-            freeCourses,
+            differentCategory,
             mostSellingCourses,
          },
       });

@@ -83,23 +83,25 @@ const Catalog = () => {
          </div>
 
          <div className=" w-11/12 mx-auto mb-16">
-            <div className=" w-11/12 flex flex-col gap-5 mx-auto mt-9">
-               <p className=" text-richblack-5 font-bold text-4xl">
-                  Free Courses
-               </p>
-               <div>
-                  <CourseSlider courses={categoryDetails?.freeCourses} />
-               </div>
-            </div>
-
             <div className=" w-11/12 flex flex-col gap-5 mx-auto mt-16">
                <p className=" text-richblack-5 font-bold text-4xl">
-                  Top Courses in {categoryDetails?.selectedCetogry?.name}
+                  {categoryDetails?.selectedCetogry?.name} Courses
                </p>
 
                <div>
                   <CourseSlider
                      courses={categoryDetails?.selectedCetogry?.courses}
+                  />
+               </div>
+            </div>
+
+            <div className=" w-11/12 flex flex-col gap-5 mx-auto mt-9">
+               <p className=" text-richblack-5 font-bold text-4xl">
+                  Other Courses
+               </p>
+               <div>
+                  <CourseSlider
+                     courses={categoryDetails?.differentCategory?.courses}
                   />
                </div>
             </div>

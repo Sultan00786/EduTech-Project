@@ -7,14 +7,19 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import Iconbtn from "../components/common/Iconbtn";
 import { MdArrowRight } from "react-icons/md";
 import Footer from "../components/common/Footer";
-import { buyCourse } from "../services/operations/studentFeatures";
+import {
+   buyCourse,
+   buyCourseFree,
+} from "../services/operations/studentFeatures";
 import { useDispatch, useSelector } from "react-redux";
 import { BsFillCaretRightFill } from "react-icons/bs";
+import toast from "react-hot-toast";
 
 function CourseDetails() {
    const { courseId } = useParams();
    const { token } = useSelector((state) => state.auth);
    const { user } = useSelector((state) => state.profile);
+   console.log(user);
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const [loading, setLoading] = useState(false);
@@ -45,6 +50,10 @@ function CourseDetails() {
    }, [CourseDetails]);
 
    const handleSubmitCourse = async () => {
+      if (user?.accountType === "Instructor") {
+         toast.error("Instructors cannot purchase course");
+         return;
+      }
       if (token) {
          buyCourse(token, [courseId], user, navigate, dispatch);
          return;
@@ -53,6 +62,11 @@ function CourseDetails() {
 
    const handleFreeCourse = () => {
       // buyCourse(token, [courseId], user, navigate, dispatch);
+      if (user?.accountType === "Instructor") {
+         toast.error("Instructors cannot purchase free courses");
+         return;
+      }
+      buyCourseFree(token, [courseId], navigate);
    };
 
    if (loading) {
