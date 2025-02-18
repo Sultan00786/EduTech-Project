@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CTAButton from "../Homepage/Botton";
 import HighlightText from "./HighlightText";
 import { FaArrowRight } from "react-icons/fa";
@@ -16,6 +16,13 @@ const CodeBlocks = ({
    backgroundGradient,
    codeColor,
 }) => {
+   const [typedCode, setTypedCode] = useState("");
+   const renderHello = () => (
+      <div>
+         <div>Hello</div>
+      </div>
+   );
+
    return (
       <div className={`flex ${position} my-20 justify-between gap-10 px-5 `}>
          {/* Section 1 */}
@@ -71,27 +78,10 @@ const CodeBlocks = ({
                className={` static w-[90%] flex flex-col gap-2 font-bold font-mono ${codeColor} `}
             >
                <TypeAnimation
-                  sequence={[
-                     (el) => {
-                        el.innerHTML = `<pre>${SyntaxHighlighter({
-                           language: "html",
-                           style: oneDark,
-                           children: `
-                           <div>
-                                <div>
-                                    Hellow
-                                </div>
-                           </div>
-                           `,
-                        })}</pre>`;
-                     },
-                     8000,
-                     "",
-                  ]} // 10000 --> 10sec wait after one animation cycle complete
-                  repeat={Infinity}
-                  cursor={true}
+                  sequence={[codeblock, 3000, ""]}
                   speed={20}
                   omitDeletionAnimation={true}
+                  repeat={Infinity}
                   style={{
                      display: "block",
                      whiteSpace: "pre",
