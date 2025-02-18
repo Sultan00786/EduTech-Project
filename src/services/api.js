@@ -30,6 +30,7 @@ export const studentEndpoints = {
    COURSE_VERIFY_API: BASE_URL + "/payment/verifySignature",
    SEND_PAYMENT_SUCCESS_EMAIL_API:
       BASE_URL + "/payment/sendPaymentSuccessEmail",
+   BUY_COURSE_FREE_API: BASE_URL + "/payment/buyCourseFree",
 };
 
 // COURSE ENDPOINTS

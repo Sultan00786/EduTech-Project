@@ -12,6 +12,7 @@ import ExploreMore from "../components/core/Homepage/ExploreMore";
 import Footer from "../components/common/Footer";
 import ReviewSlider from "../components/common/ReviewSlider";
 import { useSelector } from "react-redux";
+import codeBlockString from "../data/codeBlockString";
 
 /**
  * Section 1
@@ -112,7 +113,7 @@ const Home = () => {
                      linkto: "/login",
                      active: false,
                   }}
-                  codeblock={`<!DOCTYPE html>\n<html>\nhead><>Example</\ntitle><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\nnav><ahref="one/">One</a><ahref="two/">Two</a><ahref="three/">Three</a>\n/nav>`}
+                  codeblock={codeBlockString.html}
                   codeColor={"text-yellow-50"}
                />
             </div>
@@ -142,7 +143,7 @@ const Home = () => {
                      linkto: "/login",
                      active: false,
                   }}
-                  codeblock={`<!DOCTYPE html>\n<html>\nhead><>Example</\ntitle><linkrel="stylesheet"href="styles.css">\n/head>\nbody>\nh1><ahref="/">Header</a>\n/h1>\nnav><ahref="one/">One</a><ahref="two/">Two</a><ahref="three/">Three</a>\n/nav>`}
+                  codeblock={codeBlockString.html}
                   codeColor={"text-yellow-50"}
                />
 
