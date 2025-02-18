@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import CTAButton from "../Homepage/Botton";
-import HighlightText from "./HighlightText";
 import { FaArrowRight } from "react-icons/fa";
 import { TypeAnimation } from "react-type-animation";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"; // Choose any theme
+import CTAButton from "../Homepage/Botton";
 
 const CodeBlocks = ({
+   
    position,
    heading,
    subheading,

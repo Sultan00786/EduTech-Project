@@ -94,6 +94,12 @@ export async function buyCourse(
   toast.dismiss(toastId);
 }
 
+export async function buyCourseFree(token, courses, userDetails, navigate, dispatch) {
+  const toastId = toast.loading("Loading...");
+  console.log(courses);
+  
+}
+
 async function sendPaymentSuccessEmail(response, amount, token) {
   try {
     await apiConnector(
