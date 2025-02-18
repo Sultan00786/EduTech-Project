@@ -95,7 +95,7 @@ function Navbar() {
                                           </Link>
                                        ))
                                     ) : (
-                                       <div className="text-center text-richblack-900 font-semibold py-3">
+                                       <div className="text-center text-richblack-5 font-semibold py-3">
                                           No Courses Found
                                        </div>
                                     )}
