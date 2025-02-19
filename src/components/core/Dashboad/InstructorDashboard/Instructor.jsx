@@ -52,85 +52,107 @@ function Instructor() {
    }
 
    return (
-      <div className=" flex flex-col gap-2 text-white">
-         <div>
-            <div className="flex items-center gap-1 mb-1">
-               <h1 className=" text-richblue-5 font-bold text-2xl">
-                  HI, {user?.firstName}
+      <div className="flex flex-col gap-6 text-white">
+         {/* Header Section */}
+         <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-3">
+               <h1 className="text-richblack-5 font-bold text-3xl">
+                  Hi, {user?.firstName}
                </h1>
-               <img src={Hi_logo} width={22} />
+               <img
+                  src={Hi_logo}
+                  width={32}
+                  className="hover:rotate-12 transition-transform duration-300"
+               />
             </div>
-            <p className=" text-richblack-300 text-lg">
+            <p className="text-richblack-200 text-lg font-medium">
                Let's Start something new
             </p>
          </div>
 
-         <div className=" flex gap-2">
-            <div className="bg-richblack-800 w-full rounded-lg p-5">
+         {/* Stats and Chart Section */}
+         <div className="flex gap-6">
+            {/* Chart */}
+            <div className="bg-richblack-800 w-full rounded-xl p-6 border-[1px] border-richblack-700">
                <InstructorPieChart instructorData={instructorData} />
             </div>
-            <div className=" bg-richblack-800 rounded-lg p-5 ">
-               <div className=" w-[170px] flex flex-col justify-center gap-2">
-                  <p className=" text-richblack-5 text-xl font-bold">
-                     Statistic
+
+            {/* Statistics */}
+            <div className="bg-richblack-800 rounded-xl p-6 border-[1px] border-richblack-700">
+               <div className="w-[250px] flex flex-col gap-4">
+                  <p className="text-richblack-5 text-2xl font-bold">
+                     Statistics
                   </p>
-                  <div className="flex flex-col ">
-                     <p className=" text-richblack-400 font-semibold -mb-1">
-                        Total Course
+
+                  {/* Total Courses */}
+                  <div className="flex flex-col gap-1">
+                     <p className="text-richblack-300 font-semibold">
+                        Total Courses
                      </p>
-                     <p className=" text-richblack-200 text-3xl font-bold">
+                     <p className="text-richblack-50 text-3xl font-bold">
                         {instructorData?.length}
                      </p>
                   </div>
-                  <div>
-                     <p className=" text-richblack-400 font-semibold -mb-1">
-                        Total Student
+
+                  {/* Total Students */}
+                  <div className="flex flex-col gap-1">
+                     <p className="text-richblack-300 font-semibold">
+                        Total Students
                      </p>
-                     <p className=" text-richblack-200 text-3xl font-bold">
+                     <p className="text-richblack-50 text-3xl font-bold">
                         {totalStudent}
                      </p>
                   </div>
-                  <div>
-                     <p className=" text-richblack-400 font-semibold -mb-1">
+
+                  {/* Total Income */}
+                  <div className="flex flex-col gap-1">
+                     <p className="text-richblack-300 font-semibold">
                         Total Income
                      </p>
-                     <p className=" text-richblack-200 text-3xl font-bold">
-                        Rs.{totalIncome}
+                     <p className="text-richblack-50 text-3xl font-bold">
+                        ₹{totalIncome}
                      </p>
                   </div>
                </div>
             </div>
          </div>
 
-         <div className=" bg-richblack-800 rounded-lg p-5">
-            <div className=" flex items-center justify-between mb-3">
-               <p className=" text-richblue-5 font-bold text-xl ">
+         {/* Courses Section */}
+         <div className="bg-richblack-800 rounded-xl border-[1px] border-richblack-700">
+            <div className="flex items-center justify-between p-6 border-b-[1px] border-richblack-700">
+               <p className="text-richblack-5 font-bold text-xl">
                   Your Courses
                </p>
                <Link
-                  className=" text-yellow-25 text-sm"
-                  to={"/dashboard/my-courses"}
+                  className="text-yellow-50 text-sm font-medium hover:scale-105 transition-all duration-200"
+                  to="/dashboard/my-courses"
                >
                   View All
                </Link>
             </div>
-            <div className="flex items-center gap-3 justify-between">
+
+            <div className="flex gap-6 p-6">
                {courses?.map((course, index) => (
                   <div
-                     className=" cursor-pointer"
+                     key={index}
                      onClick={() => navigate(`/courses/${course?._id}`)}
+                     className="group cursor-pointer transition-all duration-200"
                   >
-                     <img
-                        src={course?.thumbnail}
-                        className=" w-[310px] rounded-lg aspect-video bg-cover "
-                     />
-                     <p className=" text-richblue-5 font-semibold text-lg">
+                     <div className="relative">
+                        <img
+                           src={course?.thumbnail}
+                           alt={course?.courseName}
+                           className="w-[300px] rounded-xl aspect-video object-cover group-hover:scale-105 transition-all duration-200"
+                        />
+                        <div className="absolute inset-0 rounded-xl group-hover:bg-richblack-900/40 transition-all duration-200" />
+                     </div>
+                     <p className="text-richblack-5 font-semibold text-lg mt-3 group-hover:text-yellow-50 transition-colors duration-200">
                         {course?.courseName}
                      </p>
-                     <div className="flex items-center gap-3 text-richblack-300 text-xs">
-                        <p>{course?.studentsEnrolled?.length} students</p>
-                        <p>|</p>
-                        <p>Rs.{course?.price}</p>
+                     <div className="flex items-center gap-2 text-richblack-300 text-sm mt-1">
+                        <span>{course?.studentsEnrolled?.length} students</span>
+                        <span>•</span>
+                        <span>₹{course?.price}</span>
                      </div>
                   </div>
                ))}
