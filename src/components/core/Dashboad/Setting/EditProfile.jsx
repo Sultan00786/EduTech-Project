@@ -11,69 +11,34 @@ const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"];
 
 function EditProfile() {
    const { user } = useSelector((state) => state.profile);
-   console.log(user);
    const { token } = useSelector((state) => state.auth);
-
    const navigate = useNavigate();
    const dispatch = useDispatch();
 
    const {
       register,
       handleSubmit,
-      getValues,
-      setValue,
       formState: { errors },
    } = useForm();
 
-   const isFormUpdate = (data) => {
-      if (data.firstName !== user.firstName) return true;
-      if (data.lastName !== user.lastName) return true;
-      if (data.dateOfBirth !== user.additionalDetails.dateOfBirth) return true;
-      if (data.gender !== user.additionalDetails.gender) return true;
-      if (data.number !== user.additionalDetails.contactNamber) return true;
-      if (data.about !== user.additionalDetails.about) return true;
-
-      return false;
-   };
-
-   const onsubmit = async (data) => {
-      if (isFormUpdate(data)) {
-         const formData = new FormData();
-         const values = getValues();
-
-         formData.append("firstName", values.firstName);
-         console.log(values.firstName);
-         formData.append("lastName", values.lastName);
-         formData.append("dateOfBirth", values.dateOfBirth);
-         formData.append("gender", values.gender);
-         formData.append("contactNumber", values.contactNumber);
-         formData.append("about", values.about);
-
-         formData.append("userId", user._id);
-
-         const proId = user.additionalDetails._id
-            ? user.additionalDetails._id
-            : user.additionalDetails;
-         formData.append("profileId", proId);
-
-         // Api Call
-         dispatch(updateProfile(token, formData));
-      } else {
-         toast.error("Enter updated values in field !!");
-         return;
+   const submitProfileForm = async (data) => {
+      try {
+         dispatch(updateProfile(token, data));
+      } catch (error) {
+         console.log("ERROR MESSAGE - ", error.message);
       }
    };
 
    return (
-      <div className=" relative bg-richblack-800 rounded-md px-10 py-7 -z-0">
-         <form onSubmit={handleSubmit(onsubmit)}>
-            <h2 className=" text-richblack-5 font-bold text-xl mb-8 ">
-               Profile Information
-            </h2>
-            <div className=" flex flex-col gap-7 mt-5 z-10">
-               <div className="flex justify-between gap-3 ">
-                  <div className="flex flex-col gap-2 w-full">
-                     <label htmlFor="firstName" className=" lable-style">
+      <>
+         <form onSubmit={handleSubmit(submitProfileForm)}>
+            <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
+               <h2 className="text-lg font-semibold text-richblack-5">
+                  Profile Information
+               </h2>
+               <div className="flex flex-col gap-5 lg:flex-row">
+                  <div className="flex flex-col gap-2 lg:w-[48%]">
+                     <label htmlFor="firstName" className="lable-style">
                         First Name
                      </label>
                      <input
@@ -81,9 +46,9 @@ function EditProfile() {
                         name="firstName"
                         id="firstName"
                         placeholder="Enter first name"
-                        className="form-style"
-                        {...register("firstName", { require: true })}
+                        {...register("firstName", { required: true })}
                         defaultValue={user?.firstName}
+                        className="form-style"
                      />
                      {errors.firstName && (
                         <span className="-mt-1 text-[12px] text-yellow-100">
@@ -91,18 +56,18 @@ function EditProfile() {
                         </span>
                      )}
                   </div>
-                  <div className="flex flex-col gap-2 w-full">
-                     <label htmlFor="lastName" className=" lable-style">
+                  <div className="flex flex-col gap-2 lg:w-[48%]">
+                     <label htmlFor="lastName" className="lable-style">
                         Last Name
                      </label>
                      <input
                         type="text"
-                        name="last"
-                        id="last"
+                        name="lastName"
+                        id="lastName"
                         placeholder="Enter last name"
-                        className="form-style"
-                        {...register("lastName", { require: true })}
+                        {...register("lastName", { required: true })}
                         defaultValue={user?.lastName}
+                        className="form-style"
                      />
                      {errors.lastName && (
                         <span className="-mt-1 text-[12px] text-yellow-100">
@@ -112,8 +77,8 @@ function EditProfile() {
                   </div>
                </div>
 
-               <div className="flex justify-between gap-3">
-                  <div className="flex flex-col gap-2 w-full">
+               <div className="flex flex-col gap-5 lg:flex-row">
+                  <div className="flex flex-col gap-2 lg:w-[48%]">
                      <label htmlFor="dateOfBirth" className="lable-style">
                         Date of Birth
                      </label>
@@ -121,27 +86,17 @@ function EditProfile() {
                         type="date"
                         name="dateOfBirth"
                         id="dateOfBirth"
-                        className="form-style"
-                        {...register("dateOfBirth", {
-                           required: {
-                              value: true,
-                              message: "Please enter your Date of Birth.",
-                           },
-                           max: {
-                              value: new Date().toISOString().split("T")[0],
-                              message: "Date of Birth Cannot be in the future.",
-                           },
-                        })}
+                        {...register("dateOfBirth", { required: true })}
                         defaultValue={user?.additionalDetails?.dateOfBirth}
+                        className="form-style"
                      />
                      {errors.dateOfBirth && (
                         <span className="-mt-1 text-[12px] text-yellow-100">
-                           {errors.dateOfBirth.message}
+                           Please enter your Date of Birth.
                         </span>
                      )}
                   </div>
-
-                  <div className="flex flex-col gap-2 w-full">
+                  <div className="flex flex-col gap-2 lg:w-[48%]">
                      <label htmlFor="gender" className="lable-style">
                         Gender
                      </label>
@@ -149,46 +104,53 @@ function EditProfile() {
                         type="text"
                         name="gender"
                         id="gender"
-                        className="form-style"
                         {...register("gender", { required: true })}
                         defaultValue={user?.additionalDetails?.gender}
+                        className="form-style"
                      >
-                        {genders.map((elem, index) => (
-                           <option value={elem} key={index}>
-                              {elem}
-                           </option>
-                        ))}
+                        <option value="">Select Gender</option>
+                        {genders.map((ele, i) => {
+                           return (
+                              <option key={i} value={ele}>
+                                 {ele}
+                              </option>
+                           );
+                        })}
                      </select>
-                     {errors.gender && <span>Please select your gender</span>}
+                     {errors.gender && (
+                        <span className="-mt-1 text-[12px] text-yellow-100">
+                           Please enter your Gender.
+                        </span>
+                     )}
                   </div>
                </div>
 
-               <div className="flex justify-between gap-3">
-                  <div className="flex flex-col gap-2 w-full">
+               <div className="flex flex-col gap-5 lg:flex-row">
+                  <div className="flex flex-col gap-2 lg:w-[48%]">
                      <label htmlFor="contactNumber" className="lable-style">
                         Contact Number
                      </label>
                      <input
-                        type="number"
+                        type="tel"
                         name="contactNumber"
                         id="contactNumber"
-                        className="form-style"
-                        placeholder="Enter contact number"
+                        placeholder="Enter Contact Number"
                         {...register("contactNumber", {
                            required: {
                               value: true,
-                              message: "Please enter your Contact Number",
+                              message: "Please enter your Contact Number.",
                            },
                            maxLength: {
                               value: 12,
-                              message: "Invalid Phone Number",
+                              message: "Invalid Contact Number",
                            },
-                           minLenght: {
+                           minLength: {
                               value: 10,
-                              message: "Invalid Phone Number",
+                              message: "Invalid Contact Number",
                            },
                         })}
                         defaultValue={user?.additionalDetails?.contactNumber}
+                        className="form-style"
                      />
                      {errors.contactNumber && (
                         <span className="-mt-1 text-[12px] text-yellow-100">
@@ -196,7 +158,7 @@ function EditProfile() {
                         </span>
                      )}
                   </div>
-                  <div className="flex flex-col gap-2 w-full">
+                  <div className="flex flex-col gap-2 lg:w-[48%]">
                      <label htmlFor="about" className="lable-style">
                         About
                      </label>
@@ -205,9 +167,9 @@ function EditProfile() {
                         name="about"
                         id="about"
                         placeholder="Enter Bio Details"
-                        className="form-style"
                         {...register("about", { required: true })}
                         defaultValue={user?.additionalDetails?.about}
+                        className="form-style"
                      />
                      {errors.about && (
                         <span className="-mt-1 text-[12px] text-yellow-100">
@@ -217,23 +179,19 @@ function EditProfile() {
                   </div>
                </div>
             </div>
-
-            <div className=" absolute right-0 -bottom-16 flex items-center gap-2 z-10">
+            <div className="flex justify-end gap-2">
                <button
                   onClick={() => {
                      navigate("/dashboard/my-profile");
                   }}
                   className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
                >
-                  cancle
+                  Cancel
                </button>
-
-               <button type="submit">
-                  <Iconbtn text="Save" />
-               </button>
+               <Iconbtn type="submit" text="Save" />
             </div>
          </form>
-      </div>
+      </>
    );
 }
 
