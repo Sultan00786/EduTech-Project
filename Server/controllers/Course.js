@@ -387,6 +387,73 @@ exports.getInstructorCourses = async (req, res) => {
    }
 };
 
+// Get Enrolled Students
+exports.getEnrolledStudents = async (req, res) => {
+   try {
+      const { courseId } = req.body;
+      const courses = await Course.findById(courseId)
+         .populate({
+            path: "studentsEnrolled",
+            populate: {
+               path: "courseProgress",
+            },
+         })
+         .populate({
+            path: "courseContent",
+            populate: {
+               path: "subSection",
+            },
+         });
+
+      if (!courses) {
+         return res.status(400).json({
+            success: false,
+            message: `Could not find course with id: ${courseId}`,
+         });
+      }
+
+      // here i want to try to get the course progress of each student for the specific course by using courseId
+
+      const totalNumberVideos = courses.courseContent.reduce(
+         (acc, curr) => acc + curr.subSection.length,
+         0
+      );
+
+      const data = {
+         id: courses._id,
+         courseName: courses.courseName,
+         courseContent: courses.courseContent,
+         totalNumberVideos: totalNumberVideos,
+         studentsEnrolled: courses.studentsEnrolled.map((user) => {
+            const completedVideos = user.courseProgress.find(
+               (i) => i.courseID.toString() === courseId
+            ).completedVideos;
+
+            return {
+               id: user._id,
+               firstName: user.firstName,
+               lastName: user.lastName,
+               email: user.email,
+               image: user.image,
+               compeletedVedios: completedVideos.length,
+            };
+         }),
+      };
+
+      return res.status(200).json({
+         success: true,
+         data: data,
+      });
+   } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+         success: false,
+         message: "Server error",
+         error: error.message,
+      });
+   }
+};
+
 // Delete the Course
 exports.deleteCourse = async (req, res) => {
    try {

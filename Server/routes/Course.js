@@ -6,52 +6,56 @@ const router = express.Router();
 
 // Course Controllers Import
 const {
-  createCourse,
-  getAllCourses,
-  getCourseDetails,
-  editCourse,
-  getFullCourseDetails,
-  getInstructorCourses,
-  deleteCourse,
+   createCourse,
+   getAllCourses,
+   getCourseDetails,
+   editCourse,
+   getFullCourseDetails,
+   getInstructorCourses,
+   deleteCourse,
+   getEnrolledStudents,
 } = require("../controllers/Course");
 
 // Categories Controllers Import
 const {
-  showAllCategories,
-  createCategory,
-  categoryPageDetails,
+   showAllCategories,
+   createCategory,
+   categoryPageDetails,
 } = require("../controllers/Categeory");
 
 // Sections Controllers Import
 const {
-  createSection,
-  updateSection,
-  deleteSection,
+   createSection,
+   updateSection,
+   deleteSection,
 } = require("../controllers/Section");
 
 // Sub-Sections Controllers Import
 const {
-  createSubSection,
-  updateSubSection,
-  deleteSubSection,
+   createSubSection,
+   updateSubSection,
+   deleteSubSection,
 } = require("../controllers/SubScetion");
 
 // Rating Controllers Import
 const {
-  createRating,
-  getAverageRating,
-  getAllRating,
+   createRating,
+   getAverageRating,
+   getAllRating,
 } = require("../controllers/RatingAndReview");
 
 // Course Progress Import
-const { updateCourseProgress, createTotalCorseDuration } = require("../controllers/CourseProgress");
+const {
+   updateCourseProgress,
+   createTotalCorseDuration,
+} = require("../controllers/CourseProgress");
 
 // Importing Middlewares
 const {
-  auth,
-  isInstructor,
-  isStudent,
-  isAdmin,
+   auth,
+   isInstructor,
+   isStudent,
+   isAdmin,
 } = require("../middlewares/auth");
 
 // ********************************************************************************************************
@@ -84,6 +88,8 @@ router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 router.post("/deleteCourse", auth, isInstructor, deleteCourse);
 // Get Full details of couse
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
+// Get Enrolled Students
+router.get("/getEnrolledStudents", getEnrolledStudents);
 // Post Course Progress
 router.post("/updateCourseProgress", auth, updateCourseProgress);
 // Post total time duration of course

@@ -28,6 +28,7 @@ import CourseDetails from "./pages/CourseDetails";
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/core/ViewCourse/VideoDetails";
 import Instructor from "./components/core/Dashboad/InstructorDashboard/Instructor";
+import EnrolledStudents from "./components/core/Dashboad/EnrolledStudents";
 
 function App() {
   const { user } = useSelector((state) => state.profile);
@@ -114,6 +115,10 @@ function App() {
               <Route
                 path="dashboard/edit-course/:courseId"
                 element={<EditCourse />}
+              />
+              <Route
+                path="dashboard/enrolled-students/:courseId"
+                element={<EnrolledStudents />}
               />
               <Route path="dashboard/instructor" element={<Instructor />} />
             </>
