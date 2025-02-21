@@ -2,129 +2,185 @@ import React, { useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 import PieChartLebels from "./PieChartLebels";
+import { color } from "chart.js/helpers";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function InstructorPieChart({ instructorData }) {
-   console.log(instructorData);
-   const [pieDataFor, setDataFor] = useState("student");
+   const [selectedData, setSelectedData] = useState("students"); // students or income
 
-   const filterStudentData = instructorData?.filter(
-      (course) => course?.totalStudentsEnrolled !== 0
+   if (!instructorData || !instructorData?.length) {
+      return (
+         <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-richblack-100 text-lg font-medium">
+               No Data Available
+            </p>
+            <p className="text-richblack-400 text-sm mt-1">
+               Your course analytics will appear here
+            </p>
+         </div>
+      );
+   }
+
+   // Calculate totals
+   const totalStudents = instructorData.reduce(
+      (acc, curr) => acc + curr.totalStudentsEnrolled,
+      0
    );
-   const filterIncomeData = instructorData?.filter(
-      (course) => course?.totalStudentsEnrolled !== 0
+   const totalIncome = instructorData.reduce(
+      (acc, curr) => acc + curr.totalAmountGenerated,
+      0
    );
 
-   const datasetForStudent = {
-      labels: filterStudentData?.map((course) => course?.courseName),
-      datasets: [
-         {
-            label: "Students Enrolled",
-            data: filterStudentData?.map(
-               (course) => course?.totalStudentsEnrolled
-            ),
-            backgroundColor: randomColorGenerate(filterStudentData?.length),
-            borderColor: "rgb(217, 218, 224)",
-            hoverOffset: 30,
-            borderWidth: 3,
-            offset: 10,
-         },
-      ],
-   };
+   // Color schemes - Updated with better contrasting colors
+   const studentColors = [
+      "#1FA2FF", // Bright Blue
+      "#FF6B6B", // Coral Red
+      "#4ECB71", // Fresh Green
+      "#FFB86C", // Warm Orange
+      "#845EF7", // Royal Purple
+      "#22D3EE", // Cyan
+   ];
 
-   const datasetForIncome = {
-      labels: filterIncomeData?.map((course) => course?.courseName),
-      datasets: [
-         {
-            label: "Total Amount",
-            data: filterIncomeData?.map(
-               (course) => course?.totalAmountGenerated
-            ),
-            backgroundColor: randomColorGenerate(filterIncomeData?.length),
-            borderColor: "rgb(217, 218, 224)",
-            hoverOffset: 30,
-            borderWidth: 3,
-            offset: 16,
-         },
-      ],
-   };
+   const incomeColors = [
+      "#00C49F", // Teal
+      "#FF8042", // Sunset Orange
+      "#FFCD56", // Warm Yellow
+      "#845EF7", // Royal Purple
+      "#22D3EE", // Cyan
+      "#FF6B6B", // Coral Red
+   ];
 
-   const option = {
-      responsive: false,
+   const options = {
+      responsive: true,
+      maintainAspectRatio: false,
       plugins: {
-         legend: { display: false },
-         tooltip: { enabled: true },
+         legend: {
+            position: "right",
+            align: "center",
+            labels: {
+               color: "#F59E0B", // Lighter color for better visibility
+               font: {
+                  size: 15,
+                  family: "'Inter', sans-serif",
+                  weight: "500",
+               },
+               padding: 15,
+               usePointStyle: true,
+               boxWidth: 8,
+               boxHeight: 8,
+            },
+         },
+         tooltip: {
+            backgroundColor: "rgba(17, 24, 39, 0.95)", // Darker background with opacity
+            titleColor: "#FFFFFF",
+            titleFont: {
+               size: 13,
+               family: "'Inter', sans-serif",
+               weight: "600",
+            },
+            bodyColor: "#FFFFFF",
+            bodyFont: {
+               size: 12,
+               family: "'Inter', sans-serif",
+            },
+            padding: 12,
+            cornerRadius: 8,
+            displayColors: true,
+            borderColor: "rgba(255, 255, 255, 0.1)",
+            borderWidth: 1,
+            callbacks: {
+               label: (context) => {
+                  const value = context.raw;
+                  const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                  const percentage = ((value / total) * 100).toFixed(1);
+                  return selectedData === "students"
+                     ? `Students: ${value} (${percentage}%)`
+                     : `Revenue: ₹${value} (${percentage}%)`;
+               },
+            },
+         },
+      },
+      // Added hover effects
+      onHover: (event, chartElement) => {
+         event.native.target.style.cursor = chartElement[0]
+            ? "pointer"
+            : "default";
       },
    };
 
-   function randomColorGenerate(numLength) {
-      let colors = [];
-      for (let i = 0; i < numLength; i++) {
-         const colorStr = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(
-            Math.random() * 256
-         )}, ${Math.floor(Math.random() * 256)})`;
-         colors.push(colorStr);
-      }
-      return colors;
-   }
+   const chartData = {
+      labels: instructorData.map((course) => course.courseName),
+      datasets: [
+         {
+            data: instructorData.map((course) =>
+               selectedData === "students"
+                  ? course.totalStudentsEnrolled
+                  : course.totalAmountGenerated
+            ),
+            backgroundColor:
+               selectedData === "students" ? studentColors : incomeColors,
+            borderColor: "#161D29", // Darker border for better segment separation
+            borderWidth: 2,
+            hoverBackgroundColor:
+               selectedData === "students"
+                  ? studentColors.map((color) => color + "E6") // Less transparency
+                  : incomeColors.map((color) => color + "E6"),
+            hoverBorderColor: "#FFFFFF",
+            hoverBorderWidth: 2,
+            hoverOffset: 4, // Added offset on hover
+         },
+      ],
+   };
 
    return (
-      <div>
-         <p className=" text-richblack-5 text-xl font-bold mb-2">Visualize</p>
-         <div className="flex gap-5 text-yellow-200 ">
-            <button
-               className={` px-2 py-1 rounded-2xl hover:text-yellow-50 ${
-                  pieDataFor === "student" ? " bg-richblack-700" : ""
-               } `}
-               onClick={() => setDataFor("student")}
-            >
-               Students
-            </button>
-            <button
-               className={` px-2 py-1 rounded-2xl hover:text-yellow-50 ${
-                  pieDataFor !== "student" ? " bg-richblack-700" : ""
-               } `}
-               onClick={() => setDataFor("income")}
-            >
-               Income
-            </button>
+      <div className="flex flex-col h-[400px]">
+         <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col gap-4">
+               <p className="text-richblack-5 text-2xl font-bold">
+                  Course Analytics
+               </p>
+               {/* Toggle Buttons */}
+               <div className="flex gap-4 text-sm">
+                  <button
+                     onClick={() => setSelectedData("students")}
+                     className={`px-4 py-2 rounded-full transition-all duration-200 ${
+                        selectedData === "students"
+                           ? "bg-yellow-50 text-richblack-900 font-semibold"
+                           : "bg-richblack-700 text-richblack-50 hover:bg-richblack-600"
+                     }`}
+                  >
+                     Students
+                  </button>
+                  <button
+                     onClick={() => setSelectedData("income")}
+                     className={`px-4 py-2 rounded-full transition-all duration-200 ${
+                        selectedData === "income"
+                           ? "bg-yellow-50 text-richblack-900 font-semibold"
+                           : "bg-richblack-700 text-richblack-50 hover:bg-richblack-600"
+                     }`}
+                  >
+                     Income
+                  </button>
+               </div>
+            </div>
+            <div className="flex gap-5">
+               <div className="flex flex-col items-end">
+                  <p className="text-richblack-300 text-sm">Total Students</p>
+                  <p className="text-richblack-50 text-2xl font-bold">
+                     {totalStudents}
+                  </p>
+               </div>
+               <div className="flex flex-col items-end">
+                  <p className="text-richblack-300 text-sm">Total Income</p>
+                  <p className="text-richblack-50 text-2xl font-bold">
+                     ₹{totalIncome}
+                  </p>
+               </div>
+            </div>
          </div>
-         <div className=" relative flex items-center justify-between gap-4 px-14">
-            <PieChartLebels
-               data={
-                  pieDataFor === "student"
-                     ? datasetForStudent
-                     : datasetForIncome
-               }
-            />
-            <Pie
-               data={
-                  pieDataFor === "student"
-                     ? datasetForStudent
-                     : datasetForIncome
-               }
-               options={option}
-               width={400}
-               height={400}
-            />
-            {pieDataFor === "student" ? (
-               <div className=" absolute top-[33%] left-[10%] w-10/12">
-                  {filterStudentData?.length == 0 && (
-                     <p className=" text-richblack-500 text-4xl font-bold text-center underline ">
-                        No data available for students enrolled
-                     </p>
-                  )}
-               </div>
-            ) : (
-               <div className=" absolute top-[33%] left-[10%] w-10/12">
-                  {filterIncomeData?.length == 0 && (
-                     <p className=" z-10 text-richblack-500 text-4xl font-bold text-center underline ">
-                        No data available for total Income Revenue
-                     </p>
-                  )}
-               </div>
-            )}
+         <div className="relative h-full w-full">
+            <Pie data={chartData} options={options} />
          </div>
       </div>
    );

@@ -8,6 +8,7 @@ import ConfirmationModal from "../../../common/ConfirmationModal";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { deleteCourse } from "../../../../services/operations/courseDetailsAPI";
+import { FiEdit2 } from "react-icons/fi";
 
 function CoursesTable({ courses, setCourses }) {
    const [confirmModal, setConfirmModal] = useState(null);
@@ -29,137 +30,85 @@ function CoursesTable({ courses, setCourses }) {
    };
 
    return (
-      <div className=" text-white">
-         <table className=" w-full mt-6">
-            <thead className=" w-full text-richblack-25 text-lg font-semibold">
-               <tr className=" w-[100%] flex items-center justify-between">
-                  <td className="w-[60%] content-center">COURSES</td>
-                  <td>DURATION</td>
-                  <td>PRICE</td>
-                  <td>ACTION</td>
-               </tr>
-            </thead>
-            <tbody className=" mt-3 ">
-               {courses.map((course, index) => (
-                  <tr
-                     key={index}
-                     className="flex justify-between border-b-[1px] pt-2 border-richblack-700 mb-4"
-                  >
-                     <td className=" w-[60%] flex gap-5 mb-3">
-                        <img
-                           width={230}
-                           className=" h-fit rounded-lg aspect-video object-cover"
-                           src={course?.thumbnail}
-                           alt={course.courseName}
-                        />
-                        <div className="flex flex-col gap-2">
-                           <p className=" text-richblack-5 font-bold text-2xl">
-                              {" "}
-                              {course.courseName}{" "}
-                           </p>
-                           <p className=" text-richblack-200 text-sm">
-                              {course?.courseDiscription?.length > 100 ? (
-                                 longDiscription.some(
-                                    (elem) => elem === index
-                                 ) ? (
-                                    <div>
-                                       {course?.courseDiscription}
-                                       <br />
-                                       <span
-                                          onClick={() =>
-                                             setLongDiscription(
-                                                longDiscription.filter(
-                                                   (elem) => elem !== index
-                                                )
-                                             )
-                                          }
-                                          className=" cursor-pointer text-richblack-50 hover:text-richblack-5 font-bold"
-                                       >
-                                          {" "}
-                                          read less
-                                       </span>
-                                    </div>
-                                 ) : (
-                                    <div>
-                                       {course?.courseDiscription?.substr(
-                                          0,
-                                          100
-                                       ) + "..."}{" "}
-                                       <br />
-                                       <span
-                                          onClick={() =>
-                                             setLongDiscription([
-                                                ...longDiscription,
-                                                index,
-                                             ])
-                                          }
-                                          className=" cursor-pointer text-richblack-50 hover:text-richblack-5 font-bold"
-                                       >
-                                          {" "}
-                                          read more
-                                       </span>
-                                    </div>
-                                 )
-                              ) : (
-                                 course?.courseDiscription
-                              )}
-                           </p>
-                           {/* <p className=" text-richblack-50 text-md font-bold">
-                              {" "}
-                              Created At{" "}
-                           </p> */}
-                           {course?.status === "Published" ? (
-                              <div className=" w-fit flex items-center justify-center gap-1 bg-richblack-800 pl-2 pr-4 py-1 rounded-full text-yellow-100 font-bold text-xs ">
-                                 <TiTick />
-                                 <p>Published</p>
-                              </div>
-                           ) : (
-                              <div className=" w-fit flex items-center justify-center gap-1 bg-richblack-800 pl-2 pr-4 py-1 rounded-full text-pink-300 font-bold text-xs ">
-                                 <BsExclamationLg />
-                                 <p>Draft</p>
-                              </div>
-                           )}
-                        </div>
-                     </td>
+      <div className="border-[1px] border-richblack-700 rounded-xl">
+         <div className="bg-richblack-700 rounded-t-xl flex flex-row items-center px-6 py-3 text-richblack-5 font-semibold text-lg">
+            <p className="w-[45%]">Course</p>
+            <p className="w-[25%] pl-10">Duration</p>
+            <p className="w-[20%]">Price</p>
+            <p className="w-[10%]">Actions</p>
+         </div>
 
-                     <td className=" text-richblack-200 flex items-center justify-center">
-                        <p>{course?.totalDuration}</p>
-                     </td>
+         {/* Course Items */}
+         {courses?.length === 0 ? (
+            <div className="text-center text-richblack-100 p-6 text-lg">
+               No courses found
+            </div>
+         ) : (
+            courses?.map((course, index) => (
+               <div
+                  key={index}
+                  className={`group flex flex-row items-center px-6 py-3 hover:bg-richblack-700/20 transition-all duration-200 cursor-pointer ${
+                     index === courses.length - 1 ? "" : "border-b-[1px]"
+                  } border-richblack-700`}
+                  onClick={() => {
+                     navigate(`/dashboard/enrolled-students/${course._id}`);
+                  }}
+               >
+                  <div className="w-[45%] flex items-center gap-4">
+                     <img
+                        src={course?.thumbnail}
+                        alt={course?.courseName}
+                        className="w-32 h-20 rounded-md object-cover aspect-video transition-all duration-200 
+                        group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(0,223,255,0.25)] hover:rotate-2"
+                     />
+                     <div className="flex flex-col gap-2">
+                        <p className="text-lg font-semibold text-richblack-50 group-hover:text-yellow-50 transition-colors duration-200">
+                           {course?.courseName}
+                        </p>
+                        <p className="text-richblack-300 text-sm group-hover:text-richblack-100 transition-colors duration-200">
+                           {course?.courseDescription?.length > 50
+                              ? `${course?.courseDescription?.slice(0, 50)}...`
+                              : course?.courseDescription}
+                        </p>
+                     </div>
+                  </div>
 
-                     <td className="  font-bold text-caribbeangreen-200 flex items-center gap-1">
-                        <FaRupeeSign />
-                        <p className="">{course.price} </p>
-                     </td>
+                  <div className="w-[25%] text-richblack-50 group-hover:text-blue-200 font-semibold transition-colors duration-200 pl-10">
+                     {course?.totalDuration || "2hr 30min"}
+                  </div>
 
-                     <td className=" text-richblack-200 text-xl flex items-center gap-3">
-                        <MdEdit
-                           onClick={() =>
-                              navigate(`/dashboard/edit-course/${course._id}`)
-                           }
-                           className=" cursor-pointer hover:text-richblack-50"
-                        />
-                        <RiDeleteBin6Line
-                           onClick={() => {
-                              setConfirmModal({
-                                 text1: "Delete this Section",
-                                 text2: "All the lectures in this section will be deleted",
-                                 btn1Text: "Delete",
-                                 btn2Text: "Cancle",
-                                 btn1Handler: !loading
-                                    ? () => handlerDelete(course._id)
-                                    : () => {},
-                                 btn2Handler: !loading
-                                    ? () => setConfirmModal(null)
-                                    : () => {},
-                              });
-                           }}
-                           className=" cursor-pointer hover:text-pink-500 text-pink-600"
-                        />
-                     </td>
-                  </tr>
-               ))}
-            </tbody>
-         </table>
+                  <div className="w-[20%] text-richblack-50 group-hover:text-yellow-50 font-semibold transition-colors duration-200">
+                     ₹{course?.price}
+                  </div>
+
+                  <div className="w-[10%] flex gap-3 text-richblack-300">
+                     <button
+                        onClick={() =>
+                           navigate(`/dashboard/edit-course/${course._id}`)
+                        }
+                        className="hover:text-caribbeangreen-300 hover:scale-105 transition-all duration-110"
+                     >
+                        <FiEdit2 size={20} />
+                     </button>
+                     <button
+                        onClick={() => {
+                           setConfirmModal({
+                              text1: "Do you want to delete this course?",
+                              text2: "All the data related to this course will be deleted",
+                              btn1Text: "Delete",
+                              btn2Text: "Cancel",
+                              btn1Handler: () => handlerDelete(course._id),
+                              btn2Handler: () => setConfirmModal(null),
+                           });
+                        }}
+                        className="hover:text-[#ff0000] hover:scale-110 transition-all duration-150"
+                     >
+                        <RiDeleteBin6Line size={20} />
+                     </button>
+                  </div>
+               </div>
+            ))
+         )}
          {confirmModal && <ConfirmationModal modalData={confirmModal} />}
       </div>
    );

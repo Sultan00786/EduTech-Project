@@ -387,6 +387,73 @@ exports.getInstructorCourses = async (req, res) => {
    }
 };
 
+// Get Enrolled Students
+exports.getEnrolledStudents = async (req, res) => {
+   try {
+      const { courseId } = req.query;
+
+      const course = await Course.findById(courseId)
+         .populate({
+            path: "studentsEnrolled",
+            populate: {
+               path: "courseProgress",
+            },
+         })
+         .populate({
+            path: "courseContent",
+            populate: {
+               path: "subSection",
+            },
+         });
+
+      if (!course) {
+         return res.status(404).json({
+            success: false,
+            message: `Could not find course with id: ${courseId}`,
+         });
+      }
+
+      const totalNumberVideos = course.courseContent.reduce(
+         (acc, curr) => acc + curr.subSection.length,
+         0
+      );
+
+      const data = {
+         id: course._id,
+         courseName: course.courseName,
+         courseContent: course.courseContent,
+         totalNumberVideos: totalNumberVideos,
+         studentsEnrolled: course.studentsEnrolled.map((student) => {
+            const completedVideos =
+               student.courseProgress.find(
+                  (item) => item.courseID.toString() === courseId
+               )?.completedVideos || [];
+
+            return {
+               id: student._id,
+               firstName: student.firstName,
+               lastName: student.lastName,
+               email: student.email,
+               image: student.image,
+               compeletedVedios: completedVideos.length,
+            };
+         }),
+      };
+
+      return res.status(200).json({
+         success: true,
+         data: data,
+      });
+   } catch (error) {
+      console.error(error);
+      return res.status(500).json({
+         success: false,
+         message: "Server error",
+         error: error.message,
+      });
+   }
+};
+
 // Delete the Course
 exports.deleteCourse = async (req, res) => {
    try {
