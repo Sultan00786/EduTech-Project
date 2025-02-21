@@ -392,8 +392,6 @@ exports.getEnrolledStudents = async (req, res) => {
    try {
       const { courseId } = req.query;
 
-      console.log("courseId: ", courseId);
-
       const course = await Course.findById(courseId)
          .populate({
             path: "studentsEnrolled",

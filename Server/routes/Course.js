@@ -89,7 +89,7 @@ router.post("/deleteCourse", auth, isInstructor, deleteCourse);
 // Get Full details of couse
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 // Get Enrolled Students
-router.get("/getEnrolledStudents", getEnrolledStudents);
+router.get("/getEnrolledStudents", auth, isInstructor, getEnrolledStudents);
 // Post Course Progress
 router.post("/updateCourseProgress", auth, updateCourseProgress);
 // Post total time duration of course

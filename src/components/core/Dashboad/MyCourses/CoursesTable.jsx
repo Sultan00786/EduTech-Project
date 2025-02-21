@@ -47,9 +47,12 @@ function CoursesTable({ courses, setCourses }) {
             courses?.map((course, index) => (
                <div
                   key={index}
-                  className={`group flex flex-row items-center px-6 py-3 hover:bg-richblack-700/20 transition-all duration-200 ${
+                  className={`group flex flex-row items-center px-6 py-3 hover:bg-richblack-700/20 transition-all duration-200 cursor-pointer ${
                      index === courses.length - 1 ? "" : "border-b-[1px]"
                   } border-richblack-700`}
+                  onClick={() => {
+                     navigate(`/dashboard/enrolled-students/${course._id}`);
+                  }}
                >
                   <div className="w-[45%] flex items-center gap-4">
                      <img

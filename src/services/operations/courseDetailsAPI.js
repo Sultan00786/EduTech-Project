@@ -306,7 +306,6 @@ export const getEnrolledStudents = async (courseId, token) => {
             courseId,
          }
       );
-      toast.success("Enrolled students fetched successfully");
       return response;
    } catch (error) {
       console.log("GET_ENROLLED_STUDENTS_API API ERROR............", error);
