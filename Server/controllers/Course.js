@@ -390,8 +390,11 @@ exports.getInstructorCourses = async (req, res) => {
 // Get Enrolled Students
 exports.getEnrolledStudents = async (req, res) => {
    try {
-      const { courseId } = req.body;
-      const courses = await Course.findById(courseId)
+      const { courseId } = req.query;
+
+      console.log("courseId: ", courseId);
+
+      const course = await Course.findById(courseId)
          .populate({
             path: "studentsEnrolled",
             populate: {
@@ -405,36 +408,35 @@ exports.getEnrolledStudents = async (req, res) => {
             },
          });
 
-      if (!courses) {
-         return res.status(400).json({
+      if (!course) {
+         return res.status(404).json({
             success: false,
             message: `Could not find course with id: ${courseId}`,
          });
       }
 
-      // here i want to try to get the course progress of each student for the specific course by using courseId
-
-      const totalNumberVideos = courses.courseContent.reduce(
+      const totalNumberVideos = course.courseContent.reduce(
          (acc, curr) => acc + curr.subSection.length,
          0
       );
 
       const data = {
-         id: courses._id,
-         courseName: courses.courseName,
-         courseContent: courses.courseContent,
+         id: course._id,
+         courseName: course.courseName,
+         courseContent: course.courseContent,
          totalNumberVideos: totalNumberVideos,
-         studentsEnrolled: courses.studentsEnrolled.map((user) => {
-            const completedVideos = user.courseProgress.find(
-               (i) => i.courseID.toString() === courseId
-            ).completedVideos;
+         studentsEnrolled: course.studentsEnrolled.map((student) => {
+            const completedVideos =
+               student.courseProgress.find(
+                  (item) => item.courseID.toString() === courseId
+               )?.completedVideos || [];
 
             return {
-               id: user._id,
-               firstName: user.firstName,
-               lastName: user.lastName,
-               email: user.email,
-               image: user.image,
+               id: student._id,
+               firstName: student.firstName,
+               lastName: student.lastName,
+               email: student.email,
+               image: student.image,
                compeletedVedios: completedVideos.length,
             };
          }),
