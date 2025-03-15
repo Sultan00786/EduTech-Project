@@ -43,6 +43,30 @@ app.use(
 // cloudinary connection
 cloudinaryConnect();
 
+const pingServer = () => {
+   axios
+      .get(process.env.PING_URL + "/ping")
+      .then((res) => {
+         if (!res) {
+            console.log("Fail to Ping Server");
+            return;
+         }
+         console.log(
+            `Server is Ping on ${new Date().toLocaleDateString()} --> ${new Date().toLocaleTimeString()}`
+         );
+         return {};
+      })
+      .catch((err) => {
+         console.log(err);
+      });
+};
+
+setInterval(pingServer, 1000 * 60 * 14);
+
+app.get("/ping", (req, res) => {
+   res.send("Hello");
+});
+
 // routes
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);
