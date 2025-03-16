@@ -37,22 +37,9 @@ const Home = () => {
          {/* Section 1 */}
 
          <div className="relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between">
-            {/* button */}
-
-            <Link to={"/signup"}>
-               <div className=" group mt-16 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 border-b-[2px] border-richblack-700 transition-all duration-200 hover:scale-95 w-full">
-                  <div className="flex flex-row items-center gap-3 rounded-full px-6 py-[5px] transition-all duration-200 group-hover:bg-richblack-900">
-                     <p className=" text-richblack-200 text-[15px] font-semibold ">
-                        Becomes an Instructor
-                     </p>
-                     <FaArrowRight className=" text-[12px] " />
-                  </div>
-               </div>
-            </Link>
-
             {/* Heading */}
 
-            <div className=" text-center text-4xl font-semibold mt-7">
+            <div className=" text-center text-4xl font-semibold mt-16">
                Empower Your Future Growth with
                <HighlightText text={"Coding Skills"} />
             </div>
@@ -80,6 +67,19 @@ const Home = () => {
                </CTAButton>
             </div>
 
+            {/* button */}
+
+            <Link to={"/signup"}>
+               <div className=" group mt-10 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 border-b-[2px] border-richblack-700 transition-all duration-200 hover:scale-95 w-full">
+                  <div className="flex flex-row items-center gap-3 rounded-full px-6 py-[5px] transition-all duration-200 group-hover:bg-richblack-900">
+                     <p className=" text-richblack-200 text-[15px] font-semibold ">
+                        Becomes an Instructor
+                     </p>
+                     <FaArrowRight className=" text-[12px] " />
+                  </div>
+               </div>
+            </Link>
+
             {/* vedio */}
 
             <div className=" mx-3 my-12 shadow-blue-200">
@@ -97,7 +97,7 @@ const Home = () => {
                   heading={
                      <div className=" text-4xl font-semibold">
                         Unlock Your
-                        <HighlightText text={"coding potential"} />
+                        <HighlightText text={"Coding Potential"} />
                      </div>
                   }
                   subheading={
@@ -126,12 +126,13 @@ const Home = () => {
                   position={"lg: flex-row-reverse"}
                   heading={
                      <div className=" text-4xl font-semibold">
-                        Unlock Your
-                        <HighlightText text={"coding potential"} />
+                        Master
+                        <HighlightText text={" Coding Skills "} />
+                        with Expert-Led Courses
                      </div>
                   }
                   subheading={
-                     "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+                     "Embark on a transformative coding journey with our comprehensive courses led by seasoned industry professionals. Gain invaluable insights and practical skills from experts who are dedicated to empowering you with the knowledge needed to excel in coding."
                   }
                   ctabtn1={{
                      btnText: "try it yourself",
