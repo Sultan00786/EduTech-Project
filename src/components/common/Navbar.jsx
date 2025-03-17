@@ -33,8 +33,6 @@ function Navbar() {
    const [subLinks, setSubLinks] = useState([]);
    const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-   console.log(subLinks);
-
    const fetchSublinks = async () => {
       dispatch(setLoading(true));
       try {
@@ -182,7 +180,7 @@ function Navbar() {
                   isOpen={isOpen}
                   onOpenChange={onOpenChange}
                >
-                  <DrawerContent className="bg-richblack-800 w-[47%] border-l-2 border-richblack-700">
+                  <DrawerContent className="bg-richblack-800 w-[55%] border-l-2 border-richblack-700">
                      {(onClose) => (
                         <div className=" h-full w-full">
                            <DrawerNavBar

@@ -4,7 +4,6 @@ import { TypeAnimation } from "react-type-animation";
 import CTAButton from "../Homepage/Botton";
 
 const CodeBlocks = ({
-   
    position,
    heading,
    subheading,
@@ -22,17 +21,19 @@ const CodeBlocks = ({
    );
 
    return (
-      <div className={`flex ${position} my-20 justify-between gap-10 px-5 `}>
+      <div
+         className={` flex flex-col ${position} my-20 justify-between gap-10 px-5 `}
+      >
          {/* Section 1 */}
 
-         <div className=" w-[50%] flex flex-col gap-8">
+         <div className=" md:w-[50%] flex flex-col gap-8">
             {heading}
 
             <div className=" font-bold text-richblack-300 ">{subheading}</div>
 
             {/* two button */}
 
-            <div className="flex gap-7 mt-7">
+            <div className="flex gap-7 -mt-4">
                <CTAButton active={ctabtn1.active} linkto={ctabtn1.linkto}>
                   <div className=" flex gap-2 items-center">
                      {ctabtn1.btnText}
@@ -68,7 +69,6 @@ const CodeBlocks = ({
                <p>11</p>
                <p>12</p>
                <p>13</p>
-               <p>14</p>
             </div>
 
             {/* Codes */}

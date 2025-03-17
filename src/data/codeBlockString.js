@@ -12,7 +12,6 @@ const codeBlockString = {
         <nav>
             <a href="one/">One</a>
             <a href="two/">Two</a>
-            <a href="three/">Three</a>
         </nav>
     </body>
 </html>`,
