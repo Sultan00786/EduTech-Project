@@ -50,11 +50,13 @@ function CoursesTable({ courses, setCourses }) {
                   className={`group flex flex-row items-center px-6 py-3 hover:bg-richblack-700/20 transition-all duration-200 cursor-pointer ${
                      index === courses.length - 1 ? "" : "border-b-[1px]"
                   } border-richblack-700`}
-                  onClick={() => {
-                     navigate(`/dashboard/enrolled-students/${course._id}`);
-                  }}
                >
-                  <div className="w-[45%] flex items-center gap-4">
+                  <div
+                     onClick={() => {
+                        navigate(`/dashboard/enrolled-students/${course._id}`);
+                     }}
+                     className="w-[45%] flex items-center gap-4"
+                  >
                      <img
                         src={course?.thumbnail}
                         alt={course?.courseName}
@@ -81,11 +83,12 @@ function CoursesTable({ courses, setCourses }) {
                      ₹{course?.price}
                   </div>
 
-                  <div className="w-[10%] flex gap-3 text-richblack-300">
+                  <div className="w-[10%] z-40 flex gap-3 text-richblack-300">
                      <button
-                        onClick={() =>
-                           navigate(`/dashboard/edit-course/${course._id}`)
-                        }
+                        onClick={(e) => {
+                           e.preventDefault();
+                           navigate(`/dashboard/edit-course/${course._id}`);
+                        }}
                         className="hover:text-caribbeangreen-300 hover:scale-105 transition-all duration-110"
                      >
                         <FiEdit2 size={20} />
