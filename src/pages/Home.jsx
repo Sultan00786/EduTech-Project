@@ -38,14 +38,12 @@ const Home = () => {
 
          <div className="relative mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between">
             {/* Heading */}
-
             <div className=" text-center text-4xl font-semibold mt-16">
                Empower Your Future Growth with
                <HighlightText text={"Coding Skills"} />
             </div>
 
             {/* Paragraph */}
-
             <div className=" mt-4 w-[90%] text-center text-lg font-bold text-richblack-300 ">
                With our online coding courses, you can learn at your own pace,
                from anywhere in the world, and get access to a wealth of
@@ -54,7 +52,6 @@ const Home = () => {
             </div>
 
             {/* two button */}
-
             <div className="flex flex-row gap-7 ">
                {/* CTA --> call to action button */}
 
@@ -68,7 +65,6 @@ const Home = () => {
             </div>
 
             {/* button */}
-
             <Link to={"/signup"}>
                <div className=" group mt-10 p-1 mx-auto rounded-full bg-richblack-800 font-bold text-richblack-200 border-b-[2px] border-richblack-700 transition-all duration-200 hover:scale-95 w-full">
                   <div className="flex flex-row items-center gap-3 rounded-full px-6 py-[5px] transition-all duration-200 group-hover:bg-richblack-900">
@@ -81,7 +77,6 @@ const Home = () => {
             </Link>
 
             {/* vedio */}
-
             <div className=" mx-3 my-12 shadow-blue-200">
                <video muted loop autoPlay>
                   <source src={Banner} type="video/mp4" />
@@ -89,11 +84,10 @@ const Home = () => {
             </div>
 
             {/* Code Section 1 */}
-
             <div>
                <CodeBlocks
                   // bellow properties is atribute hie :-9
-                  position={"lg: flex-row"}
+                  position={"md:flex-row"}
                   heading={
                      <div className=" text-4xl font-semibold">
                         Unlock Your
@@ -101,7 +95,7 @@ const Home = () => {
                      </div>
                   }
                   subheading={
-                     "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
+                     "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you. Whether you're a beginner or looking to advance your skills, our courses are crafted to deliver a rewarding learning experience"
                   }
                   ctabtn1={{
                      btnText: "try it yourself",
@@ -119,11 +113,10 @@ const Home = () => {
             </div>
 
             {/* Code Section 2 */}
-
             <div>
                <CodeBlocks
                   // bellow properties is atribute hie :-9
-                  position={"lg: flex-row-reverse"}
+                  position={"md:flex-row-reverse"}
                   heading={
                      <div className=" text-4xl font-semibold">
                         Master
@@ -183,7 +176,7 @@ const Home = () => {
             </div>
 
             <div className=" mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7">
-               <div className=" flex flex-row gap-16 justify-between mt-[90px] ">
+               <div className=" flex flex-col gap-4 md:flex-row md:gap-16 justify-between mt-[90px] ">
                   <div className=" text-4xl font-semibold ">
                      Get the skills you need for a
                      <HighlightText text={"Job that is in demand"} />
@@ -196,7 +189,7 @@ const Home = () => {
                         professional skills.
                      </div>
 
-                     <div className=" w-fit mt-7 items-start ">
+                     <div className=" w-fit md:mt-7 items-start ">
                         <CTAButton active={true} linkto={"/signup"}>
                            Learn More
                         </CTAButton>
