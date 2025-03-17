@@ -49,13 +49,13 @@ const CodeBlocks = ({
 
          {/* Section 2 */}
 
-         <div className=" relative flex h-fit text-10[px] w-[100%] py-4 lg:w-[500px] ">
+         <div className=" relative flex h-fit text-10[px] py-4 pr-5 w-[350px] md:w-[500px] md:scale-100 scale-[.94] md:-ml-0 -ml-2 ">
             <div className=" absolute bg-richblue-500 opacity-25 left-0 right-0 top-[2%]  rounded-md w-[100%] h-[98%] "></div>
 
             {/* HW --> BG gradiant */}
 
             {/* Numbers */}
-            <div className=" static w-[10%] text-center flex flex-col text-richblack-400 font-inter font-bold ">
+            <div className=" static w-[10%] text-center flex flex-col px-1 text-richblack-400 font-inter font-bold ">
                <p>1</p>
                <p>2</p>
                <p>3</p>
