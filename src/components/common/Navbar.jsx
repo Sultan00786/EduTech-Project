@@ -13,6 +13,11 @@ import { ACCOUNT_TYPE } from "../../utils/constants";
 import toast from "react-hot-toast";
 import { setLoading } from "../../slices/authSlice";
 
+import { Drawer, DrawerContent, useDisclosure } from "@heroui/react";
+import { HiOutlineBars3 } from "react-icons/hi2";
+import DrawerNavBar from "./DrawerNavBar";
+import NavBarButton from "../core/Nav/NavBarButton";
+
 function Navbar() {
    const location = useLocation();
 
@@ -26,6 +31,9 @@ function Navbar() {
    };
 
    const [subLinks, setSubLinks] = useState([]);
+   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
+   console.log(subLinks);
 
    const fetchSublinks = async () => {
       dispatch(setLoading(true));
@@ -51,14 +59,14 @@ function Navbar() {
             (location.pathname.includes("view-course") && "fixed")
          }`}
       >
-         <div className="flex w-11/12 max-w-maxContent items-center justify-between">
+         <div className="flex w-11/12 items-center justify-between">
             {/* img logo */}
             <Link to={"/"}>
                <img src={logo} className=" w-40 " />
             </Link>
 
             {/* nav link */}
-            <nav>
+            <nav className="hidden md:block">
                <ul className="flex gap-x-6 ">
                   {NavbarLinks?.map((link, index) => {
                      return (
@@ -121,7 +129,7 @@ function Navbar() {
             </nav>
 
             {/* Login/SignUp/Dashboard */}
-            <div className="flex gap-x-4 items-center">
+            <div className="hidden md:flex gap-x-4 items-center">
                {/* Search and Cart */}
                <div className="flex gap-x-4 items-center text-2xl text-richblack-100">
                   <span className="cursor-pointer hover:text-white transition-all duration-200">
@@ -142,22 +150,14 @@ function Navbar() {
                {/* Login/Signup buttons */}
                {token === null && (
                   <div className="flex gap-x-4 items-center">
-                     <Link to="/login">
-                        <button
-                           className="text-richblack-100 px-3 py-2 border-[1px] border-richblack-700 rounded-md
-                           bg-richblack-800 hover:bg-richblack-700 hover:text-white transition-all duration-200"
-                        >
-                           Log in
-                        </button>
-                     </Link>
-                     <Link to="/signup">
-                        <button
-                           className="text-richblack-100 px-3 py-2 border-[1px] border-richblack-700 rounded-md
-                           bg-richblack-800 hover:bg-richblack-700 hover:text-white transition-all duration-200"
-                        >
-                           Sign Up
-                        </button>
-                     </Link>
+                     <NavBarButton
+                        children={"Log in"}
+                        redirectUrl={"/login"}
+                     ></NavBarButton>
+                     <NavBarButton
+                        children={"Sign Up"}
+                        redirectUrl={"/signup"}
+                     ></NavBarButton>
                   </div>
                )}
 
@@ -167,6 +167,32 @@ function Navbar() {
                      <ProfileDropDown />
                   </div>
                )}
+            </div>
+
+            {/* Hamburger */}
+            <div className="md:hidden">
+               <button
+                  className="text-richblack-100 m-0 mr-2 px-3 py-2 border-[1px] border-richblack-700 rounded-md bg-richblack-800 hover:bg-richblack-700 hover:text-white transition-all duration-200"
+                  onClick={onOpen}
+               >
+                  <HiOutlineBars3 />
+               </button>
+               <Drawer
+                  backdrop="blur"
+                  isOpen={isOpen}
+                  onOpenChange={onOpenChange}
+               >
+                  <DrawerContent className="bg-richblack-800 w-[47%] border-l-2 border-richblack-700">
+                     {(onClose) => (
+                        <div className=" h-full w-full">
+                           <DrawerNavBar
+                              onClose={onClose}
+                              catalogLinks={subLinks}
+                           />
+                        </div>
+                     )}
+                  </DrawerContent>
+               </Drawer>
             </div>
          </div>
       </div>
