@@ -52,7 +52,7 @@ function Instructor() {
    }
 
    return (
-      <div className="flex flex-col gap-6 text-white">
+      <div className=" w-11/12 mx-auto md:w-full flex flex-col gap-6 text-white">
          {/* Header Section */}
          <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
@@ -71,50 +71,52 @@ function Instructor() {
          </div>
 
          {/* Stats and Chart Section */}
-         <div className="flex gap-6">
+         <div className="flex flex-col md:flex-row gap-6">
             {/* Chart */}
             <div className="bg-richblack-800 w-full rounded-xl p-6 border-[1px] border-richblack-700">
                <InstructorPieChart instructorData={instructorData} />
             </div>
 
             {/* Statistics */}
-            <div className="bg-richblack-800 rounded-xl p-6 border-[1px] border-richblack-700">
-               <div className="w-[250px] flex flex-col gap-4">
-                  <p className="text-richblack-5 text-2xl font-bold">
-                     Statistics
-                  </p>
+            {(instructorData || instructorData?.length) && (
+               <div className="bg-richblack-800 rounded-xl p-6 border-[1px] border-richblack-700">
+                  <div className="md:w-[250px] flex flex-col gap-4">
+                     <p className="text-richblack-5 text-2xl font-bold">
+                        Statistics
+                     </p>
 
-                  {/* Total Courses */}
-                  <div className="flex flex-col gap-1">
-                     <p className="text-richblack-300 font-semibold">
-                        Total Courses
-                     </p>
-                     <p className="text-richblack-50 text-3xl font-bold">
-                        {instructorData?.length}
-                     </p>
-                  </div>
+                     {/* Total Courses */}
+                     <div className="flex flex-col gap-1">
+                        <p className="text-richblack-300 font-semibold">
+                           Total Courses
+                        </p>
+                        <p className="text-richblack-50 text-3xl font-bold">
+                           {instructorData?.length}
+                        </p>
+                     </div>
 
-                  {/* Total Students */}
-                  <div className="flex flex-col gap-1">
-                     <p className="text-richblack-300 font-semibold">
-                        Total Students
-                     </p>
-                     <p className="text-richblack-50 text-3xl font-bold">
-                        {totalStudent}
-                     </p>
-                  </div>
+                     {/* Total Students */}
+                     <div className="flex flex-col gap-1">
+                        <p className="text-richblack-300 font-semibold">
+                           Total Students
+                        </p>
+                        <p className="text-richblack-50 text-3xl font-bold">
+                           {totalStudent}
+                        </p>
+                     </div>
 
-                  {/* Total Income */}
-                  <div className="flex flex-col gap-1">
-                     <p className="text-richblack-300 font-semibold">
-                        Total Income
-                     </p>
-                     <p className="text-richblack-50 text-3xl font-bold">
-                        ₹{totalIncome}
-                     </p>
+                     {/* Total Income */}
+                     <div className="flex flex-col gap-1">
+                        <p className="text-richblack-300 font-semibold">
+                           Total Income
+                        </p>
+                        <p className="text-richblack-50 text-3xl font-bold">
+                           ₹{totalIncome}
+                        </p>
+                     </div>
                   </div>
                </div>
-            </div>
+            )}
          </div>
 
          {/* Courses Section */}
@@ -131,7 +133,7 @@ function Instructor() {
                </Link>
             </div>
 
-            <div className="flex gap-6 p-6">
+            <div className="flex flex-col md:flex-row gap-6 p-6">
                {courses?.map((course, index) => (
                   <div
                      key={index}

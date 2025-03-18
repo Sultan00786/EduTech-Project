@@ -1,13 +1,13 @@
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
 import React, { useState } from "react";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
-import PieChartLebels from "./PieChartLebels";
-import { color } from "chart.js/helpers";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function InstructorPieChart({ instructorData }) {
    const [selectedData, setSelectedData] = useState("students"); // students or income
+
+   const width = window.innerWidth;
 
    if (!instructorData || !instructorData?.length) {
       return (
@@ -55,22 +55,25 @@ function InstructorPieChart({ instructorData }) {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-         legend: {
-            position: "right",
-            align: "center",
-            labels: {
-               color: "#F59E0B", // Lighter color for better visibility
-               font: {
-                  size: 15,
-                  family: "'Inter', sans-serif",
-                  weight: "500",
-               },
-               padding: 15,
-               usePointStyle: true,
-               boxWidth: 8,
-               boxHeight: 8,
-            },
-         },
+         legend:
+            width < 450
+               ? { display: false }
+               : {
+                    position: "right",
+                    align: "center",
+                    labels: {
+                       color: "#F59E0B", // Lighter color for better visibility
+                       font: {
+                          size: 15,
+                          family: "'Inter', sans-serif",
+                          weight: "500",
+                       },
+                       padding: 15,
+                       usePointStyle: true,
+                       boxWidth: 8,
+                       boxHeight: 8,
+                    },
+                 },
          tooltip: {
             backgroundColor: "rgba(17, 24, 39, 0.95)", // Darker background with opacity
             titleColor: "#FFFFFF",
@@ -135,7 +138,7 @@ function InstructorPieChart({ instructorData }) {
 
    return (
       <div className="flex flex-col h-[400px]">
-         <div className="flex items-center justify-between mb-6">
+         <div className="flex md:flex-row flex-col items-center justify-between mb-6">
             <div className="flex flex-col gap-4">
                <p className="text-richblack-5 text-2xl font-bold">
                   Course Analytics
@@ -164,7 +167,7 @@ function InstructorPieChart({ instructorData }) {
                   </button>
                </div>
             </div>
-            <div className="flex gap-5">
+            <div className=" hidden md:flex gap-5">
                <div className="flex flex-col items-end">
                   <p className="text-richblack-300 text-sm">Total Students</p>
                   <p className="text-richblack-50 text-2xl font-bold">

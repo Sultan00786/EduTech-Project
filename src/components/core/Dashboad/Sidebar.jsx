@@ -83,14 +83,14 @@ function Sidebar({ onClose = () => {} }) {
             </div>
          </div>
 
-         {/* <div className="z-50">
+         <div className="z-50">
             {confirmationModal && (
                <ConfirmationModal
                   onClose={onClose}
                   modalData={confirmationModal}
                />
             )}
-         </div> */}
+         </div>
       </div>
    );
 }
