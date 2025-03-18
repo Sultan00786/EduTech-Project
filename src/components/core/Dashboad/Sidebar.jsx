@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { VscSignOut } from "react-icons/vsc";
 import ConfirmationModal from "../../common/ConfirmationModal";
 
-function Sidebar() {
+function Sidebar({ onClose = () => {} }) {
    const { loading: authLoading } = useSelector((state) => state.auth);
    const { user, loading: profileLoading } = useSelector(
       (state) => state.profile
@@ -50,6 +50,7 @@ function Sidebar() {
                         link={link}
                         iconName={link.icon}
                         key={link.id}
+                        onClose={onClose}
                      />
                   );
                })}
@@ -66,6 +67,7 @@ function Sidebar() {
                      path: "/dashboard/settings",
                   }}
                   iconName="VscSettingsGear"
+                  onClose={onClose}
                />
 
                {/* Logout */}
@@ -73,7 +75,7 @@ function Sidebar() {
                   onClick={confirmationHandler}
                   className="text-sm font-medium text-pink-200/70 ml-[32px] w-full"
                >
-                  <div className="flex items-center gap-x-2 pt-2">
+                  <div className="flex items-center gap-x-2 mt-2">
                      <VscSignOut className=" text-xl" />
                      <span className="">Logout</span>
                   </div>
@@ -83,7 +85,10 @@ function Sidebar() {
 
          <div className=" z-50">
             {confirmationModal && (
-               <ConfirmationModal modalData={confirmationModal} />
+               <ConfirmationModal
+                  onClose={onClose}
+                  modalData={confirmationModal}
+               />
             )}
          </div>
       </div>

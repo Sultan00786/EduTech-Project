@@ -33,7 +33,7 @@ function EnrolledCourses() {
       getEnrolledCourses();
    }, []);
    return (
-      <div className=" text-white ">
+      <div className=" text-white md:w-full w-11/12 mx-auto md:mx-0 ">
          <h1 className=" text-richblack-5 font-bold text-4xl mt-7 mb-7">
             Enrolled Courses
          </h1>
@@ -47,25 +47,26 @@ function EnrolledCourses() {
                   <p className="border-b border-b-richblack-400 pb-2 font-semibold text-richblack-400">
                      0 Enrolled Courses
                   </p>
-                  <p className="mt-14 text-center text-3xl text-richblack-100">
+                  <p className=" mt-7 md:mt-14 md:text-center text-3xl text-richblack-100">
                      You haven't Enrolled in any Course!!
                   </p>
                </div>
             ) : (
                <div className=" border-[1px] border-richblack-700 rounded-xl ">
-                  <div className=" bg-richblack-700 rounded-t-xl flex flex-row items-center px-6 py-3 text-richblack-5 font-semibold text-lg">
-                     <p className=" w-[45%]">Course Name</p>
-                     <p className="w-[25%] flex flex-col items-start ">
-                        Duration
+                  <div className=" bg-richblack-700 rounded-t-xl flex flex-col md:flex-row items-center px-6 py-3 text-richblack-5 font-semibold text-lg">
+                     <p className=" hidden md:block md:w-[45%]">Course Name</p>
+                     <p className=" hidden md:block md:w-[25%]">Duration</p>
+                     <p className=" hidden md:block  md:w-[30%]">Progress</p>
+                     <p className=" block md:hidden text-2xl">
+                        List of Enrolled Courses
                      </p>
-                     <p className=" w-[30%]">Progress</p>
                   </div>
 
                   {/* Cards are shown bellow */}
                   {enrolledCourses.map((course, index) => (
                      <div
                         key={index}
-                        className={`group flex flex-row items-center px-6 py-3 hover:bg-richblack-700/20 transition-all duration-200 ${
+                        className={`group flex flex-col md:flex-row items-start md:items-center px-6 py-6 md:py-3 hover:bg-richblack-700/20 transition-all duration-200 ${
                            index === enCourseLen - 1 ? "" : " border-b-[1px]"
                         } border-richblack-700`}
                      >
@@ -75,14 +76,14 @@ function EnrolledCourses() {
                                  `/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`
                               );
                            }}
-                           className="w-[45%] flex items-center gap-4 cursor-pointer"
+                           className="md:w-[45%] flex md:flex-row flex-col items-center gap-4 cursor-pointer"
                         >
                            <img
-                              className="w-32 h-20 rounded-md object-cover aspect-video transition-all duration-200 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(0,223,255,0.25)] hover:rotate-2"
+                              className="md:w-32 md:h-20 rounded-md object-cover aspect-video transition-all duration-200 group-hover:md:scale-105 group-hover:md:shadow-[0_0_20px_rgba(0,223,255,0.25)] hover:md:rotate-2"
                               src={course.thumbnail}
                            />
                            <div className="flex flex-col gap-2">
-                              <p className="text-lg font-semibold text-richblack-50 group-hover:text-yellow-50 transition-colors duration-200">
+                              <p className="text-lg font-semibold md:text-richblack-50 text-yellow-50 group-hover:text-yellow-50 transition-colors duration-200">
                                  {course.courseName}
                               </p>
                               <div>
@@ -111,14 +112,34 @@ function EnrolledCourses() {
                            </div>
                         </div>
 
-                        <div className="w-[25%] flex flex-col items-start text-richblack-50 group-hover:text-blue-200 font-semibold transition-colors duration-200">
+                        <div className=" hidden md:w-[25%] md:flex md:flex-col items-start text-richblack-50 group-hover:text-blue-200 font-semibold transition-colors duration-200">
                            {course?.totalDuration}
                         </div>
 
-                        <div className="w-[30%] flex flex-col gap-2">
-                           <p className="group-hover:text-yellow-50 transition-colors duration-200">
+                        <div className=" hidden md:w-[30%] w-full md:flex md:flex-col gap-2">
+                           <p className="group-hover:md:text-yellow-50 transition-colors  duration-200">
                               Progress: {course.progressPercentage || 0}%
                            </p>
+                           <ProgressBar
+                              completed={course.progressPercentage || 0}
+                              height="8px"
+                              isLabelVisible={false}
+                              bgColor="#FFD60A"
+                              baseBgColor="#2C333F"
+                              transitionDuration="200"
+                           />
+                        </div>
+
+                        <div className=" mt-5 md:hidden w-full flex flex-col gap-2">
+                           <div className="flex flex-row justify-between">
+                              <p className="text-yellow-50 transition-colors  duration-200">
+                                 Progress: {course.progressPercentage || 0}%
+                              </p>
+                              <div className=" md:hidden md:w-[25%] flex flex-col items-start text-blue-200 font-semibold transition-colors duration-200">
+                                 {course?.totalDuration}
+                              </div>
+                           </div>
+
                            <ProgressBar
                               completed={course.progressPercentage || 0}
                               height="8px"

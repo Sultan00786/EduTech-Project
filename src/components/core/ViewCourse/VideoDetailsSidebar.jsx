@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Iconbtn from "../../common/Iconbtn";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-function VideoDetailsSidebar({ setReviewModal }) {
+function VideoDetailsSidebar({ setReviewModal, onClose = () => {} }) {
    const [activeStatus, setActiveStatus] = useState("");
    const [videoBarActive, setvideoBarActive] = useState("");
    const location = useLocation();
@@ -46,7 +46,7 @@ function VideoDetailsSidebar({ setReviewModal }) {
    }, [courseSectionData, courseEntireData, location.pathname]);
 
    return (
-      <div className=" z-10 flex w-[324px] h-full flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblack-800 pt-14 fixed z-[2]">
+      <div className=" z-10 flex w-[324px] h-full flex-col border-r-[1px] border-richblack-700 h-[calc[100vh - 3.5rem]] bg-richblack-800 md:pt-14 fixed z-[2]">
          <div>
             {/* Buttons and heading */}
             <div>
@@ -73,10 +73,10 @@ function VideoDetailsSidebar({ setReviewModal }) {
                   className=" flex items-center
                 gap-2 py-3 px-2"
                >
-                  <p className=" font-semibold text-lg">
+                  <p className=" text-richblack-50 font-semibold text-lg">
                      {courseEntireData?.courseName}
                   </p>
-                  <p className=" text-caribbeangreen-400 font-semibold ">
+                  <p className=" w-[20%] text-caribbeangreen-400 font-semibold ">
                      {completedLectures?.length} / {totalNoOfLectures}
                   </p>
                </div>
@@ -112,6 +112,7 @@ function VideoDetailsSidebar({ setReviewModal }) {
                                              `/view-course/${courseEntireData?._id}/section/${section?._id}/sub-section/${topic?._id}`
                                           );
                                           setvideoBarActive(topic?._id);
+                                          onClose();
                                        }}
                                     >
                                        <input
