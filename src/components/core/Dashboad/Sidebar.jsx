@@ -38,8 +38,8 @@ function Sidebar({ onClose = () => {} }) {
    }
 
    return (
-      <div className=" fixed min-h-[100vh] border-r-[1px] border-richblack-700  bg-richblack-800">
-         <div className="flex min-w-[222px] flex-col justify-between min-h-[calc(100vh-70px)] ">
+      <div className=" fixed h-full border-r-[1px] border-richblack-700  bg-richblack-800">
+         <div className="flex min-w-[222px] flex-col justify-between min-h-full md:min-h-[calc(100vh-70px)] ">
             <div className="flex flex-col pt-5">
                {sidebarLinks.map((link) => {
                   // console.log("------->",link.type);
@@ -56,7 +56,7 @@ function Sidebar({ onClose = () => {} }) {
                })}
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col pb-5 md:pb-0">
                <div className=" mx-auto mt-6 w-11/12 mb-5 border-t-[1px] border-richblack-600 "></div>
 
                {/* Setting */}
@@ -83,14 +83,14 @@ function Sidebar({ onClose = () => {} }) {
             </div>
          </div>
 
-         <div className=" z-50">
+         {/* <div className="z-50">
             {confirmationModal && (
                <ConfirmationModal
                   onClose={onClose}
                   modalData={confirmationModal}
                />
             )}
-         </div>
+         </div> */}
       </div>
    );
 }

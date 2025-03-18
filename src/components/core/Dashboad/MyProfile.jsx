@@ -35,7 +35,7 @@ function MyProfile() {
                   <p className="text-sm text-richblack-300">{user?.email}</p>
                </div>
             </div>
-            <div className="flex w-full justify-start ">
+            <div className="flex w-full justify-start md:w-fit ">
                <Iconbtn
                   text="Edit"
                   onClick={() => navigate("/dashboard/settings")}
@@ -117,7 +117,7 @@ function MyProfile() {
                <Iconbtn
                   text="Edit"
                   onClick={() => navigate("/dashboard/settings")}
-                  customClasses="flex items-center gap-x-2"
+                  customClasses=" md:hidden flex items-center gap-x-2"
                >
                   <RiEditBoxLine />
                </Iconbtn>
@@ -145,7 +145,7 @@ function MyProfile() {
                <Iconbtn
                   text="Edit"
                   onClick={() => navigate("/dashboard/settings")}
-                  customClasses="md:w-fit flex items-center gap-x-2"
+                  customClasses=" md:hidden md:w-fit flex items-center gap-x-2"
                >
                   <RiEditBoxLine />
                </Iconbtn>
