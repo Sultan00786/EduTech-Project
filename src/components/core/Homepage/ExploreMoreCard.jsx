@@ -7,7 +7,7 @@ function ExploreMoreCard({ Course, index }) {
       <div>
          <div
             key={index}
-            className=" relative w-[360px] bg-richblack-800 flex flex-col justify-between p-6 "
+            className=" relative w-[310px] md:w-[360px] bg-richblack-800 flex flex-col justify-between p-6 "
          >
             <h2 className=" text-richblack-5 text-lg font-bold mb-4 ">
                {" "}
