@@ -125,7 +125,7 @@ function CourseDetails() {
                         <img
                            src={CourseDetails?.thumbnail}
                            alt="course thumbnail"
-                           className="max-h-[300px] min-h-[180px] w-[400px] rounded-2xl object-cover aspect-video"
+                           className=" w-[400px] rounded-2xl object-cover aspect-video"
                         />
                         <div className="">
                            <p className="text-3xl font-bold text-richblack-5">
