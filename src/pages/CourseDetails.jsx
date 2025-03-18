@@ -79,21 +79,23 @@ function CourseDetails() {
 
    return (
       <div className=" text-white w-full">
-         <div className=" bg-richblack-800 py-14">
+         <div className=" bg-richblack-800 py-0 pt-14  md:py-14">
             <div className=" w-11/12 mx-auto">
                <div className=" relative w-11/12 mx-auto">
-                  <div className=" w-[850px] flex flex-col gap-2">
+                  <div className=" md:w-[850px] flex flex-col gap-2">
                      <h1 className=" text-richblue-5 text-4xl font-bold">
                         {CourseDetails?.courseName}
                      </h1>
                      <p className=" text-richblack-200 text-sm">
                         {CourseDetails?.courseDiscription}
                      </p>
-                     <div className=" flex items-center gap-2">
-                        <span className=" text-yellow-25 flex items-center gap-2 font-bold ">
-                           {avgReviewCount || 0}
-                        </span>
-                        <RatingStars Review_Count={avgReviewCount} />
+                     <div className=" flex md:flex-row flex-col items-start md:items-center gap-2">
+                        <div className=" flex items-center gap-2">
+                           <span className=" text-yellow-25 flex items-center gap-2 font-bold ">
+                              {avgReviewCount || 0}
+                           </span>
+                           <RatingStars Review_Count={avgReviewCount} />
+                        </div>
                         <span>
                            ({CourseDetails?.ratingAndReviews?.length} Reviews)
                         </span>
@@ -112,7 +114,7 @@ function CourseDetails() {
                      </div>
                   </div>
                   <div
-                     className="bg-richblack-700 w-fit flex flex-col gap-3 absolute right-0 top-0 p-5 pb-32 rounded-sm 
+                     className="md:scale-100 scale-[.77] md:translate-x-0 translate-x-[-13%] md:-mt-0 -mt-3 bg-richblack-700 w-fit flex flex-col gap-3 md:absolute right-0 top-0 p-5 pb-32 rounded-sm 
                      shadow-[0_0_10px_0_rgba(255,255,255,0.2)]
                      border-[1px] border-richblack-600"
                   >
@@ -176,7 +178,7 @@ function CourseDetails() {
 
          <div className=" w-11/12 mx-auto ">
             <div className=" w-11/12 mx-auto">
-               <div className=" w-[850px] mt-9">
+               <div className=" md:w-[850px] mt-14 md:mt-9">
                   <div className=" p-6 flex flex-col gap-4 border-richblack-400 border-[1px]">
                      <h1 className=" text-richblack-5 text-3xl font-bold">
                         What you'll learn

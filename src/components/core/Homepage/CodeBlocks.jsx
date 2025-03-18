@@ -22,7 +22,7 @@ const CodeBlocks = ({
 
    return (
       <div
-         className={` flex flex-col ${position} my-20 justify-between gap-10 px-5 `}
+         className={` flex flex-col ${position} my-20 justify-evenly gap-10 px-5 `}
       >
          {/* Section 1 */}
 
@@ -49,7 +49,7 @@ const CodeBlocks = ({
 
          {/* Section 2 */}
 
-         <div className=" relative flex h-fit text-10[px] py-4 pr-5 w-[350px] md:w-[500px] md:scale-100 scale-[.94] md:-ml-0 -ml-2 ">
+         <div className=" relative flex h-fit text-10[px] py-4 pr-5 w-[350px] md:w-[350px] md:scale-100 scale-[.94] md:-ml-0 -ml-2 ">
             <div className=" absolute bg-richblue-500 opacity-25 left-0 right-0 top-[2%]  rounded-md w-[100%] h-[98%] "></div>
 
             {/* HW --> BG gradiant */}
