@@ -9,10 +9,15 @@ import CourseCard from "./CourseCard";
 
 function CourseSlider({ courses }) {
    // console.log("Course");
+   const screenWidth = window.innerWidth;
    return (
       <div>
          {courses?.length > 0 ? (
-            <Swiper slidesPerView={3} spaceBetween={30} className="mySwiper">
+            <Swiper
+               slidesPerView={screenWidth < 568 ? 1 : 3}
+               spaceBetween={30}
+               className="mySwiper"
+            >
                {courses?.map((course) => (
                   <SwiperSlide>
                      <CourseCard course={course} Height={"h-[200px]"} />

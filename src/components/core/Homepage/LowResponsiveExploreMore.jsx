@@ -50,7 +50,7 @@ function LowResponsiveExploreMore({
                {courses?.length > 0 && (
                   <Swiper
                      slidesPerView={1}
-                     spaceBetween={40}
+                     spaceBetween={30}
                      className="mySwiper"
                   >
                      {courses?.map((course, index) => (

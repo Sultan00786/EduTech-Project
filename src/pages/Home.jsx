@@ -84,7 +84,7 @@ const Home = () => {
             </div>
 
             {/* Code Section 1 */}
-            <div>
+            <div className="">
                <CodeBlocks
                   // bellow properties is atribute hie :-9
                   position={"md:flex-row"}
