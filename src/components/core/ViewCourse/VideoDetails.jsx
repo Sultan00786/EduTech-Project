@@ -8,6 +8,7 @@ import { MdReplay } from "react-icons/md";
 import Iconbtn from "../../common/Iconbtn";
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice";
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
+import { Button } from "@heroui/react";
 
 function VideoDetails() {
    const { courseId, sectionId, subSectionId } = useParams();
@@ -22,6 +23,10 @@ function VideoDetails() {
    const [videoData, setVideoData] = useState([]);
    const [videoEnded, setVideoEnded] = useState(false);
    const [loading, setLoading] = useState(false);
+
+   const widowWidth = window.innerWidth;
+
+   console.log(videoData);
 
    useEffect(() => {
       const setVideoSpecificDetails = async () => {
@@ -162,73 +167,75 @@ function VideoDetails() {
             {!videoData ? (
                <div>No Data Found</div>
             ) : (
-               <div className=" relative p-6 pt-20 mx-auto select-none pl-[350px] w-[96%] flex">
+               <div className=" relative p-6 pt-20 mx-auto select-none flex flex-col md:pl-[350px] md:w-[96%]">
+                  <h1 className=" md:hidden text-xl font-semibold text-richblack-100 mt-5 ">
+                     {videoData?.title}
+                  </h1>
+
                   <Player
                      ref={playerRef}
                      aspectRatio="16:9"
                      playsInline
                      src={videoData?.videoUrl}
                      onEnded={() => setVideoEnded(true)}
+                     className=" w-full border-[2px] border-richblack-700 mt-5 md:mt-0"
                   >
                      <AiFillPlayCircle className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-6xl cursor-pointer" />
 
                      {/* {videoEnded && !isFirstVideo() && ( */}
-                     <div className="z-10 gap-4 p-4 rounded-lg flex justify-between">
+                     <div className="z-10 gap-4 w-[328px] md:w-[1102px]  p-4 flex justify-between border-x-[2px] -translate-x-[2px] border-b-[2px] border-richblack-700">
                         <div className="flex gap-2 items-center">
-                           {!isFirstVideo() && (
-                              <button
-                                 disabled={loading}
-                                 onClick={goToPrevVideo}
-                                 className="flex items-center gap-2 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all disabled:opacity-50"
-                              >
+                           <Button
+                              isIconOnly
+                              onPress={goToPrevVideo}
+                              variant="light"
+                              isDisabled={loading || isFirstVideo()}
+                           >
+                              <div className=" flex items-center gap-2 text-richblack-50">
                                  <FaStepBackward className="text-lg" />
-                                 Prev
-                              </button>
-                           )}
+                              </div>
+                           </Button>
 
-                           <div
-                              onClick={() => {
+                           <Button
+                              onPress={() => {
                                  if (playerRef?.current) {
                                     playerRef.current?.seek(0);
                                     setVideoEnded(false);
                                  }
                               }}
+                              isIconOnly
+                              variant="light"
                            >
-                              <MdReplay className="text-3xl" />
-                           </div>
+                              <div className=" flex items-center gap-2 text-richblack-50">
+                                 <MdReplay className="text-3xl" />
+                              </div>
+                           </Button>
 
-                           {!isLastVideo() && (
-                              <button
-                                 disabled={loading}
-                                 onClick={goToNextVideo}
-                                 className="flex items-center gap-2 bg-gray-700 text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all disabled:opacity-50"
-                              >
-                                 Next
+                           <Button
+                              isIconOnly
+                              onPress={goToNextVideo}
+                              variant="light"
+                              isDisabled={loading || isLastVideo()}
+                           >
+                              <div className=" flex items-center gap-2 text-richblack-50">
                                  <FaStepForward className="text-lg" />
-                              </button>
-                           )}
+                              </div>
+                           </Button>
                         </div>
-
-                        {/* <Iconbtn
-                                 disabled={loading}
-                                 onClick={() => handleLectureCompletion()}
-                                 text={
-                                    !loading
-                                       ? "Mark as completed"
-                                       : "Loading..."
-                                 }
-                                 customClasses="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-all"
-                              /> */}
-                        {!completedLectures.includes(subSectionId) && (
-                           <button
-                              onClick={() => handleLectureCompletion()}
-                              className=" bg-caribbeangreen-400 text-white h-fit w-fit px-4 py-2 text-lg rounded-md hover:bg-green-600 transition-all"
+                        <div>
+                           <Button
+                              size={widowWidth > 450 ? "md" : "sm"}
+                              onPress={() => handleLectureCompletion()}
+                              variant="shadow"
+                              color="success"
+                              isDisabled={completedLectures.includes(
+                                 subSectionId
+                              )}
                            >
-                              {!loading ? "Mark as completed" : "Loading..."}
-                           </button>
-                        )}
+                              {!loading ? "Completed" : "Loading..."}
+                           </Button>
+                        </div>
                      </div>
-                     {/* )} */}
                   </Player>
                </div>
             )}
