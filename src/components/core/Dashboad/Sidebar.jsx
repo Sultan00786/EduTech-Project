@@ -75,7 +75,7 @@ function Sidebar({ onClose = () => {} }) {
                   onClick={confirmationHandler}
                   className="text-sm font-medium text-pink-200/70 ml-[32px] w-full"
                >
-                  <div className="flex items-center gap-x-2 pt-2">
+                  <div className="flex items-center gap-x-2 mt-2">
                      <VscSignOut className=" text-xl" />
                      <span className="">Logout</span>
                   </div>

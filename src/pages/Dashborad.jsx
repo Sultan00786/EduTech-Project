@@ -34,12 +34,12 @@ function Dashborad() {
                </button>
 
                <Drawer
-                  backdrop="blur"
+                  backdrop="transparent"
                   isOpen={isOpen}
                   onOpenChange={onOpenChange}
                   placement="left"
                >
-                  <DrawerContent className="bg-richblack-800 w-[55%] border-l-2 border-richblack-700">
+                  <DrawerContent className="bg-richblack-800 w-[55%] border-l-2 border-richblack-700 mt-14">
                      {(onClose) => (
                         <div className=" h-full w-full">
                            <Sidebar onClose={onClose} />
