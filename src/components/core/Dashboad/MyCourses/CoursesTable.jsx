@@ -32,10 +32,13 @@ function CoursesTable({ courses, setCourses }) {
    return (
       <div className="border-[1px] border-richblack-700 rounded-xl">
          <div className="bg-richblack-700 rounded-t-xl flex flex-row items-center px-6 py-3 text-richblack-5 font-semibold text-lg">
-            <p className="w-[45%]">Course</p>
-            <p className="w-[25%] pl-10">Duration</p>
-            <p className="w-[20%]">Price</p>
-            <p className="w-[10%]">Actions</p>
+            <p className=" hidden md:block w-[45%]">Course</p>
+            <p className=" hidden md:block w-[25%] pl-10">Duration</p>
+            <p className=" hidden md:block w-[20%]">Price</p>
+            <p className=" hidden md:block w-[10%]">Actions</p>
+            <p className="md:hidden w-full text-center text-richblack-100 text-2xl">
+               Courses List
+            </p>
          </div>
 
          {/* Course Items */}
@@ -47,7 +50,7 @@ function CoursesTable({ courses, setCourses }) {
             courses?.map((course, index) => (
                <div
                   key={index}
-                  className={`group flex flex-row items-center px-6 py-3 hover:bg-richblack-700/20 transition-all duration-200 cursor-pointer ${
+                  className={`group flex md:flex-row flex-col items-start md:items-center px-6 py-3 hover:md:bg-richblack-700/20 transition-all duration-200 cursor-pointer ${
                      index === courses.length - 1 ? "" : "border-b-[1px]"
                   } border-richblack-700`}
                >
@@ -55,16 +58,16 @@ function CoursesTable({ courses, setCourses }) {
                      onClick={() => {
                         navigate(`/dashboard/enrolled-students/${course._id}`);
                      }}
-                     className="w-[45%] flex items-center gap-4"
+                     className="md:w-[45%] flex md:flex-row flex-col md:items-center gap-4"
                   >
                      <img
                         src={course?.thumbnail}
                         alt={course?.courseName}
-                        className="w-32 h-20 rounded-md object-cover aspect-video transition-all duration-200 
-                        group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(0,223,255,0.25)] hover:rotate-2"
+                        className=" w-full md:w-32 md:h-20 rounded-md object-cover aspect-video transition-all duration-200 
+                        group-hover:md:scale-105 group-hover:md:shadow-[0_0_20px_rgba(0,223,255,0.25)] hover:md:rotate-2 "
                      />
                      <div className="flex flex-col gap-2">
-                        <p className="text-lg font-semibold text-richblack-50 group-hover:text-yellow-50 transition-colors duration-200">
+                        <p className="md:text-lg font-semibold md:text-richblack-50 text-yellow-50 group-hover:md:text-yellow-50 transition-colors duration-200">
                            {course?.courseName}
                         </p>
                         <p className="text-richblack-300 text-sm group-hover:text-richblack-100 transition-colors duration-200">
@@ -75,15 +78,15 @@ function CoursesTable({ courses, setCourses }) {
                      </div>
                   </div>
 
-                  <div className="w-[25%] text-richblack-50 group-hover:text-blue-200 font-semibold transition-colors duration-200 pl-10">
+                  <div className="md:w-[25%] text-richblack-50 group-hover:md:text-blue-200 font-semibold transition-colors duration-200 md:pl-10">
                      {course?.totalDuration || "2hr 30min"}
                   </div>
 
-                  <div className="w-[20%] text-richblack-50 group-hover:text-yellow-50 font-semibold transition-colors duration-200">
+                  <div className="md:w-[20%] text-richblack-50 group-hover:md:text-yellow-50 font-semibold transition-colors duration-200">
                      ₹{course?.price}
                   </div>
 
-                  <div className="w-[10%] z-40 flex gap-3 text-richblack-300">
+                  <div className="md:w-[10%] z-40 flex gap-3 text-richblack-300">
                      <button
                         onClick={(e) => {
                            e.preventDefault();
