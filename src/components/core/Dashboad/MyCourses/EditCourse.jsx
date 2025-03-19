@@ -35,7 +35,7 @@ function EditCourse() {
       return <div className="flex items-center justify-center loader"></div>;
    }
    return (
-      <div className=" flex w-full items-start gap-x-6 gap-5 text-white">
+      <div className=" w-11/12 mx-auto flex md:w-full items-start gap-x-6 gap-5 text-white">
          <div className=" flex flex-col w-full">
             <h1 className=" mb-14 text-3xl font-bold text-richblack-5">
                Edit Course
@@ -45,7 +45,7 @@ function EditCourse() {
                {course ? <RenderSteps /> : <p>No course found 0` `</p>}{" "}
             </div>
          </div>
-         <div className=" bg-richblack-800 sticky top-10 w-[600px] flex flex-col rounded-md py-6 px-14 gap-5  ">
+         <div className=" hidden md:flex bg-richblack-800 sticky top-10 w-[600px] flex-col rounded-md py-6 px-14 gap-5  ">
             <div className=" flex items-center gap-3">
                <img src={logo} width={13} alt="" />
                <p className=" font-bold text-lg ">Code Upload Tips</p>

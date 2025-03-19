@@ -24,15 +24,15 @@ function Mycourse() {
    }, []);
 
    return (
-      <div>
-         <div className="text-white flex justify-between mb-16">
+      <div className="md:w-full w-11/12 mx-auto">
+         <div className="  text-white flex justify-between mb-16">
             <p className=" text-3xl ring-richblack-5 font-bold ">My Couses</p>
             <button
                disabled={loading}
                onClick={() => navigate("/dashboard/add-course")}
             >
                <Iconbtn
-                  customClasses={" flex items-center gap-1 z-40"}
+                  customClasses={" hidden md:flex items-center gap-1 z-40"}
                   text="Add Course"
                >
                   <IoMdAdd />
@@ -40,7 +40,7 @@ function Mycourse() {
             </button>
          </div>
          <div>
-            {courses.length ? (
+            {courses.length > 0 ? (
                <CoursesTable courses={courses} setCourses={setCourses} />
             ) : (
                <div className=" text-richblue-5 font-bold text-4xl flex items-center justify-center border-4 border-dashed border-richblack-600 p-7">
