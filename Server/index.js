@@ -62,7 +62,7 @@ const pingServer = () => {
       });
 };
 
-setInterval(pingServer, 1000 * 60 * 14);
+setInterval(pingServer, 1000 * 60 * 10);
 
 app.get("/ping", (req, res) => {
    res.send("Hello");
